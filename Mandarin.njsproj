@@ -30,14 +30,52 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="app.js" />
+    <Content Include="Logic\MysqlCon.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="public\images\background.jpg" />
+    <Content Include="public\images\book.svg" />
+    <Content Include="Logic\Admin\AdminLogic.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="public\stylesheets\LoginSheet.css">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="routes\index.js" />
+    <Content Include="routes\admin.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="routes\librarian.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="routes\reader.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="routes\users.js" />
     <Content Include="package.json" />
     <Content Include="public\stylesheets\main.css" />
     <Content Include="README.md" />
-    <Content Include="views\Page1.html" />
+    <Content Include="views\adminLog.html" />
+    <Content Include="views\AdminMain.html">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="views\libLog.html">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="views\readerLog.html">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="views\SearchMain.html">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="views\LibrarianMain.html" />
+    <Content Include="views\Page3.html">
+      <SubType>Code</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Logic\" />
+    <Folder Include="Logic\Admin\" />
     <Folder Include="public\" />
     <Folder Include="public\images\" />
     <Folder Include="public\javascripts\" />

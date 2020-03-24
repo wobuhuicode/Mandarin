@@ -4,7 +4,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function (req, res) {
-    res.render("Page1", { title: "HTML" });
+    res.render("adminLog");
     req.session
 });
 

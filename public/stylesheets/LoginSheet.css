@@ -1,0 +1,27 @@
+.login_bd {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+.login_bg {
+    position: relative;
+    display: flex;
+    height: 100vh;
+    width: auto;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+}
+
+.login_card {
+    height: 370px;
+    width: 450px;
+}
+
+.login_card_bd {
+    padding: 30px 70px;
+}
+
