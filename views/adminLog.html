@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="http://localhost:1337/public/stylesheets/LoginSheet.css" />
+    <link rel="stylesheet" href="http://localhost:8081/public/stylesheets/LoginSheet.css" />
     <title>Admin Login</title>
 </head>
 <body class="login_bd">
@@ -40,10 +40,13 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
     <script>
+        //给按钮绑定点击函数
         $('#signin').click(function () {
+            //有关密码的使用post请求
             $.post("/admin/authen", { account: $('#account').val(), pwd: $('#pwd').val() }, function (data) {
                 if (data.code == 1) alert("Incorrect username or password!");
-                else if (data.code == 0) window.location.href = "http://localhost:1337/admin";
+                //如果后端传回0，则跳转页面
+                else if (data.code == 0) window.location.href = "http://localhost:8081/admin";
             });
         })
     </script>

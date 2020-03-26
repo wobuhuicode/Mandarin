@@ -2,14 +2,18 @@ var path = require('path');
 var mysql = require(path.join(__dirname, '../MysqlCon')); 
 
 function compare(name, password, callback) {
+    //查询语句
     var sql = 'SELECT admin_pw FROM admin where admin_ID ="' + name + '"';
 
     mysql.connection.query(sql, function (err, result) {
+        //如果出现异常或者未查询到结果，调用路由中回调函数，传递参数false
         if (err || result.length == 0) {
             callback(false);
         }
+        //如果成功查询到结果且请求中的密码与数据库中的一致，调用路由中回调函数，传递参数true
         else if (password == result[0].admin_pw) callback(true);
     });
+
 }
 
 function lookupLibrarian(name, callback) {

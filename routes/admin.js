@@ -51,6 +51,8 @@ router.post('/addLibrarian', function (req, res) {
 })
 
 router.post('/authen', function (req, res) {
+
+    //回调函数
     function authenResult(bool) {
         if (bool) {
             req.session.adminUser = req.body.account; // 登录成功，设置 session
@@ -60,7 +62,10 @@ router.post('/authen', function (req, res) {
             res.json({ code: 1 });
         }
     };
+
+    //调用业务逻辑，业务逻辑中可以调用上面的函数实现结果返回
     adminlogic.compare(req.body.account, req.body.pwd, authenResult);
+
 });
 
 module.exports = router;
