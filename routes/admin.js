@@ -20,6 +20,13 @@ router.get('/username', function (req, res) {
     res.json({ userName: req.session.adminUser })
 });
 
+router.get('/getLibs', function (req, res) {
+    function libsRes(data) {
+        res.json(data);
+    }
+    adminlogic.getlibInfo(libsRes);
+});
+
 router.get('/searchLibrarian', function (req, res) {
     function lookupResult(bool, account, pwd) {
         if (bool) {
@@ -51,7 +58,6 @@ router.post('/addLibrarian', function (req, res) {
 })
 
 router.post('/authen', function (req, res) {
-
     //回调函数
     function authenResult(bool) {
         if (bool) {
@@ -62,10 +68,10 @@ router.post('/authen', function (req, res) {
             res.json({ code: 1 });
         }
     };
-
     //调用业务逻辑，业务逻辑中可以调用上面的函数实现结果返回
     adminlogic.compare(req.body.account, req.body.pwd, authenResult);
-
 });
+
+
 
 module.exports = router;

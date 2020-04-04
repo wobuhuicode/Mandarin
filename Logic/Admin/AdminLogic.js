@@ -53,12 +53,19 @@ function addLibrarian(name, password, callback) {
         });
     });
 }
-
-    
+  
+function getlibInfo(callback) {
+    var res = new Object();
+    mysql.connection.query('select * from librarian', function (err, result) {
+        if (err) return 0;
+        else callback(result);
+    })
+};
 
 module.exports = {
     compare,
     lookupLibrarian,
     updateLibrarian,
-    addLibrarian
+    addLibrarian,
+    getlibInfo
 }

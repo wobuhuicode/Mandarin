@@ -1,8 +1,32 @@
-body {
-    padding: 50px;
-    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+body contentBody {
+    z-index: 0;
+    display: block;
+    width: 100%;
+    overflow-x:hidden;
 }
 
-a {
-    color: #00B7FF;
+nav {
+    z-index: 1;
+    width: 100%;
 }
+
+body {
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+}
+
+.sideBar {
+    position: fixed;
+    left: 0px;
+    width: 200px;
+    height: 100vh;
+    padding-top: 70px;
+}
+
+.mainContent {
+    padding-top: 70px;
+    margin-left: 200px;
+    padding-left: 180px;
+    padding-right: 180px;
+}
+
+
