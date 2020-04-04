@@ -33,12 +33,8 @@
     <Content Include="Logic\MysqlCon.js">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="public\images\background.jpg" />
     <Content Include="public\images\book.svg" />
     <Content Include="Logic\Admin\AdminLogic.js">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="public\stylesheets\LoginSheet.css">
       <SubType>Code</SubType>
     </Content>
     <Content Include="routes\index.js" />
@@ -69,21 +65,18 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="views\LibrarianMain.html" />
-    <Content Include="views\Page3.html">
-      <SubType>Code</SubType>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Logic\" />
     <Folder Include="Logic\Admin\" />
+    <Folder Include="Logic\Librarian\" />
+    <Folder Include="Logic\Reader\" />
     <Folder Include="public\" />
     <Folder Include="public\images\" />
     <Folder Include="public\javascripts\" />
     <Folder Include="public\stylesheets\" />
     <Folder Include="routes\" />
     <Folder Include="views\" />
-    <Folder Include="views\Login_1\" />
-    <Folder Include="views\NewFolder1\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
   <ProjectExtensions>
