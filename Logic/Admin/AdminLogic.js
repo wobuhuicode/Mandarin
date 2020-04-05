@@ -39,7 +39,7 @@ function updateLibrarian(curName, newName, newPassword, callback) {
 };
 
 function repeatLibrarianID(ID, callback) {
-    connection.query("select * from librarian where librarian_ID = '" + ID + "';", function (err, result, fields) {
+    mysql.connection.query("select * from librarian where librarian_ID = '" + ID + "';", function (err, result, fields) {
         if (err) throw err;
         if (result.length != 0) {
             connection.end();
@@ -54,7 +54,7 @@ function repeatLibrarianID(ID, callback) {
 function addLibrarian(name, ID, password) {
     var addSql = "insert into librarian(librarian_NM,librarian_ID,librarian_PW) values(?,?,?);";
     var addData = [name, ID, password];
-    connection.query(addSql, addData, function (err, result) {
+    mysql.connection.query(addSql, addData, function (err, result) {
         if (err) {
             console.log('INSERT ERROR - ' + err.message);
             return 0;
