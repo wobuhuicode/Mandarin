@@ -38,20 +38,28 @@ function updateLibrarian(curName, newName, newPassword, callback) {
     
 };
 
-function addLibrarian(name, password, callback) {
-
-    mysql.connection.query('select * from librarian where librarian_ID = ' + name, function (err, result) {
-        if (err || result.length != 0) {
-            callback(2);
-            return;
+function repeatLibrarianID(ID, callback) {
+    connection.query("select * from librarian where librarian_ID = '" + ID + "';", function (err, result, fields) {
+        if (err) throw err;
+        if (result.length != 0) {
+            connection.end();
+            callback(1);
+        } else {
+            connection.end();
+            callback(0);
         }
-
-        mysql.connection.query('insert into librarian values("' + name + '","' + password + '")', function (err, results) {
-            if (err) callback(1);
-            else if (results.affectedRows == 1) callback(0);
-            console.log("Add OK!");
-        });
     });
+}
+
+function addLibrarian(name, ID, password) {
+    var addSql = "insert into librarian(librarian_NM,librarian_ID,librarian_PW) values(?,?,?);";
+    var addData = [name, ID, password];
+    connection.query(addSql, addData, function (err, result) {
+        if (err) {
+            console.log('INSERT ERROR - ' + err.message);
+            return 0;
+        }
+    })
 }
   
 function getlibInfo(callback) {
@@ -66,6 +74,7 @@ module.exports = {
     compare,
     lookupLibrarian,
     updateLibrarian,
+    repeatLibrarianID,
     addLibrarian,
     getlibInfo
 }

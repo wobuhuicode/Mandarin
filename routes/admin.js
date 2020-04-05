@@ -41,6 +41,17 @@ router.get('/searchLibrarian', function (req, res) {
 
 });
 
+router.post('/admin/addLibrarian', function (req, res) {
+    var NM = req.body.userName;
+    var ID = req.body.libID;
+    var PW = req.body.pwd;
+    adminlogic.repeatLibrarianID(ID, function (callback) {
+        if (callback == 1) res.json({ code: 2 });
+        else if (callback == 0) { res.json({ code: 0 }); adminlogic.addLibrarian(NM, ID, PW); }
+    })
+})
+
+
 router.post('/updateLibrarian', function (req, res) {
     function updateResult(bool) {
         if (bool) res.json({ code: 0 });
