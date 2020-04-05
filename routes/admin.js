@@ -61,25 +61,18 @@ router.post('/updateLibrarian', function (req, res) {
     adminlogic.updateLibrarian(req.body.curName, req.body.newName, req.body.newPassword, updateResult);
 })
 
-router.post('/addLibrarian', function (req, res) {
-    function addResult(theCode) {
-        res.json({ code: theCode });
-    }
-    adminlogic.addLibrarian(req.body.name, req.body.password, addResult);
-})
-
 router.post('/authen', function (req, res) {
-    //»Øµ÷º¯Êı
+    //å›è°ƒå‡½æ•°
     function authenResult(bool) {
         if (bool) {
-            req.session.adminUser = req.body.account; // µÇÂ¼³É¹¦£¬ÉèÖÃ session
+            req.session.adminUser = req.body.account; // ç™»å½•æˆåŠŸï¼Œè®¾ç½® session
             res.json({ code: 0 });
         }
         else {
             res.json({ code: 1 });
         }
     };
-    //µ÷ÓÃÒµÎñÂß¼­£¬ÒµÎñÂß¼­ÖĞ¿ÉÒÔµ÷ÓÃÉÏÃæµÄº¯ÊıÊµÏÖ½á¹û·µ»Ø
+    //è°ƒç”¨ä¸šåŠ¡é€»è¾‘ï¼Œä¸šåŠ¡é€»è¾‘ä¸­å¯ä»¥è°ƒç”¨ä¸Šé¢çš„å‡½æ•°å®ç°ç»“æœè¿”å›
     adminlogic.compare(req.body.account, req.body.pwd, authenResult);
 });
 
