@@ -93,15 +93,15 @@
                                  <table width="100%">
                                     <tr>
                                         <th style="width:20%" align="center">
-                                            <h5 class="mb-1">liulangdiqiu</h5>
-                                            <p class="mb-1">liucixin</p>
+                                            <h5 class="mb-1">bookname</h5>
+                                            <p class="mb-1">author</p>
                                         </th>
-                                        <th style="width:13.5%" align="center"><h5 class="mb-1">012302</h5></th>
-                                        <th style="width:11%" align="center"><h5 class="mb-1">01</h5></th>
-                                        <th style="width:12.5%" align="center"><h5 class="mb-1">24</h5></th>
-                                        <th style="width:11%" align="center"><h5 class="mb-1">1B</h5></th>
-                                        <th style="width:12.5%" align="center"><h5 class="mb-1">33</h5></th>
-                                        <th style="width:8.5%" align="center"><h5 class="mb-1">0</h5></th>
+                                        <th style="width:13.5%" align="center"><h5 class="mb-1">bookID</h5></th>
+                                        <th style="width:11%" align="center"><h5 class="mb-1">placefloor</h5></th>
+                                        <th style="width:12.5%" align="center"><h5 class="mb-1">placebookshelf</h5></th>
+                                        <th style="width:11%" align="center"><h5 class="mb-1">placeregion</h5></th>
+                                        <th style="width:12.5%" align="center"><h5 class="mb-1">price</h5></th>
+                                        <th style="width:8.5%" align="center"><h5 class="mb-1">state</h5></th>
                                     </tr>
                                  </table>
                             </li>
@@ -124,7 +124,7 @@
             });
                 $.ajax({
                     type: 'get',
-                    url: '/search',
+                    url: '/search_result',
                     data: $("#basic_url"),
                     success: function (resp) {
                         get_list(resp);
