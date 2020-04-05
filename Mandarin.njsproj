@@ -30,6 +30,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="app.js" />
+    <Content Include="Logic\Librarian\LibrarianLogic.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="Logic\MysqlCon.js">
       <SubType>Code</SubType>
     </Content>
@@ -55,9 +58,13 @@
     <Content Include="views\AdminMain.html">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="views\error.html">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="views\libLog.html">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="views\LibrarianEdit.html" />
     <Content Include="views\readerLog.html">
       <SubType>Code</SubType>
     </Content>
