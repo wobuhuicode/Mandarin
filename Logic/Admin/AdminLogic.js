@@ -70,7 +70,7 @@ function getlibInfo(callback) {
     })
 };
 
-module.exports = {
+module.exports = { 
     compare,
     lookupLibrarian,
     updateLibrarian,
