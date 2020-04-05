@@ -41,7 +41,7 @@ router.get('/searchLibrarian', function (req, res) {
 
 });
 
-router.post('/admin/addLibrarian', function (req, res) {
+router.post('/addLibrarian', function (req, res) {
     var NM = req.body.userName;
     var ID = req.body.libID;
     var PW = req.body.pwd;
