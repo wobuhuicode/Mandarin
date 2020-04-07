@@ -33,6 +33,9 @@
     <Content Include="Logic\MysqlCon.js">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="Logic\Reader\ReaderLogic.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="public\images\book.svg" />
     <Content Include="Logic\Admin\AdminLogic.js">
       <SubType>Code</SubType>
