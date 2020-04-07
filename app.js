@@ -11,7 +11,7 @@ var ejs = require('ejs');
 var mysql = require('./Logic/MysqlCon'); 
 
 var reader = require('./routes/reader');
-var libraian = require('./routes/librarian');
+var librarian = require('./routes/librarian');
 var admins = require('./routes/admin');
 
 var app = express();
@@ -43,7 +43,7 @@ app.use(session({
 }));
 
 app.use('/', reader);
-app.use('/libraian', libraian);
+app.use('/librarian', librarian);
 app.use('/admin', admins);
 
 // catch 404 and forward to error handler

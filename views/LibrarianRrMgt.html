@@ -17,10 +17,10 @@
         <a class="navbar-brand font-weight-bold" href="#">Mandarin</a>
         <div class="navbar-collapse">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link" href="#">Book Management</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item active">
                     <a class="nav-link" href="#">Reader Management</a>
                 </li>
             </ul>
@@ -32,10 +32,10 @@
     <contentBody>
         <ul class="nav flex-column nav-pills bg-dark sideBar px-2">
             <li id="addBook" class="nav-item">
-                <a class="nav-link active" href="#addBookPage" data-toggle="pill">Add Book</a>
+                <a class="nav-link active" href="#addBookPage" data-toggle="pill">View Request</a>
             </li>
             <li id="registerLibrarian" class="nav-item">
-                <a class="nav-link" href="#otherTab" data-toggle="pill">Other Things </a>
+                <a class="nav-link" href="#OtherThingsTab" data-toggle="pill">Other Things </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Link</a>
@@ -48,55 +48,54 @@
                     <div class="col">
                         <div class="card">
                             <div class="card-header  bg-primary text-white">
-                                Add Book
+                                Reader Account Application
                             </div>
                             <div class="card-body">
-                                <form>
-                                    <div class="form-group">
-                                        <label for="bookName">Name</label>
-                                        <input type="text" class="form-control" id="bookName">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="bookAuthor">Author</label>
-                                        <input type="text" class="form-control" id="bookAuthor">
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-4">
-                                            <label for="bookFloor">Floor</label>
-                                            <input type="text" class="form-control" id="bookFloor">
-                                        </div>
-                                        <div class="form-group col-4">
-                                            <label for="bookSection">Section</label>
-                                            <input type="text" class="form-control" id="bookSection">
-                                        </div>
-                                        <div class="form-group col-4">
-                                            <label for="bookShelf">Shelf</label>
-                                            <input type="text" class="form-control" id="bookShelf">
-                                        </div>
-                                    </div>
-                                    <div class="form-group mb-4">
-                                        <label for="bookPrice">Price</label>
-                                        <input type="text" class="form-control" id="bookPrice">
-                                    </div>
-                                    <button type="submit" class="btn btn-primary" style="width:100%">Submit</button>
-                                </form>
+
                             </div>
                         </div>
 
                     </div>
                 </div>
 
-                
+
             </div>
 
-            <div class="tab-pane fade container" id="otherTab">
+            <div class="tab-pane fade container" id="OtherThingsTab">
                 <div class="container">
                     <div class="card">
                         <div class="card-header  bg-primary text-white">
-                            Other Things
+                            Register Librarian
                         </div>
                         <div class="card-body">
-                           
+                            <form id="regForm">
+                                <div class="form-group">
+                                    <label for="userName">Username</label>
+                                    <input type="text" class="form-control" name="userName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="libID">Librarian ID</label>
+                                    <input type="text" class="form-control" name="libID" pattern="[\d]{4}" required>
+                                    <div class="invalid-feedback">
+                                        Please enter 4 digits ID.
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pwd">Password</label>
+                                    <input type="password" class="form-control" name="pwd" id="pwd" required minlength="6">
+                                    <div class="invalid-feedback">
+                                        At least 6 characters.
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="form-group">
+                                <label for="conPwd">Confirm Password</label>
+                                <input type="password" class="form-control" name="pwd" id="conPwd">
+                                <div class="invalid-feedback">
+                                    Please enter consistently.
+                                </div>
+                            </div>
+                            <button class="btn btn-primary btn-block" id="RegisterSubmit">Submit</button>
                         </div>
                     </div>
                 </div>

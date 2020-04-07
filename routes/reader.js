@@ -8,12 +8,18 @@ router.get('/', function (req, res) {
 });
 
 router.get('/login', function (req, res) {
-    res.render("readerLog");
+    res.render("Login");
 });
 
 router.post('/authen', function (req, res) {
-    console.log('Form (from querystring): ' + req.body.account);
-    res.render("Page2");
+    if (req.body.logType == 'reader') {
+        console.log("is a reader");
+    }
+    else if (req.body.logType == 'librarian') {
+        console.log("is a librarian");
+    }
+
+    console.log('Form (from querystring): ' + req.body.logType );
 });
 
 module.exports = router;

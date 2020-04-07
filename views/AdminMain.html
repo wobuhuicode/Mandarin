@@ -178,7 +178,7 @@
             if ($("#searchLibForm")[0].checkValidity()) {
                 this.innerHTML = 'Searching...';
                 console.log($("#searchLibForm").serializeJson());
-                $.get("/admin/searchLibrarian", $("#searchLibForm").serializeArray(), function (data) {
+                $.get("/admin/searchLibrarian", $("#searchLibForm").serializeJson(), function (data) {
                     this.innerHTML = 'Search';
                     if (data.code == 1) alert("Librarian not find");
                     else if (data.code == 0) {

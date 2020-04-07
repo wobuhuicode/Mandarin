@@ -42,10 +42,8 @@ function repeatLibrarianID(ID, callback) {
     mysql.connection.query("select * from librarian where librarian_ID = '" + ID + "';", function (err, result, fields) {
         if (err) throw err;
         if (result.length != 0) {
-            connection.end();
             callback(1);
         } else {
-            connection.end();
             callback(0);
         }
     });

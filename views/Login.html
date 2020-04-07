@@ -31,28 +31,42 @@
             <div class="col-4" >
                 <div class="card">
                     <div class="card-header  bg-primary text-white font-weight-bold">
-                        Reader Login
+                        Login
                     </div>
-                    <div class="card-body" was-validated id="logForm">
-                        <label for="formPhone">Phone</label>
-                        <div class="form-group mb-3">
-                            <input type="text" class="form-control" name="account" id="formPhone" pattern="[\d]{11}" required>
-                            <div class="invalid-feedback">
-                                Please enter 11 digits phone number.
+                    <div class="card-body" was-validated >
+                        <form id="logForm">
+                            <div class="form-group mb-3">
+                                <label for="Account">Account</label>
+                                <input type="text" class="form-control" name="account" id="Account" pattern="[\d]{4,11}" required>
+                                <div class="invalid-feedback">
+                                    Please enter 11 digits phone number.
+                                </div>
                             </div>
-                        </div>
-                        <label for="formPwd">Password</label>
-                        <div class="input-group mb-3">
-                            <input type="password" class="form-control" name="pwd" id="formPwd" required>
-                            <div class="input-group-append" id="button-addon1">
-                                <button class="btn btn-outline-primary" type="button" id="logConfirm">Confirm</button>
+                            <label for="formPwd">Password</label>
+                            <div class="input-group mb-3">
+                                <input type="password" class="form-control" name="pwd" id="formPwd" required>
+                                <div class="input-group-append" id="button-addon1">
+                                    <button class="btn btn-outline-primary" type="button" id="logConfirm">Confirm</button>
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please enter password.
+                                </div>
                             </div>
-                            <div class="invalid-feedback">
-                                Please enter password.
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="logType" id="RadioReader" value="reader" checked>
+                                <label class="form-check-label" for="RadioReader">
+                                    Reader
+                                </label>
                             </div>
-                        </div>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input primary" type="radio" name="logType" id="RadioLibrarian" value="librarian">
+                                <label class="form-check-label" for="RadioLibrarian">
+                                    Librarian
+                                </label>
+                            </div>
+                        </form>
                         <a href="#">Forget Password?</a> <br />
-                        <a href="#">Is a Librarian?</a>
                     </div>
                 </div>
             </div>
@@ -71,9 +85,9 @@
         $("#logConfirm").click(function () {
             $("[role = 'alert']").alert('close');
             $("#logForm").addClass("was-validated");
-            if ($('#formPhone')[0].validity.valid && $('#formPwd')[0].validity.valid) {
-                $.post("/admin/authen", { account: $('#formPhone').val(), pwd: $('#formPwd').val() }, function (data) {
-                    if (data.code == 1) 
+            if ($('#logForm')[0].checkValidity()) {
+                $.post("/authen", { account: $('#Account').val(), pwd: $('#formPwd').val(),logType: $("[name='logType']").val() }, function (data) {
+                    if (data.code == 2) 
                         $("#logForm").prepend('\
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">\
                                 <strong>Incorrect account or password!</strong>\
@@ -83,6 +97,7 @@
                             </div> '
                         );
                     else if (data.code == 0) window.location.href = "http://localhost:8081/";
+                    else if (data.code == 1) window.location.href = "http://localhost:8081/librarian";
                 });
             }
         })
