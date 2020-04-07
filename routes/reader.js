@@ -39,4 +39,27 @@ router.post('/authen', function (req, res) {
    ReaderLogic.login(req.body.account, req.body.pwd, authenResult);
 });
 
+router.get('/', function (req, res) {
+    res.send('respond with a resource');
+});
+
+router.get('/reader/:id', async function (req, res) {
+    //await 异步执行
+    let reader = await userController.getReaderInfoById(req.params.id)
+    return res.json({ code: 0, msg: '', data: reader });
+})
+
+router.put('/reader/:id', async function (req, res) {
+    const { name, email } = req.body;
+    const id = req.params.id
+    let result = await userController.updateReaderInfo({ name, email, id })
+    return res.json({ code: 0, msg: '修改成功', data: result });
+})
+
+router.post('/changepass/:id', async function (req, res) {
+    const { pass } = req.body;
+    const id = req.params.id
+    let reader = await userController.changePass(pass, id)
+    return res.json({ code: 0, msg: '修改成功', data: reader });
+})
 module.exports = router;

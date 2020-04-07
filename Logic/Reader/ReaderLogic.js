@@ -32,7 +32,45 @@ function login(name, password, callback) {
     });
 }
 
+const getReaderInfoById = (id) => {
+    return new Promise((res, rej) => {
+        // 获取读者信息
+        db.query(`SELECT * FROM reader WHERE readerID = ${id}`, function (error, results, fields) {
+            if (error) throw error;
+            let list = []
+            results.forEach(result => {
+                list.push(Object.assign({}, result))
+            })
+            res(list);
+        });
+    })
+}
+
+const updateReaderInfo = (reader) => {
+    return new Promise((res, rej) => {
+        // 更新读者信息
+        db.query(`UPDATE reader SET readername = '${reader.name}', email = '${reader.email}' WHERE readerID = ${reader.id}`, function (error, results, fields) {
+            if (error) throw error;
+            res(results);
+        });
+    })
+
+}
+
+const changePassword = (pass, id) => {
+    return new Promise((res, rej) => {
+        //修改密码
+        db.query(`UPDATE reader SET password = '${pass}' WHERE readerID = ${id}`, function (error, results, fields) {
+            if (error) throw error;
+            res(results);
+        });
+    })
+}
+
 module.exports = {
     searchBook,
     login
+    getReaderInfoById,
+    updateReaderInfo,
+    changePassword
 };
