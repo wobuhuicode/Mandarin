@@ -18,6 +18,21 @@ function searchBook(ptname, callback) {
         connection.end();
         callback(results);
     });
+    
 }
 
-module.exports = { searchBook };
+
+var path = require('path');
+var mysql = require(path.join(__dirname,'../MysqlCon'));
+function login(name, password, callback) {
+    var sql = 'SELECT password FROM reader where readerID = "' + name + '"';
+    mysql.connection.query(sql, function (err, result) {
+        if (err || result.length == 0) { callback(false); }
+        else if (password == result[0].password) { callback(true); }
+    });
+}
+
+module.exports = {
+    searchBook,
+    login
+};
