@@ -58,6 +58,9 @@
     <Content Include="views\AdminMain.html">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="views\ApplyReaderAccount.html">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="views\libLog.html">
       <SubType>Code</SubType>
     </Content>

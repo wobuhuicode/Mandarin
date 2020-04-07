@@ -78,7 +78,7 @@ const changePass = async (pass, id) => {
 
 module.exports = {
     searchBook,
-    login
+    login,
     getReaderInfoById,
     updateReaderInfo,
     changePassword,
