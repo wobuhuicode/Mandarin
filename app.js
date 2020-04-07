@@ -43,7 +43,7 @@ app.use(session({
 }));
 
 app.use('/reader', reader);
-app.use('/', libraian);
+app.use('/librarian', librarian);
 app.use('/admin', admins);
 
 // catch 404 and forward to error handler

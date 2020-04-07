@@ -1,0 +1,173 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title>Book Search</title>
+</head>
+<body style=" width:100vw; height:100vh">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="position:fixed; width:100%">
+        <a class="navbar-brand" href="#">Mandarin</a>
+        <div class="navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item ">
+                    <a class="nav-link " href="/librarian/addreader">ReaderManage</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">BookManage</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Dropdown
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                </li>
+                <li>
+                </li>
+            </ul>
+            <a class="text-white mx-2" href="#" id="username">Disabled</a>
+            <button class="btn btn-light my-0" id="loginout">Login Out</button>
+        </div>
+    </nav>
+
+    <div style="display:flex ;height:100%; padding-top:50px">
+        <div style="width:15%">
+            <ul class="nav flex-column nav-pills bg-dark pt-3 px-2" style="height:100%">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Add Book</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="/librarian/deletebook">deletebook</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/librarian/updatebook">updatebook</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                </li>
+            </ul>
+        </div>
+
+
+        <div style="width:85% ;display:flex; justify-content:center; padding-top:140px">
+            <div class="card" style="height:500px; width:800px">
+                <div class="card-header  bg-primary text-white font-weight-bold">
+                    Add Book
+                </div>
+                <div class="card-body">
+                    <form id="formaddbook">
+                        <div class="form-group">
+                            <label for="bookName">Name</label>
+                            <input type="text" class="form-control" id="bookName" name="bookName">
+                        </div>
+                        <div class="form-group">
+                            <label for="bookAuthor">Author</label>
+                            <input type="text" class="form-control" id="bookAuthor" name="bookAuthor">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-4">
+                                <label for="bookFloor">Floor</label>
+                                <input type="text" class="form-control" id="bookFloor" name="bookFloor">
+                            </div>
+                            <div class="form-group col-4">
+                                <label for="bookSection">Section</label>
+                                <input type="text" class="form-control" id="bookSection" name="bookSection">
+                            </div>
+                            <div class="form-group col-4">
+                                <label for="bookShelf">Shelf</label>
+                                <input type="text" class="form-control" id="bookShelf" name="bookShelf">
+                            </div>
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="bookPrice">Price</label>
+                            <input type="text" class="form-control" id="bookPrice" name="bookPrice">
+                        </div>
+                        <button type="submit" id="addsubmit" class="btn btn-primary" style="width:100%">Submit</button>
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+</body>
+</html>
+
+
+<script>
+    //获取当前登陆用户
+    $(function () {
+        $.get("/librarian/username", function (data) {
+            console.log("the current user is:" + data.librarianNM);
+            $("#username").html(data.librarianNM);
+        })
+    });
+    //登出，转到首页
+    $("#loginout").click(function () {
+        window.location.href = "/librarian/";
+    });
+    //提交要添加的书籍
+    $("#addsubmit").click( function(){
+
+        var book = {
+            "bookName": document.getElementById("bookName").value,
+            "bookAuthor": document.getElementById("bookAuthor").value,
+            "bookFloor": document.getElementById("bookFloor").value,
+            "bookSection": document.getElementById("bookSection").value,
+            "bookShelf": document.getElementById("bookShelf").value,
+            "bookPrice": document.getElementById("bookPrice").value,
+        }
+        if (book.bookName == "") alert("the bookName is null");
+        else if (book.bookAuthor == "") alert("the bookAuthor is null");
+        else if (book.bookFloor == "" || book.bookFloor.length > 2) alert("the bookFloor is null or out of range");
+        else if (book.bookSection == "" || book.bookSection.length > 2) alert("the bookSection is null or out of range");
+        else if (book.bookShelf == "" || book.bookShelf.length > 2) alert("the bookShelf is null or out of range");
+        else if (book.bookPrice == "") alert("the bookPrice is null");
+        else {
+            var callbackdata;
+
+            $.ajax({
+                type: "POST",
+                url: "/librarian/addbook_post",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(book),
+                dataType: "text",
+                async: "false",
+                success: function (result) {
+                    console.log("服务器请求成功");
+                    //alert(result);
+                    callbackdata = result;
+                    console.log("the callbackdata is" + callbackdata);
+                    if (callbackdata == "add is ok") alert("add is ok!");
+                },
+                error: function () {
+                    console.log("404 服务器请求失败");
+                }
+            });
+            
+
+        }
+    });
+
+
+</script>

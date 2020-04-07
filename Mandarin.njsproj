@@ -30,6 +30,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="app.js" />
+    <Content Include="librariancode\bookmanage\mysqlbook.js" />
+    <Content Include="librariancode\MysqlCon.js" />
+    <Content Include="librariancode\mysqlconnect.js" />
+    <Content Include="librariancode\readermanage\mysqluser.js" />
     <Content Include="Logic\Librarian\LibrarianLogic.js">
       <SubType>Code</SubType>
     </Content>
@@ -54,10 +58,13 @@
     <Content Include="package.json" />
     <Content Include="public\stylesheets\main.css" />
     <Content Include="README.md" />
+    <Content Include="views\addbook.html" />
+    <Content Include="views\addreader.html" />
     <Content Include="views\adminLog.html" />
     <Content Include="views\AdminMain.html">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="views\deletebook.html" />
     <Content Include="views\error.html">
       <SubType>Code</SubType>
     </Content>
@@ -68,12 +75,18 @@
     <Content Include="views\readerLog.html">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="views\Reader_Main.html" />
     <Content Include="views\SearchMain.html">
       <SubType>Code</SubType>
     </Content>
     <Content Include="views\LibrarianMain.html" />
+    <Content Include="views\updatebook.html" />
+    <Content Include="views\搜索页面模板.html" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="librariancode\" />
+    <Folder Include="librariancode\bookmanage\" />
+    <Folder Include="librariancode\readermanage\" />
     <Folder Include="Logic\" />
     <Folder Include="Logic\Admin\" />
     <Folder Include="Logic\Librarian\" />
