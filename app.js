@@ -33,11 +33,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //Session
 app.use(session({
-    secret: 'bianxiaobo', // 对session id 相关的cookie 进行签名
+    secret: 'bianxiaobo', // 锟斤拷session id 锟斤拷氐锟絚ookie 锟斤拷锟斤拷签锟斤拷
     resave: true,
-    saveUninitialized: false, // 是否保存未初始化的会话
+    saveUninitialized: false, // 锟角否保达拷未锟斤拷始锟斤拷锟侥会话
     cookie: {
-        maxAge: 1000 * 60 * 3, // 设置 session 的有效时间，单位毫秒
+        maxAge: 1000 * 60 * 3, // 锟斤拷锟斤拷 session 锟斤拷锟斤拷效时锟戒，锟斤拷位锟斤拷锟斤拷
     }
 }));
 
