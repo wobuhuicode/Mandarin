@@ -8,7 +8,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var ejs = require('ejs');
 var mysql = require('./Logic/MysqlCon'); 
-
 var reader = require('./routes/reader');
 var librarian = require('./routes/librarian');
 var admins = require('./routes/admin');

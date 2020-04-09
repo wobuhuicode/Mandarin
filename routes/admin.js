@@ -28,16 +28,16 @@ router.get('/getLibs', function (req, res) {
 });
 
 router.get('/searchLibrarian', function (req, res) {
-    function lookupResult(bool, account, pwd) {
+    function lookupResult(bool, account, id) {
         if (bool) {
-            res.json({ code: 0, name: account, password: pwd });
+            res.json({ code: 0, name: account, ID: id });
         }
         else {
             res.json({ code: 1 });
         }
     };
 
-    adminlogic.lookupLibrarian(req.query.key, lookupResult);
+    adminlogic.lookupLibrarian(req.query.libName, lookupResult);
 
 });
 
@@ -57,9 +57,17 @@ router.post('/updateLibrarian', function (req, res) {
         if (bool) res.json({ code: 0 });
         else res.json({code: 1})
     }
-
-    adminlogic.updateLibrarian(req.body.curName, req.body.newName, req.body.newPassword, updateResult);
+    adminlogic.updateLibrarian(req.body.curID, req.body.newName, req.body.newID, updateResult);
 })
+
+router.post('/updateLibrarianPwd', function (req, res) {
+    function updateResult(bool) {
+        if (bool) res.json({ code: 0 });
+        else res.json({ code: 1 })
+    }
+    adminlogic.updateLibrarianPwd(req.body.curID, req.body.newPwd, updateResult);
+})
+
 
 router.post('/authen', function (req, res) {
     //回调函数

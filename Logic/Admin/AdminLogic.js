@@ -18,28 +18,21 @@ function compare(name, password, callback) {
 
 function lookupLibrarian(name, callback) {
     mysql.connection.query('SELECT * from librarian where librarian_ID = "' + name + '"', function (error, results, fields) {
-        if (results.length == 1) callback(true, results[0].librarian_ID, results[0].librarian_PW);
+        if (results.length == 1) callback(true, results[0].librarian_NM, results[0].librarian_ID);
         else callback(false, null, null);
     });
 }
 
-function updateLibrarian(curName, newName, newPassword, callback) {
-    mysql.connection.query('delete from librarian where librarian_ID = ' + curName, function (error, results) {
-        if (error) {
-            callback(false);
-            return;
-        }
-
-        mysql.connection.query('insert into librarian values("' + newName + '","' + newPassword + '")', function (error, results) {
+function updateLibrarian(curID, newName, newID, callback) {
+    var sql = "update mandarin.librarian set librarian_ID = '" + newID + "', librarian_NM = '" + newName + "' where librarian_ID = '" + curID + "'"
+    mysql.connection.query(sql, function (error, results) {
         if (error) callback(false);
         else if (results.affectedRows == 1) callback(true);
-        });
     });
-    
 };
 
 function repeatLibrarianID(ID, callback) {
-    mysql.connection.query("select * from librarian where librarian_ID = '" + ID + "';", function (err, result, fields) {
+    mysql.connection.query("select * from librarian where librarian_ID = '" + ID + "';", function (err, result) {
         if (err) throw err;
         if (result.length != 0) {
             callback(1);
@@ -47,6 +40,16 @@ function repeatLibrarianID(ID, callback) {
             callback(0);
         }
     });
+}
+
+function updateLibrarianPwd(curID, newPwd, callback) {
+    var sql = "update mandarin.librarian set librarian_PW = ? where librarian_ID = ?";
+    var data = [newPwd, curID];
+    mysql.connection.query(sql, data, function (err, result) {
+        if (err) throw err;
+        if (result.affectedRows == 1) callback(true);
+        else callback(false);
+    })
 }
 
 function addLibrarian(name, ID, password) {
@@ -74,5 +77,6 @@ module.exports = {
     updateLibrarian,
     repeatLibrarianID,
     addLibrarian,
-    getlibInfo
+    getlibInfo,
+    updateLibrarianPwd
 }

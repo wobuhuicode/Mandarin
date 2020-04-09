@@ -69,7 +69,7 @@
     <Content Include="views\LibrarianRrMgt.html">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="views\Login.html">
+    <Content Include="views\Login.html" />
     <Content Include="views\addbook.html" />
     <Content Include="views\addreader.html" />
     <Content Include="views\adminLog.html" />
@@ -84,9 +84,6 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="views\LibrarianEdit.html" />
-    <Content Include="views\readerLog.html">
-      <SubType>Code</SubType>
-    </Content>
     <Content Include="views\Reader_Main.html" />
     <Content Include="views\SearchMain.html">
       <SubType>Code</SubType>

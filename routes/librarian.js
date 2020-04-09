@@ -13,13 +13,11 @@ var loginlibrarian = {                       //(当前登陆的管理员)currently logge
 
 router.get('/', function (req, res) {
     res.render("LibrarianMain", { title: "HTML" });
-   
 });
 
 //open libLog.html
 router.get('/login', function (req, res) {
-    res.render("libLog");
-   
+    res.render("libLog"); 
 });
 //login in and store the current user information
 router.post('/login_post', function (req, res) {
@@ -47,8 +45,7 @@ router.post('/login_post', function (req, res) {
                 console.log(loginlibrarian);
                 console.log("login successfully");                   //login is ok
                 res.send("login successfully");
-            }
-           
+            } 
         });
     }
 })
@@ -59,12 +56,11 @@ router.get('/username', function (req, res) {
     res.json(loginlibrarian);
 })
 
-
-
 router.get('/addbook', function (req, res) {
     console.log('the request open the LibraianMain.html')
     res.render("addbook");
 });
+
 //**********this bookID is incomplete*********
 router.post('/addbook_post', function (req, res) {
     console.log("sever send the POST request read the book data");
@@ -79,7 +75,6 @@ router.post('/addbook_post', function (req, res) {
     console.log(JSON.stringify(response));
     if (response != null) {
         var state = 1;                                  //state is intially 1
-
         var bookID = "654321";                         //**********this station is incomplete*********
         mysqlbook.insertbook(response.bookName, bookID, response.bookAuthor, response.bookFloor, response.bookShelf, response.bookSection, response.bookPrice, state, function (error, data) {
             if (error) console.log('error:bug is in function insertbook!!!!!');
@@ -88,8 +83,6 @@ router.post('/addbook_post', function (req, res) {
         })
     }
 })
-
-
 
 //open the  deletebook.html
 router.get('/deletebook', function (req, res) {
@@ -211,9 +204,5 @@ router.post('/refuse_post', function (req, res) {
         res.json("refuse is ok");
     });
 })
-
-
-
-
 
 module.exports = router;

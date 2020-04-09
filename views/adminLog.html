@@ -63,6 +63,7 @@
         </div>
     </contentBody>
 
+    
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
@@ -70,9 +71,9 @@
 
     <script>
         //给按钮绑定点击函数
-        $('#signin').click(function () {
+        $('#logConfirm').click(function () {
             //有关密码的使用post请求
-            $.post("/admin/authen", { account: $('#account').val(), pwd: $('#pwd').val() }, function (data) {
+            $.post("/admin/authen", { account: $('#Account').val(), pwd: $('#formPwd').val() }, function (data) {
                 if (data.code == 1) alert("Incorrect username or password!");
                 //如果后端传回0，则跳转页面
                 else if (data.code == 0) window.location.href = "http://localhost:8081/admin";
