@@ -72,7 +72,7 @@
             $("[role = 'alert']").alert('close');
             $("#logForm").addClass("was-validated");
             if ($('#formPhone')[0].validity.valid && $('#formPwd')[0].validity.valid) {
-                $.post("/admin/authen", { account: $('#formPhone').val(), pwd: $('#formPwd').val() }, function (data) {
+                $.post("/reader/authen", { account: $('#formPhone').val(), pwd: $('#formPwd').val() }, function (data) {
                     if (data.code == 1) 
                         $("#logForm").prepend('\
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">\

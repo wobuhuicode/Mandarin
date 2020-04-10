@@ -27,8 +27,14 @@ var mysql = require(path.join(__dirname,'../MysqlCon'));
 function login(name, password, callback) {
     var sql = 'SELECT password FROM reader where readerID = "' + name + '"';
     mysql.connection.query(sql, function (err, result) {
-        if (err || result.length == 0) { callback(false); }
-        else if (password == result[0].password) { callback(true); }
+        if (err || result.length == 0) {
+            callback(false);
+            console.log('wocuole');
+        }
+        else if (password == result[0].password) {
+            console.log('duile');
+            callback(true);
+        }
     });
 }
 
@@ -78,7 +84,7 @@ const changePass = async (pass, id) => {
 
 module.exports = {
     searchBook,
-    login
+    login,
     getReaderInfoById,
     updateReaderInfo,
     changePassword,
