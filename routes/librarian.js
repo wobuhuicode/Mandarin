@@ -59,78 +59,113 @@ router.get('/username', function (req, res) {
     res.json(loginlibrarian);
 })
 
-
-
-router.get('/addbook', function (req, res) {
-    console.log('the request open the LibraianMain.html')
-    res.render("addbook");
+//打开bookmanage.html
+router.get('/bookmanage', function (req, res) {
+    console.log('the request open the bookmanage.html')
+    res.render("bookmanage");
 });
-//**********this bookID is incomplete*********
+
+//把书的类别发送到前端
+router.post('/bookType_post', function (req, res) {
+    console.log("server send the POST request search bookType!!!");
+    mysqlbook.querycategory("find all", function (error, data) {
+        res.json(data);
+    })
+})
+
+//查找书
+router.post('/searchbookname_post', function (req, res) {
+    console.log("server send the POST request search book!!!");
+    var response = {
+        "bookname": req.body.searchbookname
+    }
+    console.log("the need find bookname is")  
+    console.log(response);
+    mysqlbook.querybookname(response.bookname, function (error, data) {
+        //console.log(data);
+        res.json(data);
+    })
+
+})
+
+
+router.post('/searchbookID_post', function (req, res) {
+    console.log("server send the POST request search book!!!");
+    var response = {
+        "searchbookID": req.body.searchbookID
+    }
+    console.log("the need find searchbookID is")
+    console.log(response);
+    mysqlbook.querybookID(response.searchbookID, function (error, data) {
+        //console.log(data);
+        res.json(data);
+    })
+
+
+})
+
+
 router.post('/addbook_post', function (req, res) {
-    console.log("sever send the POST request read the book data");
+    console.log("server send the POST request add the book data");
     var response = {
         "bookName": req.body.bookName,
         "bookAuthor": req.body.bookAuthor,
+        "bookType": req.body.bookType,
         "bookFloor": req.body.bookFloor,
         "bookShelf": req.body.bookShelf,
         "bookSection": req.body.bookSection,
         "bookPrice": req.body.bookPrice
     };
-    console.log(JSON.stringify(response));
+    console.log("the book need add is :");
+    console.log(response);
+   
     if (response != null) {
-        var state = 1;                                  //state is intially 1
+        var state = 1;                                       //state is intially 1
+        var bookID;
+        mysqlbook.produceBookID(response.bookName, response.bookType, function (error, data) {    
+            bookID = data;  
+            console.log("*****书******"+response.bookName + ": automatically generated bookID is :" + bookID);         //自动生成书的ID
+            mysqlbook.insertbook(response.bookName, bookID, response.bookAuthor, response.bookFloor, response.bookShelf, response.bookSection, response.bookPrice, state, function (error, data) {
+                if (error) console.log('error:bug is in function insertbook!!!!!');
+                console.log('the addbook callback is' + data);
+                res.send(data);
+            });
+        });// mysqlbook.produceBookID
+              
+    }//if
+});//addbook_post
 
-        var bookID = "654321";                         //**********this station is incomplete*********
-        mysqlbook.insertbook(response.bookName, bookID, response.bookAuthor, response.bookFloor, response.bookShelf, response.bookSection, response.bookPrice, state, function (error, data) {
-            if (error) console.log('error:bug is in function insertbook!!!!!');
-            console.log('the addbook callback is' + data);
-            res.send(data);
-        })
-    }
-})
 
-
-
-//open the  deletebook.html
-router.get('/deletebook', function (req, res) {
-    console.log("the request open the deletebook.html")
-    //res.sendFile(__dirname + "../views/deletebook.html");
-    res.render('deletebook');
-})
 //delete the bookID from book230;
 //then insert the delete operation meaasge into bookdelete230
 router.post('/deletebook_post', function (req, res) {
-    console.log("sever send the POST request delete the book data");
+    console.log("server send the POST request delete the book data");
     var response = {
         "deletebookID": req.body.deletebookID,
-        "librarianID": loginlibrarian.librarianID                                         
+        "librarianID": loginlibrarian.librarianID
     }
-    // first check the book is in table book230?
+    console.log("the need delete book is:");
+    console.log(response);
+    // first check the book is in table book230?    ****这个步骤为多余的，最新设计的页面删除操作是在已查询的书上面更改的，不存在的书根本不会出现在页面之上****
     //then if exist delete it and insert the delete operation meaasge into bookdelete230
     if (response != null) {
-        mysqlbook.querybook(response.deletebookID, function (error, data) {
+        mysqlbook.querybookID(response.deletebookID, function (error, data) {
             if (error) console.log('error:bug is in function querybook!!!!!');
-            if (data == "book is not here") {
-                res.send(data);
+            if (data[0] == null) {
+                res.send("book is not here");
             }
-            else if (data == "book is found") {
+            else {
                 mysqlbook.deletebook(response.librarianID, response.deletebookID, function (error, data) {
                     if (error) console.log("bug is in function deletebook!!!");
-                    console.log("the deletebook callback is" + data);
+                    //console.log("the deletebook callback is" + data);
                     res.send(data);
                 });
-            }
-        })
-    }
-})
+            }//else
+        });//mysqlbook.querybookID
+    }//if
+});
 
 
-
-//open the  upadtebook.html
-router.get('/updatebook', function (req, res) {
-    console.log("sever send the GET request open the updateook.html page");
-    res.render('updatebook');
-})
 //update the bookID from table book230
 router.post('/updatebook_post', function (req, res) {
     console.log("server send the POST request update the book data");
@@ -138,35 +173,39 @@ router.post('/updatebook_post', function (req, res) {
     var response = {
         "updatebookID": req.body.updatebookID,
         "bookFloor": req.body.bookFloor,
+        "bookType": req.body.bookType,
         "bookShelf": req.body.bookShelf,
         "bookSection": req.body.bookSection,
         "bookPrice": req.body.bookPrice
 
     }
-    // console.log('the updatebook is' + JSON.stringify(response));
+    console.log('the need updatebook is');
+    console.log(response);
 
     if (response != null) {
-        mysqlbook.querybook(response.updatebookID, function (error, data) {
+        mysqlbook.querybookID(response.updatebookID, function (error, data) {
             if (error) console.log('error:bug is in function querybook!!!!!');
-            if (data == "book is not here") {
-                res.send(data);
+            if (data[0] == null) {
+                res.send("book is not here");
             }
-            else if (data == "book is found") {
+            else{
                 mysqlbook.updatebook(response.updatebookID, response.bookFloor, response.bookShelf, response.bookSection, response.bookPrice, function (error, data) {
                     if (error) console.log("bug is in function updatebook");
-                    console.log("the updatebook callback is" + data);
+                    //console.log("the updatebook callback is" + data);
                     res.send(data);
 
-                });
-            }
-        })
-    }
+                });// mysqlbook.updatebook
+            }//else
+        })//mysqlbook.querybookID
+    }//if
 
 
 })
 
 
 
+
+//********************Reader**************
 //open the addreader.html page
 router.get('/addreader', function (req,res) {
     //console.log("sever send the GET request open the addreader.html page");
@@ -211,6 +250,8 @@ router.post('/refuse_post', function (req, res) {
         res.json("refuse is ok");
     });
 })
+//*******************Reader**************
+
 
 
 

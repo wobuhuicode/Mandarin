@@ -61,10 +61,10 @@
                         console.log("the callbackdata is " + callbackdata);
                         if (callbackdata == "login successfully") {
                             alert("login successfully!");
-                            window.location.href = "/librarian/addbook";
+                            window.location.href = "/librarian/bookmanage";
                         }
                         else if (callbackdata == "the password is error") alert("the password is error!");
-                        else if (callbackdata == "the user does not exist") alert("the user does not exist!");
+                        else if (callbackdata == "the user is not exit") alert("the user is not exit!");
                        
                     },
                     error: function () {
