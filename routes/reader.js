@@ -5,12 +5,12 @@ var readerlogic = require(path.join(__dirname, '../Logic/Reader/ReaderLogic'));
 var router = express.Router();
 
 /* GET admin pages. */
-router.get('/', function (req, res) {
+router.get('/search', function (req, res) {
     res.render("SearchMain", { title: "HTML" });
 });
 
 router.get('/login', function (req, res) {
-    res.render("readerLog");
+    res.render("readerLog", { title: "HTML" });
 });
 
 /*router.post('/authen', function (req, res) {
@@ -47,21 +47,21 @@ router.get('/', function (req, res) {
 
 router.get('/reader/:id', async function (req, res) {
     //await 异步执行
-    let reader = await userController.getReaderInfoById(req.params.id)
+    let reader = await readerlogic.getReaderInfoById(req.params.id)
     return res.json({ code: 0, msg: '', data: reader });
 })
 
 router.put('/reader/:id', async function (req, res) {
     const { name, email } = req.body;
     const id = req.params.id
-    let result = await userController.updateReaderInfo({ name, email, id })
+    let result = await readerlogic.updateReaderInfo({ name, email, id })
     return res.json({ code: 0, msg: '修改成功', data: result });
 })
 
 router.post('/changepass/:id', async function (req, res) {
     const { pass } = req.body;
     const id = req.params.id
-    let reader = await userController.changePass(pass, id)
+    let reader = await readerlogic.changePass(pass, id)
     return res.json({ code: 0, msg: '修改成功', data: reader });
 })
 module.exports = router;

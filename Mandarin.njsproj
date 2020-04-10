@@ -59,12 +59,18 @@
     <Content Include="views\AdminMain.html">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="views\ApplyReaderAccount.html">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="views\ChangeReaderInfo.html" />
+    <Content Include="views\ChangeReaderPassword.html" />
     <Content Include="views\libLog.html">
       <SubType>Code</SubType>
     </Content>
     <Content Include="views\readerLog.html">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="views\ReaderMain.html" />
     <Content Include="views\SearchMain.html">
       <SubType>Code</SubType>
     </Content>
