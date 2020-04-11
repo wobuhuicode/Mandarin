@@ -63,20 +63,16 @@
     <Content Include="public\stylesheets\main.css" />
     <Content Include="README.md" />
     <Content Include="views\AdminLog.html" />
-    <Content Include="views\AdminMain.html">
       <SubType>Code</SubType>
     </Content>
     <Content Include="views\LibrarianRrMgt.html">
       <SubType>Code</SubType>
     </Content>
     <Content Include="views\Login.html" />
-    <Content Include="views\addbook.html" />
     <Content Include="views\addreader.html" />
-    <Content Include="views\adminLog.html" />
     <Content Include="views\AdminMain.html">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="views\deletebook.html" />
     <Content Include="views\error.html">
       <SubType>Code</SubType>
     </Content>
@@ -89,7 +85,6 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="views\LibrarianMain.html" />
-    <Content Include="views\updatebook.html" />
     <Content Include="views\搜索页面模板.html" />
   </ItemGroup>
   <ItemGroup>

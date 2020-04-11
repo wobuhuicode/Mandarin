@@ -1,0 +1,644 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title>Book Search</title>
+</head>
+<body style=" width:100vw; height:100vh">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="position:fixed; width:100%">
+        <a class="navbar-brand" href="#">Mandarin</a>
+        <div class="navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item ">
+                    <a class="nav-link " href="/librarian/addreader">ReaderManage</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">BookManage</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Dropdown
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                </li>
+                <li>
+                </li>
+            </ul>
+            <a class="text-white mx-2" href="#" id="username">Disabled</a>
+            <button class="btn btn-light my-0" id="loginout">Login Out</button>
+        </div>
+    </nav>
+
+    <div style="display:flex ;height:100%; padding-top:50px">
+        <div style="width:15%">
+            <ul id="myTab" class="nav flex-column nav-pills bg-dark pt-3 px-2" style="height:100%">
+                <li class="nav-item active">
+                    <a class="nav-link active" href="#addbooktab" data-toggle="pill">Add Book</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="#searchbooktab" data-toggle="pill">Search Book</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Lend/Return Book</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                </li>
+            </ul>
+        </div>
+
+
+        <div style="width:85% ;display:flex; justify-content:center; padding-top:70px">
+            <div  class="tab-content" id="myTabContent">
+
+                <!-- 添加书的表单 -->
+                <div class="tab-pane in active" id="addbooktab">
+                    <div class="card" style="height:500px; width:800px">
+                        <div class="card-header  bg-primary text-white font-weight-bold">
+                            Add Book
+                        </div>
+                        <div class="card-body">
+                            <form id="addbookform">
+                                <div class="form-group">
+                                    <label for="addbookName">Name</label>
+                                    <input type="text" class="form-control" id="addbookName" name="bookName">
+                                </div>
+                                <div class="form-group">
+                                    <label for="addbookAuthor">Author</label>
+                                    <input type="text" class="form-control" id="addbookAuthor" name="bookAuthor">
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-3">
+                                        <label for="addbookType">bookType</label>
+                                        <select class="form-control" id="addbookType" name="addbookType">
+                                            <option value="-1">Option</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-3">
+                                        <label for="addbookFloor">Floor</label>
+                                        <input type="text" class="form-control" id="addbookFloor" name="bookFloor">
+                                    </div>
+                                    <div class="form-group col-3">
+                                        <label for="addbookSection">Section</label>
+                                        <input type="text" class="form-control" id="addbookSection" name="bookSection">
+                                    </div>
+                                    <div class="form-group col-3">
+                                        <label for="addbookShelf">Shelf</label>
+                                        <input type="text" class="form-control" id="addbookShelf" name="bookShelf">
+                                    </div>
+                                </div>
+                                <div class="form-group mb-4">
+                                    <label for="addbookPrice">Price</label>
+                                    <input type="text" class="form-control" id="addbookPrice" name="bookPrice">
+                                </div>
+                                <button type="submit" id="addsubmit" class="btn btn-primary" style="width:100%">Submit</button>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 搜索图书的表格 -->
+                <div class="tab-pane in fade" id="searchbooktab">
+                    <div class="container-fluid">
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <form class="form-search" style="margin-left: 270px;">
+                                    <input type="text" id="searchbookname">
+                                    <button type="button" id="searchbook" class="btn btn-primary" style="margin-left: 5px;">input bookname</button>
+                                </form>
+                                <table class="table" style="height:300px; width:1000px;margin-top:20px">
+                                    <thead>
+                                        <tr>
+                                            <th><em><strong>bookID</strong></em></th>
+                                            <th><em>bookname</em></th>
+                                            <th><em><strong>barcode</strong></em></th>
+                                            <th><em>operation</em></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td id="bookID1"></td>
+                                            <td id="bookname1"></td>
+                                            <td id="barcode1"><img id="imgcode1" style="height: 80px" /></td>
+                                            <td>
+                                                <button type="button" class="btn btn-link" data-toggle="modal" id="edit1" data-target="#editbookModal">click for detials</button>
+                                                <br /><button type="button" class="btn btn-link" data-toggle="modal" id="delete1">delete</button>
+                                            </td>
+                                        </tr>
+                                        <tr class="success">
+                                            <td id="bookID2"></td>
+                                            <td id="bookname2"></td>
+                                            <td id="barcode2"><img id="imgcode2" style="height: 80px" /></td>
+                                            <td>
+                                                <button type="button" class="btn btn-link" data-toggle="modal" id="edit2" data-target="#editbookModal">click for detials</button>
+                                                <br /><button type="button" class="btn btn-link" data-toggle="modal" id="delete2">delete</button>
+                                            </td>
+                                        </tr>
+                                        <tr class="error">
+                                            <td id="bookID3"></td>
+                                            <td id="bookname3"></td>
+                                            <td id="barcode3"><img id="imgcode3" style="height: 80px" /></td>
+                                            <td>
+                                                <button type="button" class="btn btn-link" data-toggle="modal" id="edit3" data-target="#editbookModal">click for detials</button>
+                                                <br /><button type="button" class="btn btn-link" data-toggle="modal" id="delete3">delete</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <ul>
+                                    <li>
+                                        <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" id="last">Last</button>
+                                        <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" id="next">Next</button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- 编辑书的模态框 -->
+                <div class="modal fade" id="editbookModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div style="width:100% ;display:flex; justify-content:center;height:600px;">
+                                <div class="card" style="height:400px; width:600px">
+                                    <div class="modal-header bg-primary">
+                                        <div class="card-header text-white font-weight-bold">update Book</div>
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    </div>
+                                    <div class="card-body">
+                                        <form>
+                                            <div class="form-group">
+                                                <label for="bookIDModal">bookID</label>
+                                                <input type="text" class="form-control" id="bookIDModal" name="bookIDModal" readonly>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="bookNameModal">Name</label>
+                                                <input type="text" class="form-control" id="bookNameModal" name="bookNameModal" readonly>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="bookAuthorModal">Author</label>
+                                                <input type="text" class="form-control" id="bookAuthorModal" name="bookAuthorModal" readonly>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group col-3">
+                                                    <label for="bookTypeModal">bookType</label>
+                                                    <input type="text" class="form-control" id="bookTypeModal" name="bookTypeModal" readonly>
+                                                </div>
+                                                <div class="form-group col-3">
+                                                    <label for="bookFloorModal">Floor</label>
+                                                    <input type="text" class="form-control" id="bookFloorModal" name="bookFloorModal">
+                                                </div>
+                                                <div class="form-group col-3">
+                                                    <label for="bookSectionModal">Section</label>
+                                                    <input type="text" class="form-control" id="bookSectionModal" name="bookSectionModal">
+                                                </div>
+                                                <div class="form-group col-3">
+                                                    <label for="bookShelfModal">Shelf</label>
+                                                    <input type="text" class="form-control" id="bookShelfModal" name="bookShelfModal">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="bookPriceModal">price</label>
+                                                <input type="text" class="form-control" id="bookPriceModal" name="bookPriceModal">
+                                            </div>
+                                            <button type="button" id="editsubmit" class="btn btn-primary" style="width:100%">update</button>
+
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+
+
+
+            </div>
+
+
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jsbarcode/3.6.0/JsBarcode.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script>
+
+
+        var bookcategory;                           //对象数组，用于存放图书列表信息
+        //获取图书列表信息
+        var getbooktyple = function () {
+            $.ajax({
+                async: "false",
+                type: "POST",
+                url: "/librarian/bookType_post",
+                contentType: "application/json; charset=utf-8",              
+                dataType: "json",
+                success: function (result) {
+                    console.log("服务器请求成功");
+                    console.log("there are " + result.length + "  category ")
+                    bookcategory = result;
+                    for (i = 0; i < result.length; i++) {
+                        $("#addbookType").append(
+                            //"<option value='science'>science</option>" 
+                            "<option value='" + result[i].category_nm + "'>" + result[i].category_nm+"</option>"                          
+                        );
+                    }
+                },
+                error: function () {
+                    console.log("404 服务器请求失败");
+                }
+            });//ajax
+        };//function getbooktyple
+
+        //获取当前登陆用户,输出图书列表信息
+        $(function () {
+            cleartable();
+            getbooktyple();
+            $.get("/librarian/username", function (data) {
+                console.log("the current user is:" + data.librarianNM);
+                $("#username").html(data.librarianNM);
+            });
+        });
+        //登出，转到首页
+        $("#loginout").click(function () {
+            window.location.href = "/librarian/";
+        });
+        //提交要添加的书籍
+        $("#addsubmit").click( function(){
+
+            var book = {
+                "bookName":$("#addbookName").val(),
+                "bookAuthor": $("#addbookAuthor").val(),
+                "bookType": $("#addbookType").val(),
+                "bookFloor": $("#addbookFloor").val(),
+                "bookSection": $("#addbookSection").val(),
+                "bookShelf": $("#addbookShelf").val(),
+                "bookPrice": $("#addbookPrice").val(),
+            }
+           
+            console.log("the book type is " + book.bookType);         
+             
+            if (book.bookName == "") alert("the bookName is null");
+            else if (book.bookAuthor == "") alert("the bookAuthor is null");
+            else if (book.bookType == "") alert("the bookType is null");
+            else if (book.bookFloor == "" || book.bookFloor.length > 2) alert("the bookFloor is null or out of range");
+            else if (book.bookSection == "" || book.bookSection.length > 2) alert("the bookSection is null or out of range");
+            else if (book.bookShelf == "" || book.bookShelf.length > 2) alert("the bookShelf is null or out of range");
+            else if (book.bookPrice == "") alert("the bookPrice is null");
+            else {
+               
+                 $.ajax({
+                    type: "POST",
+                    url: "/librarian/addbook_post",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(book),
+                    dataType: "text",
+                    async: "false",
+                    success: function (result) {
+                        console.log("服务器请求成功");
+                        //alert(result);
+                        console.log("the result is" + result);
+                        if (result == "add is ok") alert("add is ok!");
+                    },
+                    error: function () {
+                        console.log("404 服务器请求失败");
+                    }
+                 });
+
+            }
+        });
+
+
+        var callbackdata;                        //类型：对象数组；作用：用来存放数据库book230的bookname=$("#searchbookname").val() 的项
+        var firstdata;                           //类型：整数； 作用：用来表示表格当前状态的第一项是callbackdata的第几号对象，点击searchsubmit时清零，方便点击last和next时的输出
+        //清空表格内容
+        var cleartable = function () {
+            for (i = 1; i <= 3; i++) {
+                $(("#bookID" + i)).html("");
+                $(("#bookname" + i)).html("");
+                $(("#imgcode" + i)).hide();
+                $(("#edit" + i)).hide();
+                $(("#delete" + i)).hide();
+            }
+        }
+        //查找相关书籍
+        $("#searchbook").click(function () {
+            var searchbook = {
+                "searchbookname": $("#searchbookname").val() 
+            }
+            console.log(searchbook);
+            cleartable();
+            if (searchbook.bookname =="") alert("the input is null");
+            else {          
+                $.ajax({
+                    async: "false",
+                    type: "POST",
+                    url: "/librarian/searchbookname_post",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(searchbook),
+                    dataType: "json",
+                    success: function (result) {
+                        console.log("服务器请求成功");
+                        console.log("the book found has " + result.length + " books");              //此处收到的数据为对象数组，对象为数据库的所有项                      
+                        if (result[0] == null) alert("There are not book found!");
+                        callbackdata = result;
+                        cleartable();
+                        var num = 3;
+                        if (callbackdata.length <= 3) num = callbackdata.length;
+                        for (i = 1; i <= num; i++) {
+                            $(("#bookID" + i)).html(callbackdata[i - 1].bookID);
+                            $(("#bookname" + i)).html(callbackdata[i - 1].bookname);
+                            $(("#imgcode" + i)).JsBarcode(callbackdata[i - 1].bookID);
+                            $(("#imgcode" + i)).show();
+                            $(("#edit" + i)).show();
+                            $(("#delete" + i)).show();
+                        }
+                        firstdata = 0;    //表格当前状态第一项为callbackdata[0]
+                        
+                    },
+                    error: function () {
+                        console.log("404 服务器请求失败");
+                    }
+                });
+            }
+
+        });
+        //上一页
+        $("#last").click(function () {
+            if (firstdata == 0) alert("this is the first page");
+            else {
+                cleartable();
+                firstdata -= 3;
+                for (i = 1; i <= 3; i++) {
+                    $(("#bookID" + i)).html(callbackdata[firstdata + i - 1].bookID);
+                    $(("#bookname" + i)).html(callbackdata[firstdata + i - 1].bookname);
+                    $(("#imgcode" + i)).JsBarcode(callbackdata[firstdata + i - 1].bookID);
+                    $(("#imgcode" + i)).show();
+                    $(("#edit" + i)).show();
+                    $(("#delete" + i)).show();
+                }
+            }
+        });
+        //下一页
+        $("#next").click(function () {
+            if (firstdata + 3 + 1 > callbackdata.length) alert("this is the last page");
+            else {
+                cleartable();
+                firstdata += 3;
+                var num = 3;
+                if (num > callbackdata.length - firstdata) num = callbackdata.length - firstdata;
+                for (i = 1; i <= num; i++) {
+                    $(("#bookID" + i)).html(callbackdata[firstdata + i - 1].bookID);
+                    $(("#bookname" + i)).html(callbackdata[firstdata + i - 1].bookname);
+                    $(("#imgcode" + i)).JsBarcode(callbackdata[firstdata + i - 1].bookID);
+                    $(("#imgcode" + i)).show();
+                    $(("#edit" + i)).show();
+                    $(("#delete" + i)).show();
+                }
+
+            }
+        });
+
+
+        //编辑书籍按钮
+        $("#edit1").click(function () {
+            var book = {
+                "searchbookID": $("#bookID1").text()               
+            }
+            $.ajax({
+                type: "POST",
+                url: "/librarian/searchbookID_post",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(book),
+                dataType: "json",
+                async: "false",
+                success: function (result) {
+                    console.log("服务器请求成功");
+                    console.log(result[0]);
+                    $("#bookIDModal").val(result[0].bookID);                    
+                    $("#bookNameModal").val(result[0].bookname);
+                    $("#bookAuthorModal").val(result[0].author);
+                    $("#bookFloorModal").val(result[0].placefloor);
+                    $("#bookSectionModal").val(result[0].placeregion);
+                    $("#bookShelfModal").val(result[0].placebookshelf);
+                    $("#bookPriceModal").val(result[0].price);                    
+                    for (i = 0; i < bookcategory.length;i++) {
+                        if ((result[0].bookID).substring(0, 2) == bookcategory[i].category_number) {
+                            $("#bookTypeModal").val(bookcategory[i].category_nm); break;
+                        }                          
+                    }//for
+                },
+                error: function () {
+                    console.log("404 服务器请求失败");
+                }
+            });//ajax  
+        });//edit1
+
+        $("#edit2").click(function () {
+            var book = {
+                "searchbookID": $("#bookID2").text() 
+            }
+            $.ajax({
+                type: "POST",
+                url: "/librarian/searchbookID_post",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(book),
+                dataType: "json",
+                async: "false",
+                success: function (result) {
+                    console.log("服务器请求成功");
+                    console.log(result[0]);
+                    $("#bookIDModal").val(result[0].bookID);
+                    $("#bookNameModal").val(result[0].bookname);
+                    $("#bookAuthorModal").val(result[0].author);
+                    $("#bookFloorModal").val(result[0].placefloor);
+                    $("#bookSectionModal").val(result[0].placeregion);
+                    $("#bookShelfModal").val(result[0].placebookshelf);
+                    $("#bookPriceModal").val(result[0].price);
+                    for (i = 0; i < bookcategory.length; i++) {
+                        if ((result[0].bookID).substring(0, 2) == bookcategory[i].category_number) {
+                            $("#bookTypeModal").val(bookcategory[i].category_nm); break;
+                        }
+                    }//for
+                },
+                error: function () {
+                    console.log("404 服务器请求失败");
+                }
+            });//ajax  
+        });//edit2
+
+        $("#edit3").click(function () {
+            var book = {
+                "searchbookID": $("#bookID3").text() 
+            }
+            $.ajax({
+                type: "POST",
+                url: "/librarian/searchbookID_post",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(book),
+                dataType: "json",
+                async: "false",
+                success: function (result) {
+                    console.log("服务器请求成功");
+                    console.log(result[0]);
+                    $("#bookIDModal").val(result[0].bookID);
+                    $("#bookNameModal").val(result[0].bookname);
+                    $("#bookAuthorModal").val(result[0].author);
+                    $("#bookFloorModal").val(result[0].placefloor);
+                    $("#bookSectionModal").val(result[0].placeregion);
+                    $("#bookShelfModal").val(result[0].placebookshelf);
+                    $("#bookPriceModal").val(result[0].price);
+                    for (i = 0; i < bookcategory.length; i++) {
+                        if ((result[0].bookID).substring(0, 2) == bookcategory[i].category_number) {
+                            $("#bookTypeModal").val(bookcategory[i].category_nm); break;
+                        }
+                    }//for
+                },
+                error: function () {
+                    console.log("404 服务器请求失败");
+                }
+            });//ajax  
+        });//edit3
+
+        $("#editsubmit").click(function () {          
+            var book = {
+                "updatebookID": $("#bookIDModal").val(),
+                "bookFloor": $("#bookFloorModal").val(),
+                "bookSection": $("#bookSectionModal").val(),
+                "bookShelf": $("#bookShelfModal").val(),
+                "bookPrice": $("#bookPriceModal").val()
+            }
+           
+            if (book.bookFloor == "" || book.bookFloor.length > 2) alert("the bookFloor is null or out of range");
+            else if (book.bookSection == "" || book.bookSection.length > 2) alert("the bookSection is null or out of range");
+            else if (book.bookShelf == "" || book.bookShelf.length > 2) alert("the bookShelf is null or out of range");
+            else if (book.bookPrice == "") alert("the bookPrice is null");
+            else {
+                 $.ajax({
+                    type: "POST",
+                    url: "/librarian/updatebook_post",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(book),                            //发送的数据格式，body-parser解析的是字符串，所以需要把json对象转换成字符串
+                    dataType: "text",                                       //服务端返回的数据格式
+                    async: "false",                                         //默认为(true)异步,设置为false(同步)虽然慢但方便找哪步bug.
+                    success: function (result) {
+                        console.log("服务器请求成功");
+                        console.log(result);                                              
+                        if (result == "update is ok") alert("update is ok!");
+                        else if (result == "book is not here") alert("the book is not found")
+                    },
+                    error: function () {
+                        console.log("404 服务器请求失败");
+                    }
+                 });//ajax
+            }//else
+        });//editsubmit
+        //删除书籍按钮
+        $("#delete1").click(function () {
+
+            var book = {
+                "deletebookID": $("#bookID1").text()
+            }
+            if (book.deletebookID == "") alert("the deletebookID is null");
+            else {  
+                $.ajax({
+                    type: "POST",
+                    url: "/librarian/deletebook_post",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(book),
+                    dataType: "text",
+                    async: "false",
+                    success: function (result) {
+                        console.log("服务器请求成功");
+                        console.log(result);
+                        if (result == "delete is ok") alert("delete is ok!");
+                        else if (result == "book is not here") alert("the book is not found")
+                    },
+                    error: function () {
+                        console.log("404 服务器请求失败");
+                    }
+                });//ajax
+            }//else
+        });//delete1
+
+        $("#delete2").click(function () {
+
+            var book = {
+                "deletebookID": $("#bookID2").text()
+            }
+            if (book.deletebookID == "") alert("the deletebookID is null");
+            else {
+                $.ajax({
+                    type: "POST",
+                    url: "/librarian/deletebook_post",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(book),
+                    dataType: "text",
+                    async: "false",
+                    success: function (result) {
+                        console.log("服务器请求成功");
+                        console.log(result);
+                        if (result == "delete is ok") alert("delete is ok!");
+                        else if (result == "book is not here") alert("the book is not found")
+                    },
+                    error: function () {
+                        console.log("404 服务器请求失败");
+                    }
+                });//ajax
+            }//else
+        });//delete1
+
+        $("#delete3").click(function () {
+
+            var book = {
+                "deletebookID": $("#bookID3").text()
+            }
+            if (book.deletebookID == "") alert("the deletebookID is null");
+            else {
+                $.ajax({
+                    type: "POST",
+                    url: "/librarian/deletebook_post",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(book),
+                    dataType: "text",
+                    async: "false",
+                    success: function (result) {
+                        console.log("服务器请求成功");
+                        console.log(result);
+                        if (result == "delete is ok") alert("delete is ok!");
+                        else if (result == "book is not here") alert("the book is not found")
+                    },
+                    error: function () {
+                        console.log("404 服务器请求失败");
+                    }
+                });//ajax
+            }//else
+        });//delete1
+
+
+    </script>
+</body>
+</html>
+
+

@@ -19,7 +19,7 @@
                     <a class="nav-link " href="#">ReaderManage</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/librarian/addbook">BookManage</a>
+                    <a class="nav-link" href="/librarian/bookmanage">BookManage</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -176,6 +176,7 @@
         }
 
         //更新callbackdata的项
+        
         $("#searchsubmit").click(function () {          
             $.ajax({
                 async: "false",
@@ -206,6 +207,9 @@
                 }
             });          
         });
+        
+        
+
         //上一页
         $("#last").click(function () {
             if (firstdata == 0) alert("this is the first page");

@@ -11,10 +11,9 @@
     <link rel="stylesheet" href="http://localhost:8081/public/stylesheets/main.css" />
     <title>Book Search</title>
 </head>
-<body>
-
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="position: fixed;">
-        <a class="navbar-brand font-weight-bold" href="#">Mandarin</a>
+<body style=" width:100vw; height:100vh">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="position:fixed; width:100%">
+        <a class="navbar-brand" href="#">Mandarin</a>
         <div class="navbar-collapse">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
@@ -24,91 +23,53 @@
                     <a class="nav-link" href="#">Reader Management</a>
                 </li>
             </ul>
-            <a class="text-white mx-2" href="#" id="username">Disabled</a>
-            <button class="btn btn-light my-0">Log out</button>
+            <a class="text-white mx-2" href="#">Disabled</a>
+            <button type="submit" id="liblogin" class="btn btn-light my-0">Login</button>
         </div>
     </nav>
 
-    <contentBody>
-        <ul class="nav flex-column nav-pills bg-dark sideBar px-2">
-            <li id="addBook" class="nav-item">
-                <a class="nav-link active" href="#addBookPage" data-toggle="pill">Add Book</a>
-            </li>
-            <li id="registerLibrarian" class="nav-item">
-                <a class="nav-link" href="#otherTab" data-toggle="pill">Other Things </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-            </li>
-        </ul>
+    <div style="display:flex ;height:100%; padding-top:50px">
+        <div style="width:15%">
+            <ul class="nav flex-column nav-pills bg-dark pt-3 px-2" style="height:100%">
+                <li class="nav-item">
+                    <a class="nav-link " href="#">bulletin board</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                </li>
+            </ul>
+        </div>
 
-        <div class="tab-content mainContent" id="pills-tabContent">
-            <div class="tab-pane fade show active container" id="addBookPage">
-                <div class="row mb-5">
-                    <div class="col">
-                        <div class="card">
-                            <div class="card-header  bg-primary text-white">
-                                Add Book
-                            </div>
-                            <div class="card-body">
-                                <form>
-                                    <div class="form-group">
-                                        <label for="bookName">Name</label>
-                                        <input type="text" class="form-control" id="bookName">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="bookAuthor">Author</label>
-                                        <input type="text" class="form-control" id="bookAuthor">
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-4">
-                                            <label for="bookFloor">Floor</label>
-                                            <input type="text" class="form-control" id="bookFloor">
-                                        </div>
-                                        <div class="form-group col-4">
-                                            <label for="bookSection">Section</label>
-                                            <input type="text" class="form-control" id="bookSection">
-                                        </div>
-                                        <div class="form-group col-4">
-                                            <label for="bookShelf">Shelf</label>
-                                            <input type="text" class="form-control" id="bookShelf">
-                                        </div>
-                                    </div>
-                                    <div class="form-group mb-4">
-                                        <label for="bookPrice">Price</label>
-                                        <input type="text" class="form-control" id="bookPrice">
-                                    </div>
-                                    <button type="submit" class="btn btn-primary" style="width:100%">Submit</button>
-                                </form>
-                            </div>
-                        </div>
 
-                    </div>
+        <div style="width:85% ;display:flex; justify-content:center; padding-top:30px">
+            <div class="card" style="height:500px; width:800px">
+                <div class="card-header  bg-primary text-white font-weight-bold">
+
                 </div>
-
-                
-            </div>
-
-            <div class="tab-pane fade container" id="otherTab">
-                <div class="container">
-                    <div class="card">
-                        <div class="card-header  bg-primary text-white">
-                            Other Things
-                        </div>
-                        <div class="card-body">
-                           
-                        </div>
-                    </div>
+                <div class="card-body">
+                    <form>
+                    </form>
                 </div>
             </div>
         </div>
-    </contentBody>
-
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+
     <script>
-                    //自定义代码
+        $("#liblogin").click(function () {
+            console.log("open login html");
+            window.location.href = "/librarian/login";
+
+        });
     </script>
 </body>
 </html>
