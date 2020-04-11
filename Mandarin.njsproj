@@ -62,7 +62,7 @@
     <Content Include="package.json" />
     <Content Include="public\stylesheets\main.css" />
     <Content Include="README.md" />
-    <Content Include="views\AdminLog.html" />
+    <Content Include="views\AdminLog.html" >
       <SubType>Code</SubType>
     </Content>
     <Content Include="views\LibrarianRrMgt.html">
