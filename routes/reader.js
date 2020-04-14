@@ -13,6 +13,9 @@ router.get('/login', function (req, res) {
     res.render("readerLog", { title: "HTML" });
 });
 
+router.get('/apply', function (req, res) {
+    res.render("ApplyReaderAccount", { title: "HTML" });
+})
 /*router.post('/authen', function (req, res) {
     console.log('Form (from querystring): ' + req.body.account);
     res.render("Page2");
@@ -24,6 +27,14 @@ router.get('/search_result', function (req, res) {
         res.send(info);
     });
 })
+
+router.get('/apply_account', function (req, res) {
+    var newone = req.query;
+    ReaderLogic.applyAccount(newone, function (info) {
+        res.json({ code: info });
+    })
+})
+
 router.post('/authen', function (req, res) {
     //»Øµ÷º¯Êý
     function authenResult(bool) {

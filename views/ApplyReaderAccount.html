@@ -71,43 +71,45 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
     <script>
-
         $("#infoConfirm").click(function () {
             $("[role = 'alert']").alert('close');
             $("#applyForm").addClass("was-validated");
-            var data={
-                "readerName":$("#readerName").val(),
-                "readerID":$("#readerID").val(),
-                "readerEmail":$("#readerEmail").val()
-            };
-            var msg='<div class="card-header  bg-primary text-white font-weight-bold">\
-                        Fee\
-                    </div>\
-                    <div class="card-body" was-validated id="applyForm">\
-						<label for="readerName">If you want to apply an account, you need to pay ￥300.</label>\
-                        <div class="input-group mb-3">\
-                            <img src="D:\\html\\pay.jpg"></img>\
-                        </div>\
-                        <div class="input-group-append" id="button-addon1" style="float:right">\
-                            <button class="btn btn-primary" type="button" id="payConfirm">I\'ve already paid.</button>\
-                        </div>\
-                    </div>';
-            var s=document.getElementById('payPage');
-            s.innerHTML=msg;
+            if ($('#readerName')[0].validity.valid && $('#readerID')[0].validity.valid && $('#readerEmail')[0].validity.valid) {
+                var data = {
+                    "readerName": $("#readerName").val(),
+                    "readerID": $("#readerID").val(),
+                    "readerEmail": $("#readerEmail").val()
+                };
 
-            $("#payConfirm").click(function () {
-                $.post("/apply_account",data,function(data){
-                    if(data.code==0){
-                        alert('Apply Successfully!\nPlease wait patiently.');
-                    }
-                    else
-                    {
-                        alert('Error!Please try again.');
-                    }
-                })
-                window.location.href = "http://localhost:8081/";
-            });
+                var msg = '<div class="card-header  bg-primary text-white font-weight-bold">\
+                                Fee\
+                            </div>\
+                            <div class="card-body" was-validated id="applyForm">\
+                                <label for="readerName">If you want to apply an account, you need to pay ￥300.</label>\
+                                <div class="input-group mb-3">\
+                                    <img src=""></img>\
+                                </div>\
+                                <div class="input-group-append" id="button-addon1" style="float:right">\
+                                    <button class="btn btn-primary" type="button" id="payConfirm">I\'ve already paid.</button>\
+                                </div>\
+                            </div>';
+                var s = document.getElementById('payPage');
+                s.innerHTML = msg;
+
+                $("#payConfirm").click(function () {
+                    $.get("/apply_account", data, function (data) {
+                        if (data.code == 1) {
+                            //alert('Apply Successfully!\nPlease wait patiently.');
+                            window.location.href = "http://localhost:8081/";
+                        }
+                        else {
+                            alert('Error!Please try again.');
+                        }
+                    })
+                });
+            }
         });
+
 
     </script>
 </body>

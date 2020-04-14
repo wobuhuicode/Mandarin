@@ -21,14 +21,24 @@ function searchBook(ptname, callback) {
     
 }
 
-
 var path = require('path');
-var mysql = require(path.join(__dirname,'../MysqlCon'));
+var mysql = require(path.join(__dirname, '../MysqlCon'));
+
 function login(name, password, callback) {
     var sql = 'SELECT password FROM reader where readerID = "' + name + '"';
     mysql.connection.query(sql, function (err, result) {
         if (err || result.length == 0) { callback(false); }
         else if (password == result[0].password) { callback(true); }
+    });
+}
+
+function applyAccount(newone, callback) {
+    mysql.connection.query("INSERT INTO readerlogon VALUES ('" + newone.readerName + "','" + newone.readerID + "','" + newone.readerEmail + "');", function (error, result) {
+        if (error)
+            callback(false);
+        else
+            callback(true);
+        connection.end();
     });
 }
 
@@ -79,6 +89,7 @@ const changePass = async (pass, id) => {
 module.exports = {
     searchBook,
     login,
+    applyAccount,
     getReaderInfoById,
     updateReaderInfo,
     changePassword,
