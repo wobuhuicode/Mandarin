@@ -27,8 +27,14 @@ var mysql = require(path.join(__dirname, '../MysqlCon'));
 function login(name, password, callback) {
     var sql = 'SELECT password FROM reader where readerID = "' + name + '"';
     mysql.connection.query(sql, function (err, result) {
-        if (err || result.length == 0) { callback(false); }
-        else if (password == result[0].password) { callback(true); }
+        if (err || result.length == 0) {
+            callback(false);
+            console.log('wocuole');
+        }
+        else if (password == result[0].password) {
+            console.log('duile');
+            callback(true);
+        }
     });
 }
 
@@ -85,6 +91,36 @@ const changePass = async (pass, id) => {
         throw new Error('修改密码失败')
     }
 }
+const get_HistoryListInfo = (int status, String aid) => {
+    //查阅历史记录
+    String sql = "SELECT * FROM history WHERE aid='" + aid + "' and status='" + status + "'";
+    PreparedStatement stm = null;
+    ResultSet rs = null;
+    try {
+        stm = conn.prepareStatement(sql);
+        rs = stm.executeQuery();
+        while (rs.next()) {
+            HistoryBean tag = new HistoryBean();
+            tag.setHid(rs.getInt("hid"));
+            tag.setAid(rs.getInt("aid"));
+            tag.setBid(rs.getInt("bid"));
+            tag.setBookname(rs.getString("bookname"));
+            tag.setCard(rs.getString("card"));
+            tag.setAdminname(rs.getString("adminname"));
+            tag.setUsername(rs.getString("username"));
+            tag.setBegintime(rs.getString("begintime"));
+            tag.setEndtime(rs.getString("endtime"));
+            tag.setStatus(rs.getInt("status"));
+            tag_Array.add(tag);
+        }
+    } catch (SQLException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    }finally {
+        DBUtil.CloseDB(rs, stm, conn);
+    }
+    return tag_Array;
+}
 
 module.exports = {
     searchBook,
@@ -93,5 +129,6 @@ module.exports = {
     getReaderInfoById,
     updateReaderInfo,
     changePassword,
-    changePass
+    changePass,
+    get_HistoryListInfo
 };
