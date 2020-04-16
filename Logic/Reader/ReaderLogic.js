@@ -38,6 +38,16 @@ function compare(name, pwd, callback) {
     });
 }
 
+function applyAccount(newone, callback) {
+    mysql.connection.query("INSERT INTO readerlogon VALUES ('" + newone.readerName + "','" + newone.readerID + "','" + newone.readerEmail + "');", function (error, result) {
+        if (error)
+            callback(false);
+        else
+            callback(true);
+        connection.end();
+    });
+}
+
 const getReaderInfoById = (id) => {
     return new Promise((res, rej) => {
         // 获取读者信息
@@ -85,6 +95,7 @@ const changePass = async (pass, id) => {
 module.exports = {
     searchBook,
     compare,
+    applyAccount,
     getReaderInfoById,
     updateReaderInfo,
     changePassword,
