@@ -39,7 +39,7 @@ function compare(name, pwd, callback) {
 }
 
 function applyAccount(newone, callback) {
-    mysql.connection.query("INSERT INTO readerlogon VALUES ('" + Namenewone.readerID + "','" + newone.reader + "','" + newone.readerEmail + "');", function (error, result) {
+    mysql.connection.query("INSERT INTO readerlogon VALUES ('" + newone.readerID + "','" + newone.readerName + "','" + newone.readerEmail + "');", function (error, result) {
         if (error)
             callback(false);
         else
@@ -50,7 +50,7 @@ function applyAccount(newone, callback) {
 
 const getReaderInfoById = (id) => {
     return new Promise((res, rej) => {
-        // »ñÈ¡¶ÁÕßĞÅÏ¢
+        // è·å–è¯»è€…ä¿¡æ¯
         mysql.connection.query(`SELECT * FROM reader WHERE readerID = ${id}`, function (error, results, fields) {
             if (error) throw error;
             let list = []
@@ -64,7 +64,7 @@ const getReaderInfoById = (id) => {
 
 const updateReaderInfo = (reader) => {
     return new Promise((res, rej) => {
-        // ¸üĞÂ¶ÁÕßĞÅÏ¢
+        // æ›´æ–°è¯»è€…ä¿¡æ¯
         mysql.connection.query(`UPDATE reader SET readername = '${reader.name}', email = '${reader.email}' WHERE readerID = ${reader.id}`, function (error, results, fields) {
             if (error) throw error;
             res(results);
@@ -75,7 +75,7 @@ const updateReaderInfo = (reader) => {
 
 const changePassword = (pass, id) => {
     return new Promise((res, rej) => {
-        //ĞŞ¸ÄÃÜÂë
+        //ä¿®æ”¹å¯†ç 
         mysql.connection.query(`UPDATE reader SET password = '${pass}' WHERE readerID = ${id}`, function (error, results, fields) {
             if (error) throw error;
             res(results);
@@ -88,7 +88,7 @@ const changePass = async (pass, id) => {
         await userModel.changePassword(pass, id)
         return true;
     } catch (e) {
-        throw new Error('ĞŞ¸ÄÃÜÂëÊ§°Ü')
+        throw new Error('ä¿®æ”¹å¯†ç å¤±è´¥')
     }
 }
 
