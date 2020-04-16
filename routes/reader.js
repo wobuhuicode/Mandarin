@@ -42,15 +42,15 @@ router.post('/authen', function (req, res) {
         if (bool) {
             req.session.readerUser = req.body.account; // 登录成功，设置 session
             res.json({ code: 0 });
-            console.log('yinggai cuole');
+            console.log('yinggai duile');
         }
         else {
             res.json({ code: 1 });
-            console.log('cbdduile');
+            console.log('cuole');
         }
     };
     //调用业务逻辑，业务逻辑中可以调用上面的函数实现结果返回
-   readerlogic.login(req.body.account, req.body.pwd, authenResult);
+    readerlogic.compare(req.body.account, req.body.pwd, authenResult);
 });
 
 router.get('/', function (req, res) {

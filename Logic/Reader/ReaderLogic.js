@@ -24,7 +24,7 @@ function searchBook(ptname, callback) {
 
 var path = require('path');
 var mysql = require(path.join(__dirname,'../MysqlCon'));
-function login(name, pwd, callback) {
+function compare(name, pwd, callback) {
     var sql = 'SELECT password FROM reader where readerID = "' + name + '"';
     mysql.connection.query(sql, function (err, result) {
         if (err || result.length == 0) {
@@ -84,7 +84,7 @@ const changePass = async (pass, id) => {
 
 module.exports = {
     searchBook,
-    login,
+    compare,
     getReaderInfoById,
     updateReaderInfo,
     changePassword,
