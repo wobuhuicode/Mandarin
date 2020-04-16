@@ -37,6 +37,7 @@ router.get('/apply_account', function (req, res) {
 
 router.post('/authen', function (req, res) {
     //回调函数
+    alert("这是reader");
     function authenResult(bool) {
         if (bool) {
             req.session.readerUser = req.body.account; // 登录成功，设置 session
