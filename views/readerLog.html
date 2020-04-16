@@ -36,14 +36,14 @@
                     <div class="card-body" was-validated id="logForm">
                         <label for="formPhone">Phone</label>
                         <div class="form-group mb-3">
-                            <input type="text" class="form-control" name="account" id="formPhone" pattern="[\d]{11}" required>
+                            <input type="text" class="form-control"  id="account" pattern="[\d]{11}" required>
                             <div class="invalid-feedback">
                                 Please enter 11 digits phone number.
                             </div>
                         </div>
                         <label for="formPwd">Password</label>
                         <div class="input-group mb-3">
-                            <input type="password" class="form-control" name="pwd" id="formPwd" required>
+                            <input type="password" class="form-control"  id="pwd" required>
                             <div class="input-group-append" id="button-addon1">
                                 <button class="btn btn-outline-primary" type="button" id="logConfirm">Confirm</button>
                             </div>
@@ -69,22 +69,24 @@
 
     <script>    
         $("#logConfirm").click(function () {
-            $("[role = 'alert']").alert('close');
+            /*$("[role = 'alert']").alert('close');
             $("#logForm").addClass("was-validated");
-            if ($('#formPhone')[0].validity.valid && $('#formPwd')[0].validity.valid) {
-                $.post("/reader/authen", { account: $('#formPhone').val(), pwd: $('#formPwd').val() }, function (data) {
-                    if (data.code == 1) 
-                        $("#logForm").prepend('\
+            if ($('#formPhone')[0].validity.valid && $('#formPwd')[0].validity.valid) {*/
+                $.post("/reader/test", { account: $('#account').val(), pwd: $('#pwd').val() }, function (data) {
+                    if (data.code == 1) {
+                        /*$("#logForm").prepend('\
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">\
                                 <strong>Incorrect account or password!</strong>\
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">\
                                     <span aria-hidden="true">&times;</span>\
                                 </button>\
                             </div> '
-                        );
-                    else if (data.code == 0) window.location.href = "http://localhost:8081/";
+                        );*/
+                        alert("Incorrect phone or password");
+                    }
+                    else if (data.code == 0) window.location.href = "http://localhost:8081/search";
                 });
-            }
+            /*}*/
         })
     </script>
 </body>

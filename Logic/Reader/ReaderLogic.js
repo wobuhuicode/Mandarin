@@ -24,16 +24,16 @@ function searchBook(ptname, callback) {
 
 var path = require('path');
 var mysql = require(path.join(__dirname,'../MysqlCon'));
-function login(name, password, callback) {
+function login(name, pwd, callback) {
     var sql = 'SELECT password FROM reader where readerID = "' + name + '"';
     mysql.connection.query(sql, function (err, result) {
         if (err || result.length == 0) {
             callback(false);
             console.log('wocuole');
         }
-        else if (password == result[0].password) {
-            console.log('duile');
+        else if (pwd == result[0].password) {
             callback(true);
+            console.log('duile');
         }
     });
 }
