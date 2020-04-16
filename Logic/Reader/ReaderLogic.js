@@ -23,7 +23,7 @@ function searchBook(ptname, callback) {
 
 
 var path = require('path');
-var mysql = require(path.join(__dirname,'../MysqlCon'));
+var mysql = require(path.join(__dirname, '../MysqlCon'));
 function compare(name, pwd, callback) {
     var sql = 'SELECT password FROM reader where readerID = "' + name + '"';
     mysql.connection.query(sql, function (err, result) {

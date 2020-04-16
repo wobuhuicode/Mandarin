@@ -35,12 +35,11 @@ router.get('/apply_account', function (req, res) {
     })
 })
 
-router.post('/authen', function (req, res) {
+router.get('/reader/login', function (req, res) {
     //回调函数
-    alert("这是reader");
     function authenResult(bool) {
         if (bool) {
-            req.session.readerUser = req.body.account; // 登录成功，设置 session
+            req.session.readerUser = req.query.account; // 登录成功，设置 session
             res.json({ code: 0 });
             console.log('yinggai duile');
         }
@@ -50,7 +49,8 @@ router.post('/authen', function (req, res) {
         }
     };
     //调用业务逻辑，业务逻辑中可以调用上面的函数实现结果返回
-    readerlogic.compare(req.body.account, req.body.pwd, authenResult);
+    console.log(req.query);
+    readerlogic.compare(req.query.account, req.query.pwd, authenResult);
 });
 
 router.get('/', function (req, res) {
