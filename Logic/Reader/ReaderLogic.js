@@ -39,7 +39,7 @@ function compare(name, pwd, callback) {
 }
 
 function applyAccount(newone, callback) {
-    mysql.connection.query("INSERT INTO readerlogon VALUES ('" + newone.readerName + "','" + newone.readerID + "','" + newone.readerEmail + "');", function (error, result) {
+    mysql.connection.query("INSERT INTO readerlogon VALUES ('" + Namenewone.readerID + "','" + newone.reader + "','" + newone.readerEmail + "');", function (error, result) {
         if (error)
             callback(false);
         else
