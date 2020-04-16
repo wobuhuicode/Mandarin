@@ -30,9 +30,10 @@ router.get('/search_result', function (req, res) {
 
 router.get('/apply_account', function (req, res) {
     var newone = req.query;
-    ReaderLogic.applyAccount(newone, function (info) {
+    //console.log(newone);
+    readerlogic.applyAccount(newone, function (info) {
         res.json({ code: info });
-    })
+    });
 })
 
 router.post('/authen', function (req, res) {

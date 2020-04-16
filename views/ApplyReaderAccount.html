@@ -87,7 +87,7 @@
                             <div class="card-body" was-validated id="applyForm">\
                                 <label for="readerName">If you want to apply an account, you need to pay ￥300.</label>\
                                 <div class="input-group mb-3">\
-                                    <img src=""></img>\
+                                    <img src="http://localhost:8081/public/images/pay.jpg"></img>\
                                 </div>\
                                 <div class="input-group-append" id="button-addon1" style="float:right">\
                                     <button class="btn btn-primary" type="button" id="payConfirm">I\'ve already paid.</button>\
@@ -97,8 +97,8 @@
                 s.innerHTML = msg;
 
                 $("#payConfirm").click(function () {
-                    $.get("/apply_account", data, function (data) {
-                        if (data.code == 1) {
+                    $.get("/apply_account", data, function (res) {
+                        if (res.code == 1) {
                             //alert('Apply Successfully!\nPlease wait patiently.');
                             window.location.href = "http://localhost:8081/";
                         }
