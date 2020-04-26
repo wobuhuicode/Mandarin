@@ -48,6 +48,7 @@
     <Content Include="Logic\Admin\AdminLogic.js">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="public\images\pay.jpg" />
     <Content Include="routes\index.js" />
     <Content Include="routes\admin.js">
       <SubType>Code</SubType>
@@ -73,7 +74,15 @@
     <Content Include="views\AdminMain.html">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="views\ApplyReaderAccount.html">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="views\ChangeReaderInfo.html" />
+    <Content Include="views\ChangeReaderPassword.html" />
     <Content Include="views\error.html">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="views\libLog.html">
       <SubType>Code</SubType>
     </Content>
     <Content Include="views\libLog.html">
@@ -81,6 +90,7 @@
     </Content>
     <Content Include="views\LibrarianEdit.html" />
     <Content Include="views\Reader_Main.html" />
+    <Content Include="views\ReaderMain.html" />
     <Content Include="views\SearchMain.html">
       <SubType>Code</SubType>
     </Content>
