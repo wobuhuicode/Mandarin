@@ -15,16 +15,12 @@ router.get('/', function (req, res) {
     res.render("LibrarianMain", { title: "HTML" });
 });
 
-//open libLog.html
-router.get('/login', function (req, res) {
-    res.render("libLog"); 
-});
 //login in and store the current user information
 router.post('/login_post', function (req, res) {
     console.log("the server get the request from login_post!");
     var response = {
-        "librarianID": req.body.librarianID,
-        "password": req.body.password
+        "librarianID": req.body.account,
+        "password": req.body.pwd
     }
     if (response == null) res.end('the login resopnse is null!!!');
     else {
@@ -32,10 +28,10 @@ router.post('/login_post', function (req, res) {
             if (error) console.log("bug is in function querylibrarian!!!");
 
             if (data == "the user is not exit") {
-                res.send(data);                                        //the user is not exit
+                res.json({ code: 1 });                                 //the user is not exist
             }
             else if (data == "the password is error") {
-                res.send(data);                                        //password is error
+                res.json({ code: 1 });                                    //password is error
             }
             else {
                 loginlibrarian.librarianNM = data.librarian_NM; 
@@ -44,11 +40,12 @@ router.post('/login_post', function (req, res) {
                 console.log("the current user is:");
                 console.log(loginlibrarian);
                 console.log("login successfully");                   //login is ok
-                res.send("login successfully");
+                res.json({code: 0});
             } 
         });
     }
 })
+
 //send the current user
 router.get('/username', function (req, res) {
     console.log("the server get the request from username!");

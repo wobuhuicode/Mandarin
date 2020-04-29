@@ -7,65 +7,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
+        <link rel="stylesheet" href="http://localhost:8081/public/stylesheets/main.css" />
         <title>Manage Reader Account</title>
 </head>
 <body style=" width:100vw; height:100vh">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="position:fixed; width:100%">
-        <a class="navbar-brand" href="#">Mandarin</a>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="position: fixed;">
+        <a class="navbar-brand font-weight-bold" href="#">Mandarin</a>
         <div class="navbar-collapse">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link " href="#">ReaderManage</a>
+                    <a class="nav-link" href="/librarian/addreader">Reader Management</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/librarian/bookmanage">BookManage</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Dropdown
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                    <a class="nav-link active" href="/librarian/bookmanage">Book Management</a>
                 </li>
             </ul>
             <a class="text-white mx-2" href="#" id="username">Disabled</a>
-            <button class="btn btn-light my-0" id="logout">Login Out</button>
+            <button class="btn btn-light my-0" id="loginout">Log Out</button>
         </div>
     </nav>
 
-    <div style="display:flex ;height:100%; padding-top:50px">
-        <div style="width:15%">
-            <ul class="nav flex-column nav-pills bg-dark pt-3 px-2" style="height:100%">
-                <li class="nav-item ">
-                    <a class="nav-link" href="#">agree</a>
-                </li>
-                <li class="nav-item ">
-                    <a class="nav-link" href="#">editreader</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                </li>
-            </ul>
-        </div>
+    <contentBody>
+        <ul class="nav flex-column nav-pills bg-dark sideBar px-2">
+            <li id="viewLibrarian" class="nav-item">
+                <a class="nav-link active" href="#approveTab" data-toggle="pill">Approve Application</a>
+            </li>
+            <li id="registerLibrarian" class="nav-item">
+                <a class="nav-link" href="#editTab" data-toggle="pill">Edit Reader</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+            </li>
+        </ul>
 
-
-
-        <div style="width:70%; margin-left:100px;display:flex; justify-content:center; padding-top:140px">
-            <div class="container-fluid">
-                <div class="row-fluid">
-                    <div class="span12">
-                        <form class="form-search">
-                            <input class="form-group" type="text" id="searchID" />
-                            <button type="button" class="btn btn-primary btn-sm"  id="searchsubmit">search</button>
-                        </form>
+        <div class="tab-content mainContent">
+            <div class="tab-pane fade show active container" id="approveTab">
+                <div class="row">
+                    <div class="col-12">
+                        <button type="button" class="btn btn-primary btn-sm mb-3" id="searchsubmit">Refresh</button>
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
@@ -130,24 +110,20 @@
                             </tbody>
                         </table>
                         <div class="pagination pagination-centered">
-                            <ul>
-                                <li>
-                                    <button type="button" class="btn btn-primary btn-xs" data-toggle="modal"  id="last">Last</button>
-                                    <button type="button" class="btn btn-primary btn-xs" data-toggle="modal"  id="next">Next</button>
-                                </li>
-                            </ul>
+                            <button type="button" class="btn btn-primary btn-xs mx-2" data-toggle="modal" id="last">Last</button>
+                            <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" id="next">Next</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-    </div>
+    </contentBody>
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
- 
+
 
     <script>
         var callbackdata;                           //类型：对象数组；作用：用来存放数据库readerlogon的现有项
@@ -157,7 +133,7 @@
             $.get("/librarian/username", function (data) {
                 console.log("the current user is:" + data.librarianNM);
                 $("#username").html(data.librarianNM);
-            })          
+            })
         });
 
         //登出，跳转到首页
@@ -167,7 +143,7 @@
 
         //清空表格内容
         var cleartable = function () {
-            for (i = 1; i <= 5; i++) {  
+            for (i = 1; i <= 5; i++) {
                 $(("#number" + i)).html("");
                 $(("#readerID" + i)).html("");
                 $(("#readerName" + i)).html("");
@@ -176,8 +152,8 @@
         }
 
         //更新callbackdata的项
-        
-        $("#searchsubmit").click(function () {          
+
+        $("#searchsubmit").click(function () {
             $.ajax({
                 async: "false",
                 type: "POST",
@@ -200,15 +176,14 @@
                         $(("#Email" + i)).html(result[i - 1].Email);
                     }
                     firstdata = 0;                                                                           //表格当前状态第一项为callbackdata[0]
-                  
                 },
                 error: function () {
                     console.log("404 服务器请求失败");
                 }
-            });          
+            });
         });
-        
-        
+
+
 
         //上一页
         $("#last").click(function () {
@@ -216,12 +191,12 @@
             else {
                 cleartable();
                 firstdata -= 5;
-                for (i = 1; i <= 5; i++) {                   
+                for (i = 1; i <= 5; i++) {
                     $(("#number" + i)).html(firstdata + i);
                     $(("#readerID" + i)).html(callbackdata[firstdata + i - 1].ReaderID);
                     $(("#readerName" + i)).html(callbackdata[firstdata + i - 1].ReaderName);
                     $(("#Email" + i)).html(callbackdata[firstdata + i - 1].Email);
-                }              
+                }
             }
         });
         //下一页
@@ -232,7 +207,7 @@
                 firstdata += 5;
                 var num = 5;
                 if (num > callbackdata.length - firstdata) num = callbackdata.length - firstdata;
-                for (i = 1; i <= num; i++) {                  
+                for (i = 1; i <= num; i++) {
                     $(("#number" + i)).html(firstdata + i);
                     $(("#readerID" + i)).html(callbackdata[firstdata + i - 1].ReaderID);
                     $(("#readerName" + i)).html(callbackdata[firstdata + i - 1].ReaderName);
@@ -267,7 +242,7 @@
                     }
                 });
             }
-            
+
         });
         $("#agree2").click(function () {
             var reader = {
@@ -293,7 +268,7 @@
                     }
                 });
             }
-            
+
         });
         $("#agree3").click(function () {
             var reader = {

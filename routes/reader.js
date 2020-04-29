@@ -25,7 +25,6 @@ router.post('/authen', function (req, res) {
 });
 //    res.render("readerLog", { title: "HTML" });
 
-
 router.get('/apply', function (req, res) {
     res.render("ApplyReaderAccount", { title: "HTML" });
 })
@@ -49,11 +48,11 @@ router.get('/apply_account', function (req, res) {
     });
 })
 
-router.get('/reader/login', function (req, res) {
-    //�ص�����
+router.post('/reader/login', function (req, res) {
+
     function authenResult(bool) {
         if (bool) {
-            req.session.readerUser = req.query.account; // ��¼�ɹ������� session
+            req.session.readerUser = req.body.account; // session
             res.json({ code: 0 });
             console.log('yinggai duile');
         }
@@ -62,24 +61,30 @@ router.get('/reader/login', function (req, res) {
             console.log('cuole');
         }
     };
-    //����ҵ���߼���ҵ���߼��п��Ե�������ĺ���ʵ�ֽ������
+
     console.log(req.query);
-    readerlogic.compare(req.query.account, req.query.pwd, authenResult);
+    readerlogic.compare(req.body.account, req.body.pwd, authenResult);
 });
 
-router.get('/', function (req, res) {
-    res.send('respond with a resource');
+router.get('/reader', function (req, res) {
+    if (typeof (req.session.readerUser) == "undefined") {
+        res.redirect("/login");
+    }
+    else res.render("ReaderMain");
 });
 
-router.get('/reader/:id', async function (req, res) {
-    //await �첽ִ��
-    let reader = await readerlogic.getReaderInfoById(req.params.id)
+router.get('/reader/id', async function (req, res) {
+    //await 
+    if (typeof (req.session.readerUser) == "undefined") return;
+
+    const id = req.session.readerUser;
+    let reader = await readerlogic.getReaderInfoById(id);
     return res.json({ code: 0, msg: '', data: reader });
 })
 
 router.put('/reader/:id', async function (req, res) {
     const { name, email } = req.body;
-    const id = req.params.id
+    const id = req.session.readerUser;
     let result = await readerlogic.updateReaderInfo({ name, email, id })
     return res.json({ code: 0, msg: '�޸ĳɹ�', data: result });
 })
@@ -90,4 +95,5 @@ router.post('/changepass/:id', async function (req, res) {
     let reader = await readerlogic.changePass(pass, id)
     return res.json({ code: 0, msg: '�޸ĳɹ�', data: reader });
 })
+
 module.exports = router;

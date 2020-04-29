@@ -63,12 +63,10 @@
     <Content Include="package.json" />
     <Content Include="public\stylesheets\main.css" />
     <Content Include="README.md" />
-    <Content Include="views\AdminLog.html" >
+    <Content Include="views\AdminLog.html">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="views\LibrarianRrMgt.html">
-      <SubType>Code</SubType>
-    </Content>
+    <Content Include="views\bookmanage.html" />
     <Content Include="views\Login.html" />
     <Content Include="views\addreader.html" />
     <Content Include="views\AdminMain.html">
@@ -85,17 +83,10 @@
     <Content Include="views\libLog.html">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="views\libLog.html">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="views\LibrarianEdit.html" />
-    <Content Include="views\Reader_Main.html" />
     <Content Include="views\ReaderMain.html" />
     <Content Include="views\SearchMain.html">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="views\LibrarianMain.html" />
-    <Content Include="views\搜索页面模板.html" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="librariancode\" />

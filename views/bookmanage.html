@@ -7,236 +7,207 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="http://localhost:8081/public/stylesheets/main.css" />
     <title>Book Search</title>
 </head>
-<body style=" width:100vw; height:100vh">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="position:fixed; width:100%">
-        <a class="navbar-brand" href="#">Mandarin</a>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="position: fixed;">
+        <a class="navbar-brand font-weight-bold" href="#">Mandarin</a>
         <div class="navbar-collapse">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item ">
-                    <a class="nav-link " href="/librarian/addreader">ReaderManage</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="/librarian/addreader">Reader Management</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">BookManage</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Dropdown
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                </li>
-                <li>
+                    <a class="nav-link active" href="#">Book Management</a>
                 </li>
             </ul>
             <a class="text-white mx-2" href="#" id="username">Disabled</a>
-            <button class="btn btn-light my-0" id="loginout">Login Out</button>
+            <button class="btn btn-light my-0" id="loginout">Log Out</button>
         </div>
     </nav>
 
-    <div style="display:flex ;height:100%; padding-top:50px">
-        <div style="width:15%">
-            <ul id="myTab" class="nav flex-column nav-pills bg-dark pt-3 px-2" style="height:100%">
-                <li class="nav-item active">
-                    <a class="nav-link active" href="#addbooktab" data-toggle="pill">Add Book</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link " href="#searchbooktab" data-toggle="pill">Search Book</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Lend/Return Book</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                </li>
-            </ul>
+    <contentBody>
+        <ul class="nav flex-column nav-pills bg-dark sideBar px-2">
+            <li id="viewLibrarian" class="nav-item">
+                <a class="nav-link active" href="#addbooktab" data-toggle="pill">Add Book</a>
+            </li>
+            <li id="registerLibrarian" class="nav-item">
+                <a class="nav-link" href="#searchbooktab" data-toggle="pill">Search Book</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Lend/Return Book</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+            </li>
+        </ul>
+
+        <div class="tab-content mainContent">
+            <!-- 添加书的表单 -->
+            <div class="tab-pane fade show active container" id="addbooktab">
+                <div class="card" style="height:500px; width:800px">
+                    <div class="card-header  bg-primary text-white font-weight-bold">
+                        Add Book
+                    </div>
+                    <div class="card-body">
+                        <form id="addbookform">
+                            <div class="form-group">
+                                <label for="addbookName">Name</label>
+                                <input type="text" class="form-control" id="addbookName" name="bookName">
+                            </div>
+                            <div class="form-group">
+                                <label for="addbookAuthor">Author</label>
+                                <input type="text" class="form-control" id="addbookAuthor" name="bookAuthor">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-3">
+                                    <label for="addbookType">bookType</label>
+                                    <select class="form-control" id="addbookType" name="addbookType">
+                                        <option value="-1">Option</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-3">
+                                    <label for="addbookFloor">Floor</label>
+                                    <input type="text" class="form-control" id="addbookFloor" name="bookFloor">
+                                </div>
+                                <div class="form-group col-3">
+                                    <label for="addbookSection">Section</label>
+                                    <input type="text" class="form-control" id="addbookSection" name="bookSection">
+                                </div>
+                                <div class="form-group col-3">
+                                    <label for="addbookShelf">Shelf</label>
+                                    <input type="text" class="form-control" id="addbookShelf" name="bookShelf">
+                                </div>
+                            </div>
+                            <div class="form-group mb-4">
+                                <label for="addbookPrice">Price</label>
+                                <input type="text" class="form-control" id="addbookPrice" name="bookPrice">
+                            </div>
+                            <button type="submit" id="addsubmit" class="btn btn-primary" style="width:100%">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 搜索图书的表格 -->
+            <div class="tab-pane in fade" id="searchbooktab" style="margin-top: 50px">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <form>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="searchbookname">
+                                    <div class="input-group-append" id="button-addon1">
+                                        <button class="btn btn-outline-primary" type="button" id="searchbook">Search Book</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <table class="table" style="height:300px; width:800px;margin-top:20px">
+                                <thead>
+                                    <tr>
+                                        <th><em><strong>bookID</strong></em></th>
+                                        <th><em>bookname</em></th>
+                                        <th><em><strong>barcode</strong></em></th>
+                                        <th><em>operation</em></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td id="bookID1"></td>
+                                        <td id="bookname1"></td>
+                                        <td id="barcode1"><img id="imgcode1" style="height: 80px" /></td>
+                                        <td>
+                                            <button type="button" class="btn btn-link" data-toggle="modal" id="edit1" data-target="#editbookModal">click for detials</button>
+                                            <br /><button type="button" class="btn btn-link" data-toggle="modal" id="delete1">delete</button>
+                                        </td>
+                                    </tr>
+                                    <tr class="success">
+                                        <td id="bookID2"></td>
+                                        <td id="bookname2"></td>
+                                        <td id="barcode2"><img id="imgcode2" style="height: 80px" /></td>
+                                        <td>
+                                            <button type="button" class="btn btn-link" data-toggle="modal" id="edit2" data-target="#editbookModal">click for detials</button>
+                                            <br /><button type="button" class="btn btn-link" data-toggle="modal" id="delete2">delete</button>
+                                        </td>
+                                    </tr>
+                                    <tr class="error">
+                                        <td id="bookID3"></td>
+                                        <td id="bookname3"></td>
+                                        <td id="barcode3"><img id="imgcode3" style="height: 80px" /></td>
+                                        <td>
+                                            <button type="button" class="btn btn-link" data-toggle="modal" id="edit3" data-target="#editbookModal">click for detials</button>
+                                            <br /><button type="button" class="btn btn-link" data-toggle="modal" id="delete3">delete</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                                    <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" id="last">Last</button>
+                                    <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" id="next">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+    </contentBody>
 
-
-        <div style="width:85% ;display:flex; justify-content:center; padding-top:70px">
-            <div  class="tab-content" id="myTabContent">
-
-                <!-- 添加书的表单 -->
-                <div class="tab-pane in active" id="addbooktab">
-                    <div class="card" style="height:500px; width:800px">
-                        <div class="card-header  bg-primary text-white font-weight-bold">
-                            Add Book
+    <!-- 编辑书的模态框 -->
+    <div class="modal fade" id="editbookModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div style="width:100% ;display:flex; justify-content:center;height:600px;">
+                    <div class="card" style="height:400px; width:600px">
+                        <div class="modal-header bg-primary">
+                            <div class="card-header text-white font-weight-bold">update Book</div>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                         </div>
                         <div class="card-body">
-                            <form id="addbookform">
+                            <form>
                                 <div class="form-group">
-                                    <label for="addbookName">Name</label>
-                                    <input type="text" class="form-control" id="addbookName" name="bookName">
+                                    <label for="bookIDModal">bookID</label>
+                                    <input type="text" class="form-control" id="bookIDModal" name="bookIDModal" readonly>
                                 </div>
                                 <div class="form-group">
-                                    <label for="addbookAuthor">Author</label>
-                                    <input type="text" class="form-control" id="addbookAuthor" name="bookAuthor">
+                                    <label for="bookNameModal">Name</label>
+                                    <input type="text" class="form-control" id="bookNameModal" name="bookNameModal" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label for="bookAuthorModal">Author</label>
+                                    <input type="text" class="form-control" id="bookAuthorModal" name="bookAuthorModal" readonly>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-3">
-                                        <label for="addbookType">bookType</label>
-                                        <select class="form-control" id="addbookType" name="addbookType">
-                                            <option value="-1">Option</option>
-                                        </select>
+                                        <label for="bookTypeModal">bookType</label>
+                                        <input type="text" class="form-control" id="bookTypeModal" name="bookTypeModal" readonly>
                                     </div>
                                     <div class="form-group col-3">
-                                        <label for="addbookFloor">Floor</label>
-                                        <input type="text" class="form-control" id="addbookFloor" name="bookFloor">
+                                        <label for="bookFloorModal">Floor</label>
+                                        <input type="text" class="form-control" id="bookFloorModal" name="bookFloorModal">
                                     </div>
                                     <div class="form-group col-3">
-                                        <label for="addbookSection">Section</label>
-                                        <input type="text" class="form-control" id="addbookSection" name="bookSection">
+                                        <label for="bookSectionModal">Section</label>
+                                        <input type="text" class="form-control" id="bookSectionModal" name="bookSectionModal">
                                     </div>
                                     <div class="form-group col-3">
-                                        <label for="addbookShelf">Shelf</label>
-                                        <input type="text" class="form-control" id="addbookShelf" name="bookShelf">
+                                        <label for="bookShelfModal">Shelf</label>
+                                        <input type="text" class="form-control" id="bookShelfModal" name="bookShelfModal">
                                     </div>
                                 </div>
-                                <div class="form-group mb-4">
-                                    <label for="addbookPrice">Price</label>
-                                    <input type="text" class="form-control" id="addbookPrice" name="bookPrice">
+                                <div class="form-group">
+                                    <label for="bookPriceModal">price</label>
+                                    <input type="text" class="form-control" id="bookPriceModal" name="bookPriceModal">
                                 </div>
-                                <button type="submit" id="addsubmit" class="btn btn-primary" style="width:100%">Submit</button>
+                                <button type="button" id="editsubmit" class="btn btn-primary" style="width:100%">update</button>
 
                             </form>
                         </div>
                     </div>
                 </div>
 
-                <!-- 搜索图书的表格 -->
-                <div class="tab-pane in fade" id="searchbooktab">
-                    <div class="container-fluid">
-                        <div class="row-fluid">
-                            <div class="span12">
-                                <form class="form-search" style="margin-left: 270px;">
-                                    <input type="text" id="searchbookname">
-                                    <button type="button" id="searchbook" class="btn btn-primary" style="margin-left: 5px;">input bookname</button>
-                                </form>
-                                <table class="table" style="height:300px; width:1000px;margin-top:20px">
-                                    <thead>
-                                        <tr>
-                                            <th><em><strong>bookID</strong></em></th>
-                                            <th><em>bookname</em></th>
-                                            <th><em><strong>barcode</strong></em></th>
-                                            <th><em>operation</em></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td id="bookID1"></td>
-                                            <td id="bookname1"></td>
-                                            <td id="barcode1"><img id="imgcode1" style="height: 80px" /></td>
-                                            <td>
-                                                <button type="button" class="btn btn-link" data-toggle="modal" id="edit1" data-target="#editbookModal">click for detials</button>
-                                                <br /><button type="button" class="btn btn-link" data-toggle="modal" id="delete1">delete</button>
-                                            </td>
-                                        </tr>
-                                        <tr class="success">
-                                            <td id="bookID2"></td>
-                                            <td id="bookname2"></td>
-                                            <td id="barcode2"><img id="imgcode2" style="height: 80px" /></td>
-                                            <td>
-                                                <button type="button" class="btn btn-link" data-toggle="modal" id="edit2" data-target="#editbookModal">click for detials</button>
-                                                <br /><button type="button" class="btn btn-link" data-toggle="modal" id="delete2">delete</button>
-                                            </td>
-                                        </tr>
-                                        <tr class="error">
-                                            <td id="bookID3"></td>
-                                            <td id="bookname3"></td>
-                                            <td id="barcode3"><img id="imgcode3" style="height: 80px" /></td>
-                                            <td>
-                                                <button type="button" class="btn btn-link" data-toggle="modal" id="edit3" data-target="#editbookModal">click for detials</button>
-                                                <br /><button type="button" class="btn btn-link" data-toggle="modal" id="delete3">delete</button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <ul>
-                                    <li>
-                                        <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" id="last">Last</button>
-                                        <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" id="next">Next</button>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
-
-                <!-- 编辑书的模态框 -->
-                <div class="modal fade" id="editbookModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div style="width:100% ;display:flex; justify-content:center;height:600px;">
-                                <div class="card" style="height:400px; width:600px">
-                                    <div class="modal-header bg-primary">
-                                        <div class="card-header text-white font-weight-bold">update Book</div>
-                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                    </div>
-                                    <div class="card-body">
-                                        <form>
-                                            <div class="form-group">
-                                                <label for="bookIDModal">bookID</label>
-                                                <input type="text" class="form-control" id="bookIDModal" name="bookIDModal" readonly>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="bookNameModal">Name</label>
-                                                <input type="text" class="form-control" id="bookNameModal" name="bookNameModal" readonly>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="bookAuthorModal">Author</label>
-                                                <input type="text" class="form-control" id="bookAuthorModal" name="bookAuthorModal" readonly>
-                                            </div>
-                                            <div class="form-row">
-                                                <div class="form-group col-3">
-                                                    <label for="bookTypeModal">bookType</label>
-                                                    <input type="text" class="form-control" id="bookTypeModal" name="bookTypeModal" readonly>
-                                                </div>
-                                                <div class="form-group col-3">
-                                                    <label for="bookFloorModal">Floor</label>
-                                                    <input type="text" class="form-control" id="bookFloorModal" name="bookFloorModal">
-                                                </div>
-                                                <div class="form-group col-3">
-                                                    <label for="bookSectionModal">Section</label>
-                                                    <input type="text" class="form-control" id="bookSectionModal" name="bookSectionModal">
-                                                </div>
-                                                <div class="form-group col-3">
-                                                    <label for="bookShelfModal">Shelf</label>
-                                                    <input type="text" class="form-control" id="bookShelfModal" name="bookShelfModal">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="bookPriceModal">price</label>
-                                                <input type="text" class="form-control" id="bookPriceModal" name="bookPriceModal">
-                                            </div>
-                                            <button type="button" id="editsubmit" class="btn btn-primary" style="width:100%">update</button>
-
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div><!-- /.modal-content -->
-                    </div><!-- /.modal-dialog -->
-                </div><!-- /.modal -->
-
-
-
-            </div>
-
-
-
-        </div>
-    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/jsbarcode/3.6.0/JsBarcode.all.min.js"></script>
@@ -252,7 +223,7 @@
                 async: "false",
                 type: "POST",
                 url: "/librarian/bookType_post",
-                contentType: "application/json; charset=utf-8",              
+                contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (result) {
                     console.log("服务器请求成功");
@@ -260,8 +231,8 @@
                     bookcategory = result;
                     for (i = 0; i < result.length; i++) {
                         $("#addbookType").append(
-                            //"<option value='science'>science</option>" 
-                            "<option value='" + result[i].category_nm + "'>" + result[i].category_nm+"</option>"                          
+                            //"<option value='science'>science</option>"
+                            "<option value='" + result[i].category_nm + "'>" + result[i].category_nm + "</option>"
                         );
                     }
                 },
@@ -285,10 +256,10 @@
             window.location.href = "/librarian/";
         });
         //提交要添加的书籍
-        $("#addsubmit").click( function(){
+        $("#addsubmit").click(function () {
 
             var book = {
-                "bookName":$("#addbookName").val(),
+                "bookName": $("#addbookName").val(),
                 "bookAuthor": $("#addbookAuthor").val(),
                 "bookType": $("#addbookType").val(),
                 "bookFloor": $("#addbookFloor").val(),
@@ -296,9 +267,9 @@
                 "bookShelf": $("#addbookShelf").val(),
                 "bookPrice": $("#addbookPrice").val(),
             }
-           
-            console.log("the book type is " + book.bookType);         
-             
+
+            console.log("the book type is " + book.bookType);
+
             if (book.bookName == "") alert("the bookName is null");
             else if (book.bookAuthor == "") alert("the bookAuthor is null");
             else if (book.bookType == "") alert("the bookType is null");
@@ -307,8 +278,8 @@
             else if (book.bookShelf == "" || book.bookShelf.length > 2) alert("the bookShelf is null or out of range");
             else if (book.bookPrice == "") alert("the bookPrice is null");
             else {
-               
-                 $.ajax({
+
+                $.ajax({
                     type: "POST",
                     url: "/librarian/addbook_post",
                     contentType: "application/json; charset=utf-8",
@@ -324,7 +295,7 @@
                     error: function () {
                         console.log("404 服务器请求失败");
                     }
-                 });
+                });
 
             }
         });
@@ -345,12 +316,12 @@
         //查找相关书籍
         $("#searchbook").click(function () {
             var searchbook = {
-                "searchbookname": $("#searchbookname").val() 
+                "searchbookname": $("#searchbookname").val()
             }
             console.log(searchbook);
             cleartable();
-            if (searchbook.bookname =="") alert("the input is null");
-            else {          
+            if (searchbook.bookname == "") alert("the input is null");
+            else {
                 $.ajax({
                     async: "false",
                     type: "POST",
@@ -360,7 +331,7 @@
                     dataType: "json",
                     success: function (result) {
                         console.log("服务器请求成功");
-                        console.log("the book found has " + result.length + " books");              //此处收到的数据为对象数组，对象为数据库的所有项                      
+                        console.log("the book found has " + result.length + " books");              //此处收到的数据为对象数组，对象为数据库的所有项
                         if (result[0] == null) alert("There are not book found!");
                         callbackdata = result;
                         cleartable();
@@ -375,7 +346,7 @@
                             $(("#delete" + i)).show();
                         }
                         firstdata = 0;    //表格当前状态第一项为callbackdata[0]
-                        
+
                     },
                     error: function () {
                         console.log("404 服务器请求失败");
@@ -424,7 +395,7 @@
         //编辑书籍按钮
         $("#edit1").click(function () {
             var book = {
-                "searchbookID": $("#bookID1").text()               
+                "searchbookID": $("#bookID1").text()
             }
             $.ajax({
                 type: "POST",
@@ -436,28 +407,28 @@
                 success: function (result) {
                     console.log("服务器请求成功");
                     console.log(result[0]);
-                    $("#bookIDModal").val(result[0].bookID);                    
+                    $("#bookIDModal").val(result[0].bookID);
                     $("#bookNameModal").val(result[0].bookname);
                     $("#bookAuthorModal").val(result[0].author);
                     $("#bookFloorModal").val(result[0].placefloor);
                     $("#bookSectionModal").val(result[0].placeregion);
                     $("#bookShelfModal").val(result[0].placebookshelf);
-                    $("#bookPriceModal").val(result[0].price);                    
-                    for (i = 0; i < bookcategory.length;i++) {
+                    $("#bookPriceModal").val(result[0].price);
+                    for (i = 0; i < bookcategory.length; i++) {
                         if ((result[0].bookID).substring(0, 2) == bookcategory[i].category_number) {
                             $("#bookTypeModal").val(bookcategory[i].category_nm); break;
-                        }                          
+                        }
                     }//for
                 },
                 error: function () {
                     console.log("404 服务器请求失败");
                 }
-            });//ajax  
+            });//ajax
         });//edit1
 
         $("#edit2").click(function () {
             var book = {
-                "searchbookID": $("#bookID2").text() 
+                "searchbookID": $("#bookID2").text()
             }
             $.ajax({
                 type: "POST",
@@ -485,12 +456,12 @@
                 error: function () {
                     console.log("404 服务器请求失败");
                 }
-            });//ajax  
+            });//ajax
         });//edit2
 
         $("#edit3").click(function () {
             var book = {
-                "searchbookID": $("#bookID3").text() 
+                "searchbookID": $("#bookID3").text()
             }
             $.ajax({
                 type: "POST",
@@ -518,10 +489,10 @@
                 error: function () {
                     console.log("404 服务器请求失败");
                 }
-            });//ajax  
+            });//ajax
         });//edit3
 
-        $("#editsubmit").click(function () {          
+        $("#editsubmit").click(function () {
             var book = {
                 "updatebookID": $("#bookIDModal").val(),
                 "bookFloor": $("#bookFloorModal").val(),
@@ -529,13 +500,13 @@
                 "bookShelf": $("#bookShelfModal").val(),
                 "bookPrice": $("#bookPriceModal").val()
             }
-           
+
             if (book.bookFloor == "" || book.bookFloor.length > 2) alert("the bookFloor is null or out of range");
             else if (book.bookSection == "" || book.bookSection.length > 2) alert("the bookSection is null or out of range");
             else if (book.bookShelf == "" || book.bookShelf.length > 2) alert("the bookShelf is null or out of range");
             else if (book.bookPrice == "") alert("the bookPrice is null");
             else {
-                 $.ajax({
+                $.ajax({
                     type: "POST",
                     url: "/librarian/updatebook_post",
                     contentType: "application/json; charset=utf-8",
@@ -544,14 +515,14 @@
                     async: "false",                                         //默认为(true)异步,设置为false(同步)虽然慢但方便找哪步bug.
                     success: function (result) {
                         console.log("服务器请求成功");
-                        console.log(result);                                              
+                        console.log(result);
                         if (result == "update is ok") alert("update is ok!");
                         else if (result == "book is not here") alert("the book is not found")
                     },
                     error: function () {
                         console.log("404 服务器请求失败");
                     }
-                 });//ajax
+                });//ajax
             }//else
         });//editsubmit
         //删除书籍按钮
@@ -561,7 +532,7 @@
                 "deletebookID": $("#bookID1").text()
             }
             if (book.deletebookID == "") alert("the deletebookID is null");
-            else {  
+            else {
                 $.ajax({
                     type: "POST",
                     url: "/librarian/deletebook_post",

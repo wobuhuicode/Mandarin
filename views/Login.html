@@ -8,7 +8,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="D:\VS\Practice\jsrepo\view\main.css" />
-    <link rel="stylesheet" href="main.css" />
+    <link rel="stylesheet" href="http://localhost:8081/public/stylesheets/main.css" />
     <title>Reader Login</title>
 </head>
 <body>
@@ -21,7 +21,7 @@
                 </li>
             </ul>
         </div>
-        <button class="btn btn-light my-0">Apply for a account</button>
+        <a class="btn btn-light my-0" href="/apply">Apply for a account</a>
     </nav>
 
     <contentBody class="contianer px-5" style="padding-top: 170px">
@@ -85,20 +85,18 @@
             $("[role = 'alert']").alert('close');
             $("#logForm").addClass("was-validated");
             if ($('#logForm')[0].checkValidity()) {
-                $.post("/authen", { account: $('#Account').val(), pwd: $('#formPwd').val(),logType: $("[name='logType']").val() }, function (data) {
-                    if (data.code == 2) 
-                        $("#logForm").prepend('\
-                                <div class="alert alert-danger alert-dismissible fade show" role="alert">\
-                                    <strong>Incorrect account or password!</strong>\
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">\
-                                        <span aria-hidden="true">&times;</span>\
-                                    </button>\
-                                </div> '
-                        );
-                    //else if (data.code == 0) window.location.href = "http://localhost:8081/";
-                    else if (data.code == 1) window.location.href = "http://localhost:8081/librarian";
-                    else if (data.code == 0) window.location.href = "http://localhost:8081/search";
-                });
+                if ($("[name='logType']:checked").val() == 'reader') {
+                    $.post("/reader/login", { account: $('#Account').val(), pwd: $('#formPwd').val() }, function (data) {
+                        if (data.code == 0) window.location.href = "http://localhost:8081/reader";
+                        else alert("Login Failed!")
+                    })
+                } else if ($("[name='logType']:checked").val() == 'librarian') {
+                    console.log('Login as Librarian')
+                    $.post('/librarian/login_post', { account: $('#Account').val(), pwd: $('#formPwd').val() }, function (data) {
+                        if (data.code == 0) window.location.href = "http://localhost:8081/librarian//bookmanage";
+                        else alert("Login Failed!")
+                    })
+                }
             }
         })
     </script>
