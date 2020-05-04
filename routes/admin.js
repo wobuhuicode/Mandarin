@@ -85,7 +85,7 @@ router.post('/modDepositandCyclePage', function (req, res) {
             res.json({ code: 1 });
         }
     }
-    adminlogic.moddeposit(req.body.moddeposit, req.body.modcycle, req.body.olddeposit ,modResult);
+    adminlogic.moddeposit(req.body.deposit, req.body.cycle ,modResult);
 })
 
 router.get('/getInfo', function (req, res) {

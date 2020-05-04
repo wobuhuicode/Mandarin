@@ -71,10 +71,28 @@ function getlibInfo(callback) {
 };
 
 
-function moddeposit(deposit, cycle, olddeposit ,callback) {
-    mysql.connection.query('update depositandcycle set deposit = '+deposit+',cycle = '+cycle+' where deposit ='+ olddeposit, function (err,result) {
-        if (err) return false;
-        else callback(true);
+function moddeposit(deposit, cycle, callback) {
+    mysql.connection.query('select * from depositandcycle', function (err, result) {
+        if (err) {
+            return false;
+        } else {
+            if (deposit == result[0].deposit) {
+                mysql.connection.query('update depositandcycle set cycle = ' + cycle + ' where deposit =' + deposit, function (err, result) {
+                    if (err) return false;
+                    else callback(true);
+                })
+            } else if (cycle == result[0].cycle) {
+                mysql.connection.query('update depositandcycle set deposit = ' + deposit + ' where cycle =' + cycle, function (err, result) {
+                    if (err) return false;
+                        else callback(true);
+                })
+            } else {
+                mysql.connection.query('update depositandcycle set deposit = '+deposit+',cycle = '+cycle+' where deposit ='+ result[0].deposit, function (err,result) {
+                    if (err) return false;
+                    else callback(true);
+                })
+            }
+        } 
     })
 }
 

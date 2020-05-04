@@ -134,16 +134,12 @@
                         <div class="card-body">
                             <form id="modForm">
                                 <div class="form-group">
-                                    <label for="moddeposit">moddeposit</label>
-                                    <input type="text" class="form-control" name="bookID" id="moddeposit" required>
+                                    <label for="deposit">deposit</label>
+                                    <input type="text" class="form-control" name="deposit" id="deposit" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="modcycle">modcycle</label>
-                                    <input type="text" class="form-control" name="deposit" id="modcycle" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="olddeposit">olddeposit</label>
-                                    <input type="text" class="form-control" name="cycle" id="olddeposit" required>
+                                    <label for="cycle">cycle</label>
+                                    <input type="text" class="form-control" name="cycle" id="cycle" required>
                                 </div>
                             </form>
                             <button class="btn btn-primary btn-block" id="modifyConfirm">Confirm</button>
@@ -186,7 +182,6 @@
             */
 
         function get_list(info){
-            alert("daozhelila");
             var s = document.getElementById('libs'); //获取列表头
             //计算人数
             //添加结点
@@ -198,7 +193,6 @@
         }
 
         function get_list1(info1) {
-            alert("daozhelila");
             var s = document.getElementById('Info'); //获取列表头
             //计算人数
             //添加结点
@@ -294,7 +288,7 @@
         })
         //提交修改表单
         $('#modifyConfirm').click(function () {
-            $.post("/admin/modDepositandCyclePage", { moddeposit: $('#moddeposit').val(), modcycle: $('#modcycle').val(),olddeposit: $('#olddeposit').val() }, function (data) {
+            $.post("/admin/modDepositandCyclePage", { deposit: $('#deposit').val(), cycle: $('#cycle').val() }, function (data) {
                 if (data.code == 1) alert("Modification failed!");
                 else if (data.code == 0) alert("Modification succeed!");
             });
