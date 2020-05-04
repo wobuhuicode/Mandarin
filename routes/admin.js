@@ -76,6 +76,23 @@ router.post('/authen', function (req, res) {
     adminlogic.compare(req.body.account, req.body.pwd, authenResult);
 });
 
+//修改保证金及周期
+router.post('/modDepositandCyclePage', function (req, res) {
+    function modResult(bool) {
+        if (bool) {
+            res.json({ code: 0 });
+        } else {
+            res.json({ code: 1 });
+        }
+    }
+    adminlogic.moddeposit(req.body.moddeposit, req.body.modcycle, req.body.olddeposit ,modResult);
+})
 
+router.get('/getInfo', function (req, res) {
+    function InfoRes(data) {
+        res.json(data);
+    }
+    adminlogic.getInfo(InfoRes);
+});
 
 module.exports = router;

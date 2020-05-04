@@ -33,6 +33,9 @@
             <li id="registerLibrarian" class="nav-item">
                 <a class="nav-link" href="#registerLibrarianTab" data-toggle="pill">Register Librarian </a>
             </li>
+            <li id="moddepositandcycle" class="nav-item">
+                <a class="nav-link" href="#modDepositandCyclePage" data-toggle="pill">Modify deposiy&cycle</a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Link</a>
             </li>
@@ -121,6 +124,54 @@
                     </div>
                 </div>
             </div>
+
+            <div class="tab-pane fade container" id="modDepositandCyclePage">
+                <div class="container">
+                    <div class="card">
+                        <div class="card-header  bg-primary text-white">
+                            Modify deposiy and cycle
+                        </div>
+                        <div class="card-body">
+                            <form id="modForm">
+                                <div class="form-group">
+                                    <label for="moddeposit">moddeposit</label>
+                                    <input type="text" class="form-control" name="bookID" id="moddeposit" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="modcycle">modcycle</label>
+                                    <input type="text" class="form-control" name="deposit" id="modcycle" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="olddeposit">olddeposit</label>
+                                    <input type="text" class="form-control" name="cycle" id="olddeposit" required>
+                                </div>
+                            </form>
+                            <button class="btn btn-primary btn-block" id="modifyConfirm">Confirm</button>
+                        </div>
+                    </div>
+                </div>
+
+                <br />
+
+                <div >
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-header  bg-primary text-white">
+                                informations
+                            </div>
+                            <div class="py-3 px-4">
+                                <ul class="list-group" id="Info">
+                                    <li class="list-group-item list-group-item-action">
+                                        <h5 class="mb-1">information 1</h5>
+                                        <p class="mb-1">Info.</p>
+                                        <small>Click to edit</small>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>                 
     </contentBody>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
@@ -146,6 +197,18 @@
             s.innerHTML= msg;
         }
 
+        function get_list1(info1) {
+            alert("daozhelila");
+            var s = document.getElementById('Info'); //获取列表头
+            //计算人数
+            //添加结点
+            var msg1 = '';
+            for (var i = 0; i < info1.length; i++) {
+                msg1 = msg1 + '<li class="list-group-item list-group-item-action"> <h5 class="mb-1">deposit:' + info1[i].deposit + '</h5><h5 class="mb-1">cycle:' + info1[i].cycle + '</h5> <small> Click to edit</small> </li>';
+            }
+            s.innerHTML = msg1;
+        }
+
         jQuery.prototype.serializeJson=function(){ 
             var obj=new Object(); 
             $.each(this.serializeArray(), function(index, param){ 
@@ -165,9 +228,13 @@
 
         $(function () {
             $.get("/admin/getLibs", function (data) {
-                alert("daozhelila");
-                alert(data);
                 get_list(data);
+            })
+        });
+
+       $(function () {
+            $.get("/admin/getInfo", function (data) {
+                get_list1(data);
             })
         });
 
@@ -225,7 +292,13 @@
                 })
             } 
         })
-
+        //提交修改表单
+        $('#modifyConfirm').click(function () {
+            $.post("/admin/modDepositandCyclePage", { moddeposit: $('#moddeposit').val(), modcycle: $('#modcycle').val(),olddeposit: $('#olddeposit').val() }, function (data) {
+                if (data.code == 1) alert("Modification failed!");
+                else if (data.code == 0) alert("Modification succeed!");
+            });
+        })
     </script>
 </body>
 </html>

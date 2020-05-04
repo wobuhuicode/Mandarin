@@ -70,11 +70,28 @@ function getlibInfo(callback) {
     })
 };
 
+
+function moddeposit(deposit, cycle, olddeposit ,callback) {
+    mysql.connection.query('update depositandcycle set deposit = '+deposit+',cycle = '+cycle+' where deposit ='+ olddeposit, function (err,result) {
+        if (err) return false;
+        else callback(true);
+    })
+}
+
+function getInfo(callback) {
+    mysql.connection.query('select * from depositandcycle', function (err, result) {
+        if (err) return 0;
+        else callback(result);
+    })
+};
+
 module.exports = {
     compare,
     lookupLibrarian,
     updateLibrarian,
     repeatLibrarianID,
     addLibrarian,
-    getlibInfo
+    getlibInfo,
+    moddeposit,
+    getInfo
 }
