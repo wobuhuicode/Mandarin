@@ -102,6 +102,14 @@
 
     <!--自定义的代码-->
     <script>
+        $('#basic_url').bind('keypress', function (event) {
+            if (event.keyCode == "13") {
+                event.preventDefault();
+                //回车执行查询
+                $('#search-btn').click();
+            }
+        });
+
         $("#search-btn").click(function () {
             $("#searchicon").animate({
                 marginTop: '10px'
