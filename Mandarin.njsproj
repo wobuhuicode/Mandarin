@@ -67,7 +67,7 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="views\bookmanage.html" />
-    <Content Include="views\FindPassword.html">
+    <Content Include="views\RecoverPassword.html">
       <SubType>Code</SubType>
     </Content>
     <Content Include="views\Login.html" />
