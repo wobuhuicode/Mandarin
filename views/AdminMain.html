@@ -198,7 +198,7 @@
             //添加结点
             var msg1 = '';
             for (var i = 0; i < info1.length; i++) {
-                msg1 = msg1 + '<li class="list-group-item list-group-item-action"> <h5 class="mb-1">deposit:' + info1[i].deposit + '</h5><h5 class="mb-1">cycle:' + info1[i].cycle + '</h5> <small> Click to edit</small> </li>';
+                msg1 = msg1 + '<li class="list-group-item list-group-item-action"> <h5 class="mb-1">deposit:' + info1[i].deposit + '</h5><h5 class="mb-1">overduetime:' + info1[i].overdueTime + '</h5><h5 class="mb-1">everydayfine:' + info1[i].everydayFine + '</h5><h5 class="mb-1">maxfine:' + info1[i].maxFine + '</h5> <small> Click to edit</small> </li>';
             }
             s.innerHTML = msg1;
         }

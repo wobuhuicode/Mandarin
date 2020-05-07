@@ -16,6 +16,7 @@ function compare(name, password, callback) {
 
 }
 
+
 function lookupLibrarian(name, callback) {
     mysql.connection.query('SELECT * from librarian where librarian_ID = "' + name + '"', function (error, results, fields) {
         if (results.length == 1) callback(true, results[0].librarian_ID, results[0].librarian_PW);
@@ -77,17 +78,20 @@ function moddeposit(deposit, cycle, callback) {
             return false;
         } else {
             if (deposit == result[0].deposit) {
-                mysql.connection.query('update depositandcycle set cycle = ' + cycle + ' where deposit =' + deposit, function (err, result) {
+                mysql.connection.query('update depositandcycle set cycle = ' + cycle + ' where deposit =' + deposit, function (err, result) {})
+                mysql.connection1.query('update finerules230 set overdueTime = ' + cycle + ' where deposit =' + result[0].deposit, function (err, result) {
                     if (err) return false;
                     else callback(true);
                 })
             } else if (cycle == result[0].cycle) {
-                mysql.connection.query('update depositandcycle set deposit = ' + deposit + ' where cycle =' + cycle, function (err, result) {
+                mysql.connection.query('update depositandcycle set deposit = ' + deposit + ' where cycle =' + cycle, function (err, result) {})
+                mysql.connection1.query('update finerules230 set deposit = ' + deposit + ' where deposit =' + result[0].deposit, function (err, result) {
                     if (err) return false;
-                        else callback(true);
+                    else callback(true);
                 })
             } else {
-                mysql.connection.query('update depositandcycle set deposit = '+deposit+',cycle = '+cycle+' where deposit ='+ result[0].deposit, function (err,result) {
+                mysql.connection.query('update depositandcycle set deposit = ' + deposit + ',cycle = ' + cycle + ' where deposit =' + result[0].deposit, function (err, result) {})
+                mysql.connection1.query('update finerules230 set deposit = ' + deposit + ',overdueTime = '+cycle+' where deposit =' + result[0].deposit, function (err, result) {
                     if (err) return false;
                     else callback(true);
                 })
@@ -97,10 +101,10 @@ function moddeposit(deposit, cycle, callback) {
 }
 
 function getInfo(callback) {
-    mysql.connection.query('select * from depositandcycle', function (err, result) {
-        if (err) return 0;
-        else callback(result);
-    })
+        mysql.connection1.query('select overdueTime,everydayFine,maxFine,deposit from finerules230', function (err, results) {
+              if (err) return false;
+              else callback(results);
+        })
 };
 
 module.exports = {
