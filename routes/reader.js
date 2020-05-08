@@ -96,4 +96,25 @@ router.post('/changepass/:id', async function (req, res) {
     return res.json({ code: 0, msg: '�޸ĳɹ�', data: reader });
 })
 
+router.get('/recoverpwd', function (req, res) {
+    res.render("RecoverPassword");
+})
+
+router.post('/recover_pwd', function (req, res) {
+    function confirmResult(bool) {
+        var result = 0;
+        if (bool) {
+            res.json({ code: 0 });
+            console.log('seccess');
+        }
+        else {
+            res.json({ code: 1 });
+            console.log('fail');
+        }
+    };
+    console.log(req.body.email);
+    readerlogic.comparemail(req.body.account, req.body.email, confirmResult);
+
+})
+
 module.exports = router;
