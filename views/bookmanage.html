@@ -36,7 +36,10 @@
                 <a class="nav-link" href="#searchbooktab" data-toggle="pill">Search Book</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Lend/Return Book</a>
+                <a class="nav-link" href="#lendbooktab" data-toggle="pill">Lend/Return Book</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#historytab" data-toggle="pill">Search History</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Link</a>
@@ -142,14 +145,66 @@
                                     </tr>
                                 </tbody>
                             </table>
-                                    <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" id="last">Last</button>
-                                    <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" id="next">Next</button>
+                            <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" id="last">Last</button>
+                            <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" id="next">Next</button>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!--借还书的表单-->
+            <div id="lendbooktab" class="tab-pane in fade" >
+                <div style="display:flex ;height:100%; padding-top:50px">
+                    <div class="card" style="height:400px; width:600px">
+                        <div class="modal-header bg-primary">
+                            <div class="card-header text-white font-weight-bold">Lend Book</div>
+                        </div>
+                        <div class="card-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="LendreaderID">Lend ReaderID</label>
+                                    <input type="text" class="form-control" id="lendreaderID" name="readerID">
+                                </div>
+                                <div class="form-group">
+                                    <label for="bookID">Lend BookID</label>
+                                    <input type="text" class="form-control" id="lendbookID" name="bookID">
+                                </div>
+                                <button type="button" id="lend" class="btn btn-primary" style="width:100%">Lend</button>
+
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card" style="height:400px; width:600px">
+                        <div class="modal-header bg-primary">
+                            <div class="card-header text-white font-weight-bold">Rend Book</div>
+                        </div>
+                        <div class="card-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="returnreaderID">Return ReaderID</label>
+                                    <input type="text" class="form-control" id="returnreaderID" name="readerID">
+                                </div>
+                                <div class="form-group">
+                                    <label for="returnbookID">Return BookID</label>
+                                    <input type="text" class="form-control" id="returnbookID" name="bookID">
+                                </div>
+                                <button type="button" id="return" class="btn btn-primary" style="width:100%">Return</button>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--查询借阅信息的表格-->
+            <div id="historytab" >
+
+
+            </div>
+            
+
         </div>
-    </contentBody>
+</contentBody>
 
     <!-- 编辑书的模态框 -->
     <div class="modal fade" id="editbookModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -606,6 +661,52 @@
                 });//ajax
             }//else
         });//delete1
+
+        $("#lend").click(function () {
+            var lend = {
+                "lendreaderID": $("#lendreaderID").val(),
+                "lendbookID": $("#lendbookID").val()
+            }
+            $.ajax({
+                type: "POST",
+                url: "/librarian/lendbook_post",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(lend),
+                dataType: "text",
+                async: "false",
+                success: function (result) {
+                    console.log("服务器请求成功");
+                    alert(result);
+                },
+                error: function () {
+                    console.log("404 服务器请求失败");
+                }
+
+            });
+        });
+
+        $("#return").click(function () {
+            var returnbook = {
+                "returnreaderID": $("#returnreaderID").val(),
+                "returnbookID": $("#returnbookID").val()
+            }
+            $.ajax({
+                type: "POST",
+                url: "/librarian/returnbook_post",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(returnbook),
+                dataType: "text",
+                async: "false",
+                success: function (result) {
+                    console.log("服务器请求成功");
+                    alert(result);
+                },
+                error: function () {
+                    console.log("404 服务器请求失败");
+                }
+            });
+        });
+
 
 
     </script>

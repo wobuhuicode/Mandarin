@@ -198,12 +198,71 @@ function editcategory(number, type, book_sum, callback) {
     sqlParams = [type, book_sum,number];
     mysql.connection.query(sql, sqlParams, function (err, result) {
         if (err) {
-            console.log('[ERROR] - ', err.message);
+            console.log('[editcategory ERROR] - ', err.message);
             return;
         }      
        callback(null,"update bookcategory230 is ok");
     });
 }
+
+
+//借书,首先查询当前用户已借书是否小于3本，然后查询该书是否存在，再根据读者ID查询该读者的姓名，最后加入bookgoing230,修改图书状态
+function lendbook(readerID, bookID, callback) {
+    var sql1 = "select * from bookgoing230 where returntime is null and readerID= " + readerID;
+    //查询当前用户已借书是否小于3本
+    mysql.connection.query(sql1, function (err, result) {
+        if (err) {
+            console.log('[lendbook ERROR] - ', err.message);
+            return;
+        }
+        //console.log(result);      
+        if (result.length >= 3) callback(null, "the reader has lend 3 books");
+        else {
+            var sql2 = "select * from book230 where bookID =" + bookID;
+            //查询该书是否存在
+            mysql.connection.query(sql2, function (err, result2) {
+                if (err) {
+                    console.log('[lendbook ERROR] - ', err.message);
+                    return;
+                }
+                //console.log(result2);
+                if (result2[0] == null) callback(null, "the book is not in library");
+                else if (result2[0].state == 0) callback(null, "the book has been lend");
+                else {
+                    var sql3 = "insert into bookgoing230 values(?,?,?,?,?,?,?,?)";
+                    var readername;
+                    //根据读者id获取读者姓名
+                    mysqluser.connection.query("select readername from reader where readerID=" + readerID, function (err, result5) {
+                        //console.log(result5);
+                        if (result5[0] == null) callback(null, "the readerID is error");
+                        readername = result5[0].readername;
+                        var nowdate = new Date();
+                        var time = nowdate.toLocaleString('english', { hour12: false });
+                        console.log(readername);
+                        sqlParams = [readerID, readername, bookID, time, , , , ,];
+                        //记录借书信息
+
+                        mysql.connection.query(sql3, sqlParams, function (err, result3) {
+                            if (err) {
+                                console.log('[lendbook ERROR] - ', err.message);
+                                return;
+                            }
+                            else {
+                                //借书成功，修改图书馆该书状态
+                                mysql.connection.query("update book230 set state=0  where bookID=" + bookID, function (err, result4) { });
+                                callback(null, "lend is ok");
+                            }
+
+                        });
+                        
+                     })
+                    
+                }             
+            });
+        }
+    });
+}
+
 
 
 
@@ -218,5 +277,6 @@ module.exports = {
     deletemessage,
     produceBookID,
     querycategory,
-    editcategory
+    editcategory,
+    lendbook
 };
