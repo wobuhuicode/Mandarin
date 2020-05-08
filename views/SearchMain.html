@@ -162,7 +162,7 @@
                         '<th style="width:12.5%" align="center"><h5 class="mb-1">' + res[i].placebookshelf + '</h5></th>' +
                         '<th style="width:11%" align="center"><h5 class="mb-1">' + res[i].placeregion + '</h5></th>' +
                         '<th style="width:12.5%" align="center"><h5 class="mb-1">' + res[i].price + '</h5></th>' +
-                        '<th style="width:8.5%" align="center"><button value=' + temp + ' onclick=reverse(value)> Reverse</button ></th ></tr ></table ></li > ';
+                        '<th style="width:8.5%" align="center"><button value=' + temp + ' onclick=reserve(value)> Reserve</button ></th ></tr ></table ></li > ';
                 }
             }
             //alert(msg);
@@ -173,12 +173,32 @@
             
         }
 
-        function reverse(info) {
+        function reserve(info) {
             //alert(info);
             var time = new Date();
+            var now = time.toLocaleDateString() + '/' + time.getHours() + '/' + time.getMinutes();
             info = JSON.parse(info);
-            var data = "book's name: " + info.bookname + "\nauthor: " + info.author + "\nbook's ID: " + info.bookID + "\ntime: " + time.toLocaleDateString() + time.toLocaleTimeString();
-            alert(data);
+            var data = "book's name: " + info.bookname + "\nauthor: " + info.author + "\nbook's ID: " + info.bookID + "\ntime: " + now;
+            var judge = window.confirm(data);
+            //alert(judge);
+            if (judge == true) {
+                var reserveinfo = {
+                    "bookname": info.bookname,
+                    "author": info.author,
+                    "bookID": info.bookID,
+                    "time": now
+                }
+                //alert(JSON.stringify(reserveinfo))
+                $.get('/reserve', reserveinfo, function (resp) {
+                    if (resp.code == 0) {
+                        alert("Reserve Successful!");
+                    }
+                    else {
+                        alert("Sorry, please try again.");
+                    }
+                })
+                
+            }
         }
 
     </script>
