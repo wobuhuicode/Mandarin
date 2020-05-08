@@ -31,6 +31,32 @@ function EditBook(Category, Floor, Section, Shelf, bookName, callback) {
     });
 }
 
+//根据读者ID查询读者借阅记录及罚金记录
+function queryreaderID(readerID, callback) {
+    var selectSQL = 'select * from bookgoing230 where ReaderID =' + readerID;
+    mysql.connection.query(selectSQL, function (err, result) {
+        if (err) {
+            console.log('[queryhistory ERROR] - ', err.message);
+        }
+        callback(null, result);
+    });
+}
+
+//根据读者姓名查询读者借阅记录及罚金记录
+function queryreadername(readername, callback) {
+    var sql = 'select * from bookgoing230 where readername=?';
+    var sqlParams = [readername];
+    mysql.connection.query(sql, sqlParams, function (err, result) {
+        if (err) {
+            console.log('[queryreadername ERROR] - ', err.message);
+            return;
+        }
+        callback(null, result);
+    });
+}
+
 module.exports = {
-    EditBook
+    EditBook,
+    queryreaderID,
+    queryreadername
 }
