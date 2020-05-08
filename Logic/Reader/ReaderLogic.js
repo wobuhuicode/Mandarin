@@ -92,6 +92,66 @@ const changePass = async (pass, id) => {
     }
 }
 
+//计算还有多少天还书
+var mysql = require('mysql');
+
+var connection = mysql.createConnection({
+    host: '49.234.115.108',
+    user: 'memeda',
+    password: 'mysqldemima',
+    database: 'library230'
+});
+connection.connect();
+
+var sql = 'select borrowTime from history where bookID = 00001 ';
+
+connection.query(sql, function (err, result) {
+    if (err) {
+        console.log('[SELECT ERROR] - ', err.message);
+        return;
+    }
+    var temp = new String(result[0].borrowTime);
+    var borrowTime = new Date(temp).getTime();
+    var nowTime = Date.now();
+    var differ = nowTime - borrowTime;
+    console.log("已经借书" + Math.round(differ / (24 * 60 * 60 * 1000)) + "天");
+});
+
+connection.end();
+//书籍要到期时接收邮件提醒
+function sendemail(differ)
+{
+    var nodemailer = require('nodemailer');
+
+    const Transport = nodemailer.createTransport({
+        service: 'qq',
+        secure: true,
+        auth: {
+            user: '709472048@qq.com',
+            pass: 'utaxgtgbfulkbfcj',
+        }
+    });
+
+    const mailOptions = {
+        from: "709472048@qq.com",
+        to: "sxhqzhc@126.com",
+        subject: "还书提醒",
+        text: "您借的图书即将到期，请按时归还！"
+    };
+
+    if (differ < 5 && differ == 5) {
+        Transport.sendMail(mailOptions, (err, data) => {
+            if (err) {
+                console.log(err);
+                res.json({ status: 400, msg: "send fail....." })
+            } else {
+                console.log(data);
+                res.json({ status: 200, msg: "邮件发送成功....." })
+            }
+        });
+    }
+}
+
 module.exports = {
     searchBook,
     compare,
@@ -99,5 +159,6 @@ module.exports = {
     getReaderInfoById,
     updateReaderInfo,
     changePassword,
-    changePass
+    changePass,
+    sendemail
 };
