@@ -33,6 +33,10 @@ router.get('/apply', function (req, res) {
     res.render("Page2");
 });*/
 
+
+/****************************************************************************************************************/
+
+
 router.get('/search_result', function (req, res) {
     var pt = req.query.bookname;
     readerlogic.searchBook(pt, function (info) {
@@ -95,5 +99,6 @@ router.post('/changepass/:id', async function (req, res) {
     let reader = await readerlogic.changePass(pass, id)
     return res.json({ code: 0, msg: '�޸ĳɹ�', data: reader });
 })
+
 
 module.exports = router;
