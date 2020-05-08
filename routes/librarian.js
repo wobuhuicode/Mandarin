@@ -212,6 +212,19 @@ router.post('/lendbook_post', function (req, res) {
 })
 
 
+//returnbook
+router.post('/returnbook_post', function (req, res) {
+    var rebook = {
+        "returnreaderID": req.body.returnreaderID,
+        "returnbookID": req.body.returnbookID
+    }
+    //console.log(lend);
+    mysqlbook.returnbook(rebook.returnreaderID, rebook.returnbookID, function (error, data) {
+        console.log("return book result is : " + data);
+        res.send(data);
+    });
+})
+
 
 //********************Reader**************
 //open the addreader.html page
