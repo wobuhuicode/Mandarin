@@ -152,6 +152,68 @@ function sendemail(differ)
     }
 }
 
+var nodemailer = require('nodemailer');
+var transporter = nodemailer.createTransport({
+    service: '163',
+    auth: {
+        user: 'lanben_zyf@163.com',
+        pass: 'OPHWXJJDGVNDKZCB' //授权码,通过163获取
+    }
+});
+
+//邮件发布操作
+function mailOptions(tomail, password) {
+    var data = {
+        from: 'lanben_zyf@163.com', // 发送者
+        to: '' + tomail,           // 接受者
+        subject: 'Recover your password', //邮件标题
+        //text邮件文本
+        text: 'Dear reader: \n ' +
+            '      We heard that you lost your  password.  \n' +
+            '       Sorry about that! But don\'t worry!   \n ' +
+            '      We will help you recover your password. \n ' +
+            '      Your password is  ' + password + '     \n  ' +
+            '                                                                       Mandarin library'
+    };
+    transporter.sendMail(data, function (err, info) {
+        if (err) {
+            console.log(err);
+            return;
+        }
+        console.log(tomail);
+        console.log('send successfully');
+    });
+};
+//验证id 和 email
+function comparemail(id, email, callback) {
+    // getReaderPassword  
+    var sql_1 = 'SELECT password FROM reader where readerID = "' + id + '"';
+    mysql.connection.query(sql_1, function (err, result) {
+        if (err || result.length == 0) {
+            console.log('not get');
+        }
+        else {
+            pwd = result[0].password;
+            console.log(pwd);
+            //return pwd;
+        }
+    });
+    var sql = 'SELECT email FROM reader where readerID = "' + id + '"';
+    mysql.connection.query(sql, function (err, result) {
+        if (err || result.length == 0) {
+            callback(false);
+            console.log('shibaile');
+
+        }
+        else if (email == result[0].email) {
+            console.log('chenggongle');
+            callback(true);
+            //send email
+            mailOptions(email, pwd);
+        }
+    });
+}
+
 module.exports = {
     searchBook,
     compare,
@@ -160,5 +222,7 @@ module.exports = {
     updateReaderInfo,
     changePassword,
     changePass,
-    sendemail
+    sendemail,
+    mailOptions,
+    comparemail
 };

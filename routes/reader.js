@@ -33,10 +33,6 @@ router.get('/apply', function (req, res) {
     res.render("Page2");
 });*/
 
-
-/****************************************************************************************************************/
-
-
 router.get('/search_result', function (req, res) {
     var pt = req.query.bookname;
     readerlogic.searchBook(pt, function (info) {
@@ -100,5 +96,25 @@ router.post('/changepass/:id', async function (req, res) {
     return res.json({ code: 0, msg: '�޸ĳɹ�', data: reader });
 })
 
+router.get('/recoverpwd', function (req, res) {
+    res.render("RecoverPassword");
+})
+
+router.post('/recover_pwd', function (req, res) {
+    function confirmResult(bool) {
+        var result = 0;
+        if (bool) {
+            res.json({ code: 0 });
+            console.log('seccess');
+        }
+        else {
+            res.json({ code: 1 });
+            console.log('fail');
+        }
+    };
+    console.log(req.body.email);
+    readerlogic.comparemail(req.body.account, req.body.email, confirmResult);
+
+})
 
 module.exports = router;
