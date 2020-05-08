@@ -136,17 +136,34 @@
             var booklist = document.getElementById('books');
             var msg = '';
             for (var i = 0; i < res.length; i++)
-                //msg = msg + '<li class="list-group-item list-group-item-action"><h5 class="mb-1">' + res[i].bookname + "&emsp;&emsp;&emsp;" + res[i].bookID + "&emsp;&emsp;&emsp;" + res[i].placefloor + "&emsp;&emsp;&emsp;&emsp;&emsp;" + res[i].placebookshelf + "&emsp;&emsp;&emsp;&emsp;&emsp;" + res[i].placeregion + "&emsp;&emsp;&emsp;&emsp;&emsp;" + res[i].price + "&emsp;&emsp;&emsp;&emsp;&emsp;" + res[i].state + '</h5><p class="mb-1">' + res[i].author + '</p></li>';
-                msg = msg + '<li class="list-group-item list-group-item-action">' +
-                    '<table width="100%"><tr>' +
-                    '<th style="width:20%" align="center"><h5 class="mb-1">' + res[i].bookname + '</h5>' +
-                    '<p class="mb-1">' + res[i].author + '</p></th>' +
-                    '<th style="width:13.5%" align="center"><h5 class="mb-1">' + res[i].bookID + '</h5></th>' +
-                    '<th style="width:11%" align="center"><h5 class="mb-1">' + res[i].placefloor + '</h5></th>' +
-                    '<th style="width:12.5%" align="center"><h5 class="mb-1">' + res[i].placebookshelf + '</h5></th>' +
-                    '<th style="width:11%" align="center"><h5 class="mb-1">' + res[i].placeregion + '</h5></th>' +
-                    '<th style="width:12.5%" align="center"><h5 class="mb-1">' + res[i].price + '</h5></th>' +
-                    '<th style="width:8.5%" align="center"><h5 class="mb-1">' + res[i].state + '</h5></th></tr></table></li>';
+            //msg = msg + '<li class="list-group-item list-group-item-action"><h5 class="mb-1">' + res[i].bookname + "&emsp;&emsp;&emsp;" + res[i].bookID + "&emsp;&emsp;&emsp;" + res[i].placefloor + "&emsp;&emsp;&emsp;&emsp;&emsp;" + res[i].placebookshelf + "&emsp;&emsp;&emsp;&emsp;&emsp;" + res[i].placeregion + "&emsp;&emsp;&emsp;&emsp;&emsp;" + res[i].price + "&emsp;&emsp;&emsp;&emsp;&emsp;" + res[i].state + '</h5><p class="mb-1">' + res[i].author + '</p></li>';
+            {
+                if (res[i].state == 0) {
+                    msg = msg + '<li class="list-group-item list-group-item-action">' +
+                        '<table width="100%"><tr>' +
+                        '<th style="width:20%" align="center"><h5 class="mb-1">' + res[i].bookname + '</h5>' +
+                        '<p class="mb-1">' + res[i].author + '</p></th>' +
+                        '<th style="width:13.5%" align="center"><h5 class="mb-1">' + res[i].bookID + '</h5></th>' +
+                        '<th style="width:11%" align="center"><h5 class="mb-1">' + res[i].placefloor + '</h5></th>' +
+                        '<th style="width:12.5%" align="center"><h5 class="mb-1">' + res[i].placebookshelf + '</h5></th>' +
+                        '<th style="width:11%" align="center"><h5 class="mb-1">' + res[i].placeregion + '</h5></th>' +
+                        '<th style="width:12.5%" align="center"><h5 class="mb-1">' + res[i].price + '</h5></th>' +
+                        '<th style="width:8.5%" align="center"><h5 class="mb-1">' + res[i].state + '</h5></th></tr></table></li>';
+                }
+                else {
+                    msg = msg + '<li class="list-group-item list-group-item-action" value="'+res[i]+'" onclick="alert(value)">' +
+                        '<table width="100%"><tr>' +
+                        '<th style="width:20%" align="center"><h5 class="mb-1">' + res[i].bookname + '</h5>' +
+                        '<p class="mb-1">' + res[i].author + '</p></th>' +
+                        '<th style="width:13.5%" align="center"><h5 class="mb-1">' + res[i].bookID + '</h5></th>' +
+                        '<th style="width:11%" align="center"><h5 class="mb-1">' + res[i].placefloor + '</h5></th>' +
+                        '<th style="width:12.5%" align="center"><h5 class="mb-1">' + res[i].placebookshelf + '</h5></th>' +
+                        '<th style="width:11%" align="center"><h5 class="mb-1">' + res[i].placeregion + '</h5></th>' +
+                        '<th style="width:12.5%" align="center"><h5 class="mb-1">' + res[i].price + '</h5></th>' +
+                        '<th style="width:8.5%" align="center"><h5 class="mb-1">' + res[i].state + '</h5></th></tr></table></li>';
+                }
+            }
+            //alert(msg);
             if (msg == '')
                 booklist.innerHTML = '<li class="list-group-item list-group-item-action"><h5 class="mb-1">Sorry, no such book.</h5></li>';
             else
