@@ -44,7 +44,7 @@
                 <div class="input-group">
                     <input type="text" class="form-control" id="basic_url" name="bookname" placeholder="book's name" aria-describedby="search-btn" required>
                     <div class="input-group-append">
-                        <button class="btn btn-primary" type="button" id="search-btn" onclick="changecard()">Go</button>
+                        <button class="btn btn-primary" type="button" id="search-btn">Go</button>
                     </div>
                 </div>
             </form>
@@ -135,8 +135,8 @@
         function get_list(res) {
             var booklist = document.getElementById('books');
             var msg = '';
-            for (var i = 0; i < res.length; i++)
-            //msg = msg + '<li class="list-group-item list-group-item-action"><h5 class="mb-1">' + res[i].bookname + "&emsp;&emsp;&emsp;" + res[i].bookID + "&emsp;&emsp;&emsp;" + res[i].placefloor + "&emsp;&emsp;&emsp;&emsp;&emsp;" + res[i].placebookshelf + "&emsp;&emsp;&emsp;&emsp;&emsp;" + res[i].placeregion + "&emsp;&emsp;&emsp;&emsp;&emsp;" + res[i].price + "&emsp;&emsp;&emsp;&emsp;&emsp;" + res[i].state + '</h5><p class="mb-1">' + res[i].author + '</p></li>';
+            //alert(JSON.stringify(res));
+            for (var i = 0; i < res.length; i++)//msg = msg + '<li class="list-group-item list-group-item-action"><h5 class="mb-1">' + res[i].bookname + "&emsp;&emsp;&emsp;" + res[i].bookID + "&emsp;&emsp;&emsp;" + res[i].placefloor + "&emsp;&emsp;&emsp;&emsp;&emsp;" + res[i].placebookshelf + "&emsp;&emsp;&emsp;&emsp;&emsp;" + res[i].placeregion + "&emsp;&emsp;&emsp;&emsp;&emsp;" + res[i].price + "&emsp;&emsp;&emsp;&emsp;&emsp;" + res[i].state + '</h5><p class="mb-1">' + res[i].author + '</p></li>';
             {
                 if (res[i].state == 0) {
                     msg = msg + '<li class="list-group-item list-group-item-action">' +
@@ -151,7 +151,9 @@
                         '<th style="width:8.5%" align="center"><h5 class="mb-1">' + res[i].state + '</h5></th></tr></table></li>';
                 }
                 else {
-                    msg = msg + '<li class="list-group-item list-group-item-action" value="'+res[i]+'" onclick="alert(value)">' +
+                    temp = JSON.stringify(res[i]);
+                    //alert(temp);
+                    msg = msg + '<li class="list-group-item list-group-item-action">' +
                         '<table width="100%"><tr>' +
                         '<th style="width:20%" align="center"><h5 class="mb-1">' + res[i].bookname + '</h5>' +
                         '<p class="mb-1">' + res[i].author + '</p></th>' +
@@ -160,7 +162,7 @@
                         '<th style="width:12.5%" align="center"><h5 class="mb-1">' + res[i].placebookshelf + '</h5></th>' +
                         '<th style="width:11%" align="center"><h5 class="mb-1">' + res[i].placeregion + '</h5></th>' +
                         '<th style="width:12.5%" align="center"><h5 class="mb-1">' + res[i].price + '</h5></th>' +
-                        '<th style="width:8.5%" align="center"><h5 class="mb-1">' + res[i].state + '</h5></th></tr></table></li>';
+                        '<th style="width:8.5%" align="center"><button value=' + temp + ' onclick=reverse(value)> Reverse</button ></th ></tr ></table ></li > ';
                 }
             }
             //alert(msg);
@@ -170,6 +172,15 @@
                 booklist.innerHTML = msg;
             
         }
+
+        function reverse(info) {
+            //alert(info);
+            var time = new Date();
+            info = JSON.parse(info);
+            var data = "book's name: " + info.bookname + "\nauthor: " + info.author + "\nbook's ID: " + info.bookID + "\ntime: " + time.toLocaleDateString() + time.toLocaleTimeString();
+            alert(data);
+        }
+
     </script>
 </body>
 </html>
