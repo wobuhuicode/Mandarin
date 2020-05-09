@@ -70,7 +70,14 @@ router.get('/reader', function (req, res) {
     if (typeof (req.session.readerUser) == "undefined") {
         res.redirect("/login");
     }
-    else res.render("ReaderMain");
+    else {
+        res.render("ReaderMain");
+        readerlogic.selectname(req.session.readerUser, function (info) {
+            //res.send(info);
+            console.log(info);
+        });
+        console.log(req.session.readerUser);
+    }
 });
 
 router.get('/reader/id', async function (req, res) {
