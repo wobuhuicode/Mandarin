@@ -21,6 +21,29 @@ function searchBook(ptname, callback) {
     
 }
 
+function reserveBook(info, callback) {
+    var mysql = require("mysql");
+    var connection = mysql.createConnection({
+        host: '49.234.115.108',
+        user: 'memeda',
+        password: 'mysqldemima',
+        database: 'library230'
+    });
+
+    connection.connect(function (err) {
+        if (err) {
+            console.error('error connecting:' + err.stack)
+        }
+        //console.log('connected as id ' + connection.threadId);
+    });
+    connection.query("INSERT INTO reserve230 VALUES ('" + info.bookID+"','"+info.time+"','"+ info.readerID + "');", function (error, results) {
+        connection.end();
+        if (error) throw error;
+        else
+            callback(true);
+    });
+
+}
 
 var path = require('path');
 var mysql = require(path.join(__dirname, '../MysqlCon'));
@@ -231,6 +254,7 @@ function comparemail(id, email, callback) {
 
 module.exports = {
     searchBook,
+    reserveBook,
     compare,
     selectname,
     applyAccount,

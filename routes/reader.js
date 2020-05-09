@@ -13,6 +13,10 @@ router.get('/login', function (req, res) {
     res.render("Login");
 });
 
+router.get('/recoverpwd', function (req, res) {
+    res.render("RecoverPassword");
+})
+
 router.post('/authen', function (req, res) {
     if (req.body.logType == 'reader') {
         console.log("is a reader");
@@ -103,16 +107,12 @@ router.post('/changepass/:id', async function (req, res) {
     return res.json({ code: 0, msg: '�޸ĳɹ�', data: reader });
 })
 
-router.get('/recoverpwd', function (req, res) {
-    res.render("RecoverPassword");
-})
-
 router.post('/recover_pwd', function (req, res) {
     function confirmResult(bool) {
         var result = 0;
         if (bool) {
             res.json({ code: 0 });
-            console.log('seccess');
+            console.log('success');
         }
         else {
             res.json({ code: 1 });
@@ -122,6 +122,18 @@ router.post('/recover_pwd', function (req, res) {
     console.log(req.body.email);
     readerlogic.comparemail(req.body.account, req.body.email, confirmResult);
 
+})
+
+router.get('/reserve', function (req, res) {
+    var info = req.query;
+    readerlogic.reserveBook(info, function (code) {
+        if (code == true) {
+            res.json({ code: 0 });
+        }
+        else {
+            res.json({ code: 1 });
+        }
+    })
 })
 
 module.exports = router;
