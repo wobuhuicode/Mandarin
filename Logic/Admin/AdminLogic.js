@@ -2,19 +2,20 @@ var path = require('path');
 var mysql = require(path.join(__dirname, '../MysqlCon')); 
 
 function compare(name, password, callback) {
-    //²éÑ¯Óï¾ä
+    //ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½
     var sql = 'SELECT admin_pw FROM admin where admin_ID ="' + name + '"';
 
     mysql.connection.query(sql, function (err, result) {
-        //Èç¹û³öÏÖÒì³£»òÕßÎ´²éÑ¯µ½½á¹û£¬µ÷ÓÃÂ·ÓÉÖÐ»Øµ÷º¯Êý£¬´«µÝ²ÎÊýfalse
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ì³£ï¿½ï¿½ï¿½ï¿½Î´ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½ï¿½Ð»Øµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý²ï¿½ï¿½ï¿½false
         if (err || result.length == 0) {
             callback(false);
         }
-        //Èç¹û³É¹¦²éÑ¯µ½½á¹ûÇÒÇëÇóÖÐµÄÃÜÂëÓëÊý¾Ý¿âÖÐµÄÒ»ÖÂ£¬µ÷ÓÃÂ·ÓÉÖÐ»Øµ÷º¯Êý£¬´«µÝ²ÎÊýtrue
+        //ï¿½ï¿½ï¿½ï¿½É¹ï¿½ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½Ðµï¿½Ò»ï¿½Â£ï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½ï¿½Ð»Øµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý²ï¿½ï¿½ï¿½true
         else if (password == result[0].admin_pw) callback(true);
     });
 
 }
+
 
 function lookupLibrarian(name, callback) {
     mysql.connection.query('SELECT * from librarian where librarian_ID = "' + name + '"', function (error, results, fields) {
@@ -71,6 +72,48 @@ function getlibInfo(callback) {
     })
 };
 
+
+function moddeposit(deposit, cycle, callback) {
+    mysql.connection.query('select * from depositandcycle', function (err, result) {
+        if (err) {
+            return false;
+        } else {
+            if (deposit == result[0].deposit) {
+                mysql.connection.query('update depositandcycle set cycle = ' + cycle + ' where deposit =' + deposit, function (err, result) {
+                    if (err) return false;
+                })
+                mysql.connection1.query('update finerules230 set overdueTime = ' + cycle + ' where deposit =' + result[0].deposit, function (err, result) {
+                    if (err) return false;
+                    else callback(true);
+                })
+            } else if (cycle == result[0].cycle) {
+                mysql.connection.query('update depositandcycle set deposit = ' + deposit + ' where cycle =' + cycle, function (err, result) {
+                    if (err) return false;
+                })
+                mysql.connection1.query('update finerules230 set deposit = ' + deposit + ' where deposit =' + result[0].deposit, function (err, result) {
+                    if (err) return false;
+                    else callback(true);
+                })
+            } else {
+                mysql.connection.query('update depositandcycle set deposit = ' + deposit + ',cycle = ' + cycle + ' where deposit =' + result[0].deposit, function (err, result) {
+                    if (err) return false;
+                })
+                mysql.connection1.query('update finerules230 set deposit = ' + deposit + ',overdueTime = '+cycle+' where deposit =' + result[0].deposit, function (err, result) {
+                    if (err) return false;
+                    else callback(true);
+                })
+            }
+        } 
+    })
+}
+
+function getInfo(callback) {
+        mysql.connection1.query('select overdueTime,everydayFine,maxFine,deposit from finerules230', function (err, results) {
+              if (err) return false;
+              else callback(results);
+        })
+};
+
 module.exports = {
     compare,
     lookupLibrarian,
@@ -78,5 +121,7 @@ module.exports = {
     repeatLibrarianID,
     addLibrarian,
     getlibInfo,
-    updateLibrarianPwd
+    updateLibrarianPwd,
+    moddeposit,
+    getInfo
 }
