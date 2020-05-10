@@ -870,15 +870,15 @@
                 cleartable_history();
                 firsthistory -= 5;
                 for (i = 1; i <= 5; i++) {
-                    $(("#readerID" + i)).html(callbackhistory[i - 1].readerID);
-                    $(("#readerName" + i)).html(callbackhistory[i - 1].readername);
-                    $(("#history_bookID" + i)).html(callbackhistory[i - 1].bookID);
-                    $(("#borrowtime" + i)).html(callbackhistory[i - 1].borrowtime);
-                    $(("#returntime" + i)).html(callbackhistory[i - 1].returntime);
-                    $(("#overduetime" + i)).html(callbackhistory[i - 1].overduetime);
-                    $(("#fine" + i)).html(callbackhistory[i - 1].fine);
-                    if (callbackhistory[i - 1].paid == 1) $(("#paid" + i)).html("yes");
-                    else if (callbackhistory[i - 1].paid == 0) $(("#paid" + i)).html("no");
+                    $(("#readerID" + i)).html(callbackhistory[firsthistory + i - 1].readerID);
+                    $(("#readerName" + i)).html(callbackhistory[firsthistory + i - 1].readername);
+                    $(("#history_bookID" + i)).html(callbackhistory[firsthistory + i - 1].bookID);
+                    $(("#borrowtime" + i)).html(callbackhistory[firsthistory + i - 1].borrowtime);
+                    $(("#returntime" + i)).html(callbackhistory[firsthistory + i - 1].returntime);
+                    $(("#overduetime" + i)).html(callbackhistory[firsthistory + i - 1].overduetime);
+                    $(("#fine" + i)).html(callbackhistory[firsthistory + i - 1].fine);
+                    if (callbackhistory[firsthistory + i - 1].paid == 1) $(("#paid" + i)).html("yes");
+                    else if (callbackhistory[firsthistory + i - 1].paid == 0) $(("#paid" + i)).html("no");
                     else $(("#paid" + i)).html();
 
                 }
@@ -893,15 +893,15 @@
                 var num = 5;
                 if (num > callbackhistory.length - firsthistory) num = callbackhistory.length - firsthistory;
                 for (i = 1; i <= num; i++) {
-                    $(("#readerID" + i)).html(callbackhistory[i - 1].readerID);
-                    $(("#readerName" + i)).html(callbackhistory[i - 1].readername);
-                    $(("#history_bookID" + i)).html(callbackhistory[i - 1].bookID);
-                    $(("#borrowtime" + i)).html(callbackhistory[i - 1].borrowtime);
-                    $(("#returntime" + i)).html(callbackhistory[i - 1].returntime);
-                    $(("#overduetime" + i)).html(callbackhistory[i - 1].overduetime);
-                    $(("#fine" + i)).html(callbackhistory[i - 1].fine);
-                    if (callbackhistory[i - 1].paid == 1) $(("#paid" + i)).html("yes");
-                    else if (callbackhistory[i - 1].paid == 0) $(("#paid" + i)).html("no");
+                    $(("#readerID" + i)).html(callbackhistory[firsthistory + i - 1].readerID);
+                    $(("#readerName" + i)).html(callbackhistory[firsthistory + i - 1].readername);
+                    $(("#history_bookID" + i)).html(callbackhistory[firsthistory + i - 1].bookID);
+                    $(("#borrowtime" + i)).html(callbackhistory[firsthistory + i - 1].borrowtime);
+                    $(("#returntime" + i)).html(callbackhistory[firsthistory + i - 1].returntime);
+                    $(("#overduetime" + i)).html(callbackhistory[firsthistory + i - 1].overduetime);
+                    $(("#fine" + i)).html(callbackhistory[firsthistory + i - 1].fine);
+                    if (callbackhistory[firsthistory + i - 1].paid == 1) $(("#paid" + i)).html("yes");
+                    else if (callbackhistory[firsthistory + i - 1].paid == 0) $(("#paid" + i)).html("no");
                     else $(("#paid" + i)).html();
 
                 }
