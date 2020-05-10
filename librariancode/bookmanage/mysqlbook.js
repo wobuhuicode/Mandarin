@@ -19,7 +19,7 @@ function querybookID(bookID, callback) {
 
 //find the book according to bookname
 function querybookname(bookname, callback) {
-    if (bookname == "find all") {
+    if (bookname == "") {
         var sql = 'select * from book230';      
         mysql.connection.query(sql, function (err, result) {
             if (err) {
@@ -348,6 +348,40 @@ function datedifference(sDate1, sDate2) {    //sDate1和sDate2是2006-12-18格式
 };
 
 
+//根据读者ID查询读者借阅记录及罚金记录
+function queryhistory_readerID(readerID, callback) {
+    if (readerID == "") {
+        var selectSQL = 'select * from bookgoing230';
+    }
+    else var selectSQL = 'select * from bookgoing230 where ReaderID =' + readerID;
+    mysql.connection.query(selectSQL, function (err, result) {
+        if (err) {
+            console.log('[queryhistory ERROR] - ', err.message);
+        }
+        callback(null, result);
+    });
+}
+
+//根据读者姓名查询读者借阅记录及罚金记录
+function queryhistory_readername(readername, callback) {
+    var sql = 'select * from bookgoing230 where readername=?';
+    var sqlParams = [readername];
+    mysql.connection.query(sql, sqlParams, function (err, result) {
+        if (err) {
+            console.log('[queryreadername ERROR] - ', err.message);
+            return;
+        }
+        callback(null, result);
+    });
+}
+
+
+/*
+queryhistory_readerID("12345678901", function (err, data) {
+
+    console.log(data);
+})
+*/
 module.exports = {
     querybookID,
     querybookname,
@@ -359,5 +393,6 @@ module.exports = {
     querycategory,
     editcategory,
     lendbook,
-    returnbook
+    returnbook,
+    queryhistory_readerID
 };

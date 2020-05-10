@@ -53,6 +53,8 @@ router.get('/username', function (req, res) {
     res.json(loginlibrarian);
 })
 
+
+//***************************Bookmanage********************************
 //open bookmanage.html
 router.get('/bookmanage', function (req, res) {
     console.log('the request open the bookmanage.html')
@@ -226,7 +228,29 @@ router.post('/returnbook_post', function (req, res) {
 })
 
 
-//********************Reader**************
+//queryhistory_readerID
+router.post('/historysearch_post', function (req, res) {
+    var history_readerID = {
+        "history_readerID": req.body.history_readerID
+    }
+    console.log("the need search history readerID is :");
+    console.log(history_readerID);
+    mysqlbook.queryhistory_readerID(history_readerID.history_readerID, function (error, data) {
+        res.json(data);
+    })
+
+})
+//***************************Bookmanage********************************
+
+
+
+
+
+
+
+
+
+//***************************Readermanage******************************
 //open the addreader.html page
 router.get('/addreader', function (req,res) {
     //console.log("sever send the GET request open the addreader.html page");
@@ -271,7 +295,7 @@ router.post('/refuse_post', function (req, res) {
         res.json("refuse is ok");
     });
 })
-//*******************Reader**************
+//***************************Readermanage******************************
 
 
 module.exports = router;
