@@ -6,9 +6,9 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-        <link rel="stylesheet" href="http://localhost:8081/public/stylesheets/main.css" />
-        <title>Manage Reader Account</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="http://localhost:8081/public/stylesheets/main.css" />
+    <title>Manage Reader Account</title>
 </head>
 <body style=" width:100vw; height:100vh">
 
@@ -53,6 +53,8 @@
                                     <th>readerID</th>
                                     <th>readerName</th>
                                     <th>Email</th>
+                                    <th>Password</th>
+                                    <th>Balance</th>
                                     <th>agree</th>
                                 </tr>
                             </thead>
@@ -62,6 +64,8 @@
                                     <td id="readerID1"></td>
                                     <td id="readerName1"></td>
                                     <td id="Email1"></td>
+                                    <td id="Password1"></td>
+                                    <td id="Balance1"></td>
                                     <td>
                                         <button type="button" class="btn btn-success btn-sm" data-toggle="modal" id="agree1">agree</button>
                                         <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" id="refuse1">refuse</button>
@@ -72,6 +76,8 @@
                                     <td id="readerID2"></td>
                                     <td id="readerName2"></td>
                                     <td id="Email2"></td>
+                                    <td id="Password2"></td>
+                                    <td id="Balance2"></td>
                                     <td>
                                         <button type="button" class="btn btn-success btn-sm" data-toggle="modal" id="agree2">agree</button>
                                         <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" id="refuse2">refuse</button>
@@ -82,6 +88,8 @@
                                     <td id="readerID3"></td>
                                     <td id="readerName3"></td>
                                     <td id="Email3"></td>
+                                    <td id="Password3"></td>
+                                    <td id="Balance3"></td>
                                     <td>
                                         <button type="button" class="btn btn-success btn-sm" data-toggle="modal" id="agree3">agree</button>
                                         <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" id="refuse3">refuse</button>
@@ -92,6 +100,8 @@
                                     <td id="readerID4"></td>
                                     <td id="readerName4"></td>
                                     <td id="Email4"></td>
+                                    <td id="Password4"></td>
+                                    <td id="Balance4"></td>
                                     <td>
                                         <button type="button" class="btn btn-success btn-sm" data-toggle="modal" id="agree4">agree</button>
                                         <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" id="refuse4">refuse</button>
@@ -102,6 +112,8 @@
                                     <td id="readerID5"></td>
                                     <td id="readerName5"></td>
                                     <td id="Email5"></td>
+                                    <td id="Password5"></td>
+                                    <td id="Balance5"></td>
                                     <td>
                                         <button type="button" class="btn btn-success btn-sm" data-toggle="modal" id="agree5">agree</button>
                                         <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" id="refuse5">refuse</button>
@@ -120,7 +132,7 @@
             <div id="editTab" class="tab-pane in fade">
                 <div style="width:100% ;display:flex; justify-content:center;height:800px;padding-top:60px;">
                     <div class="card" style="height:500px; width:800px;">
-                        <div class="modal-header">                          
+                        <div class="modal-header">
                             <div class="input-group">
                                 <input type="text" class="form-control" id="searchReaderID" value="input ReaderID">
                                 <div class="input-group-append" id="button-addon1">
@@ -142,15 +154,23 @@
                                     <label for="Email">Email</label>
                                     <input type="text" class="form-control" id="Email" name="Email">
                                 </div>
+                                <div class="form-group">
+                                    <label for="Password">Password</label>
+                                    <input type="text" class="form-control" id="Password" name="Password">
+                                </div>
+                                <div class="form-group">
+                                    <label for="Balance">Balance</label>
+                                    <input type="text" class="form-control" id="Balance" name="Balance">
+                                </div>
 
-                                <button type="button" id="editsubmit" class="btn btn-primary" style="width:100%">update</button>
+                                <button type="button" id="editsubmit" class="btn btn-primary" style="width:100%">Update</button>
 
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
-            </div>
+        </div>
 
     </contentBody>
 
@@ -185,6 +205,8 @@
                 $(("#readerID" + i)).html("");
                 $(("#readerName" + i)).html("");
                 $(("#Email" + i)).html("");
+				$(("#Password" + i)).html("");
+				$(("#Balance" + i)).html("");
                 $("#agree" + i).hide();
                 $("#refuse" + i).hide();
             }
@@ -196,7 +218,7 @@
             $.ajax({
                 async: "false",
                 type: "POST",
-                url: "/librarian/register_post",
+                url: "/librarian/refresh_post",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (result) {
@@ -213,6 +235,8 @@
                         $(("#readerID" + i)).html(result[i - 1].ReaderID);
                         $(("#readerName" + i)).html(result[i - 1].ReaderName);
                         $(("#Email" + i)).html(result[i - 1].Email);
+						$(("#Password" + i)).html(result[i - 1].Password);
+				        $(("#Balance" + i)).html(result[i - 1].Balance);
                         $("#agree" + i).show();
                         $("#refuse" + i).show();
                     }
@@ -224,6 +248,32 @@
             });
         });
 
+        //提交要搜索的readerID
+        $("#readerID").click(function () {
+            var searchreader = {
+                "searchReaderID": $("#searchReaderID").val(),
+            }
+            console.log(searchreader);
+            if (searchreader.searchReaderID == "" || (searchreader.searchReaderID).length > 11) alert("the readerID is null or out of range");
+            else {
+                $.ajax({
+                    type: "POST",
+                    url: "/librarian/search_post", //searchreader
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(searchreader),                            //发送的数据格式，body-parser解析的是字符串，所以需要把json对象转换成字符串
+                    dataType: "json",                                       //服务端返回的数据格式
+                    async: "false",                                         //默认为(true)异步,设置为false(同步)虽然慢但方便找哪步bug.
+                    success: function (result) {
+                        console.log("服务器请求成功");
+                        console.log(result);
+                        if (result[0] == null) alert("There are no readers found!");
+                    },
+                    error: function () {
+                        console.log("404 服务器请求失败");
+                    }
+                });//ajax
+            }//else
+        });//readerID
 
 
         //上一页
@@ -237,6 +287,8 @@
                     $(("#readerID" + i)).html(callbackdata[firstdata + i - 1].ReaderID);
                     $(("#readerName" + i)).html(callbackdata[firstdata + i - 1].ReaderName);
                     $(("#Email" + i)).html(callbackdata[firstdata + i - 1].Email);
+					$(("#Password" + i)).html(callbackdata[firstdata + i - 1].Password);
+					$(("#Balance" + i)).html(callbackdata[firstdata + i - 1].Balance);
                     $("#agree" + i).show();
                     $("#refuse" + i).show();
                 }
@@ -255,6 +307,8 @@
                     $(("#readerID" + i)).html(callbackdata[firstdata + i - 1].ReaderID);
                     $(("#readerName" + i)).html(callbackdata[firstdata + i - 1].ReaderName);
                     $(("#Email" + i)).html(callbackdata[firstdata + i - 1].Email);
+					$(("#Password" + i)).html(callbackdata[firstdata + i - 1].Password);
+					$(("#Balance" + i)).html(callbackdata[firstdata + i - 1].Balance);
                     $("#agree" + i).show();
                     $("#refuse" + i).show();
                 }
@@ -390,6 +444,41 @@
                 });
             }
         });
+
+		 $("#editsubmit").click(function () {
+            var reader = {
+                "updatereaderID": $("#ReaderID").val(),
+                "ReaderName": $("#ReaderName").val(),
+                "Email": $("#Email").val(),
+                "Password": $("#Password").val(),
+                "Balance": $("#Balance").val(),
+            }
+			console.log(reader);
+			//if (reader.ReaderID == "" || (reader.ReaderID).length > 11) alert("the readerID is null or out of range");
+			if (reader.ReaderName == "" || (reader.ReaderName).length>20) alert("the readerName is null or out og range");
+            else if (reader.Email == "") alert("the Email is null");
+            else if (reader.Password == "" || (reader.Password).length > 20) alert("the password is null or out of range");
+			else if (reader.Balance == "") alert("the Balance is null");
+            else {
+                $.ajax({
+                    type: "POST",
+                    url: "/librarian/edit_post", //updatereader
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(reader),                            //发送的数据格式，body-parser解析的是字符串，所以需要把json对象转换成字符串
+                    dataType: "text",                                       //服务端返回的数据格式
+                    async: "false",                                         //默认为(true)异步,设置为false(同步)虽然慢但方便找哪步bug.
+                    success: function (result) {
+                        console.log("服务器请求成功");
+                        console.log(result);
+                        if (result == "update is ok") alert("update is ok!");
+                        else if (result == "reader is not here") alert("the reader is not found")
+                    },
+                    error: function () {
+                        console.log("404 服务器请求失败");
+                    }
+                });//ajax
+            }//else
+        });//editsubmit
 
         $("#refuse1").click(function () {
             var reader = {

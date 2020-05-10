@@ -6,7 +6,7 @@ var mysqluser = require(path.join(__dirname, '../MysqlCon.js'));
 //find the book according to bookID
 function querybookID(bookID, callback) {
 
-    var sql = 'select * from book230 where bookID=' + bookID;
+    var sql = 'select * from book230 where bookID =' + bookID;
     mysql.connection.query(sql, function (err, result) {
         if (err) {
             console.log('[querybookID ERROR] - ', err.message);

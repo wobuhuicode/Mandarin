@@ -3,6 +3,7 @@ var path = require('path');
 var express = require('express');
 var mysqlbook = require(path.join(__dirname, '../librariancode/bookmanage/mysqlbook.js'));
 var mysqluser = require(path.join(__dirname, '../librariancode/readermanage/mysqluser.js'));
+var AccountManage = require(path.join(__dirname, '../librariancode/readermanage/AccountManage.js'));
 var router = express.Router();
 
 var loginlibrarian = {                       //currently logged in librarian
@@ -270,6 +271,55 @@ router.post('/refuse_post', function (req, res) {
         console.log(data2);
         res.json("refuse is ok");
     });
+})
+//search readerID from table reader
+router.post('/search_post', function (req, res) {
+    var response = {
+        "readerID": req.body.readerID
+    }
+    console.log("the need find readerID is")
+    console.log(response);
+    AccountManage.queryaccount(response.readerID, function (error, data) {
+        if (error) console.log("bug is in function deletelogon!");
+        if (data[0] == null) {
+            res.send("reader does not exist");
+        }
+        console.log(data);
+        res.json("search is ok");
+    });
+})
+//update reader account from table reader
+router.post('/edit_post', function (req, res) {
+    console.log("server send the POST request update the reader data");
+
+    var response = {
+        "updatereaderID": req.body.updatereaderID,
+        "ReaderName": req.body.ReaderName,
+        "Email": req.body.Email,
+        "Password": req.body.Password,
+        "Balance": req.body.Balance
+    }
+    console.log('the need updatereader is');
+    console.log(response);
+
+    if (response != null) {
+        AccountManage.queryaccount(response.readerID, function (error, data) {
+            if (error) console.log('error:bug is in function queryaccount!');
+            if (data == null) {
+                res.send("reader does not exist");
+            }
+            else{
+                AccountManage.updateaccount(response.readerID, response.readerName, response.Email, response.Password, response.Balance, function (error, data) {
+                    if (error) console.log("bug is in function updateaccount");
+                    //console.log("the updatebook callback is" + data);
+                    res.send(data);
+
+                });//AccountManage.updateaccount
+            }//else
+        })//AccountManage.queryaccount
+    }//if
+
+
 })
 //*******************Reader**************
 
