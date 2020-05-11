@@ -114,6 +114,13 @@ function getInfo(callback) {
         })
 };
 
+function modFine(eve, max, callback) {
+    mysql.connection1.query('update finerules230 set maxFine = ' +eve+ ', everydayFine = ' +max+ ' where ID = 1', function (err, result) {
+        if (err) return false;
+        else callback(true);
+    })
+}
+
 module.exports = {
     compare,
     lookupLibrarian,
@@ -123,5 +130,6 @@ module.exports = {
     getlibInfo,
     updateLibrarianPwd,
     moddeposit,
-    getInfo
+    getInfo,
+    modFine
 }

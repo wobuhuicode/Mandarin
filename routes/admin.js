@@ -96,6 +96,18 @@ router.post('/modDepositandCyclePage', function (req, res) {
     adminlogic.moddeposit(req.body.deposit, req.body.cycle ,modResult);
 })
 
+//修改罚金规则
+router.post('/modFine', function (req, res) {
+    function modResult(bool) {
+        if (bool) {
+            res.json({ code: 0 });
+        } else {
+            res.json({ code: 1 });
+        }
+    }
+    adminlogic.modFine(req.body.eveFine, req.body.maxFine, modResult);
+})
+
 router.get('/getInfo', function (req, res) {
     function InfoRes(data) {
         res.json(data);
