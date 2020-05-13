@@ -70,6 +70,21 @@ router.post('/reader/login', function (req, res) {
     readerlogic.compare(req.body.account, req.body.pwd, authenResult);
 });
 
+router.get('/reader/logout', function (req, res) {
+    if (typeof (req.session.readerUser) == "undefined") {
+        res.json({ code: 0 });
+
+    }
+    else {
+        console.log(req.session.readerUser);
+        req.session.readerUser = "undefined";
+
+        console.log(req.session.readerUser);
+        res.json({ code: 0 });
+    }
+
+})
+
 router.get('/reader', function (req, res) {
     if (typeof (req.session.readerUser) == "undefined") {
         res.redirect("/login");
