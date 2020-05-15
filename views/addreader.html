@@ -42,6 +42,8 @@
         </ul>
 
         <div class="tab-content mainContent">
+
+            <!--添加读者表格-->
             <div class="tab-pane fade show active container" id="approveTab">
                 <div class="row">
                     <div class="col-12">
@@ -58,7 +60,7 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td id="number1">1</td>
+                                    <td id="number1"  height="60px">1</td>
                                     <td id="readerID1"></td>
                                     <td id="readerName1"></td>
                                     <td id="Email1"></td>
@@ -68,7 +70,7 @@
                                     </td>
                                 </tr>
                                 <tr class="success">
-                                    <td id="number2">2</td>
+                                    <td id="number2" height="60px">2</td>
                                     <td id="readerID2"></td>
                                     <td id="readerName2"></td>
                                     <td id="Email2"></td>
@@ -78,7 +80,7 @@
                                     </td>
                                 </tr>
                                 <tr class="error">
-                                    <td id="number3">3</td>
+                                    <td id="number3" height="60px">3</td>
                                     <td id="readerID3"></td>
                                     <td id="readerName3"></td>
                                     <td id="Email3"></td>
@@ -88,7 +90,7 @@
                                     </td>
                                 </tr>
                                 <tr class="warning">
-                                    <td id="number4">4</td>
+                                    <td id="number4" height="60px">4</td>
                                     <td id="readerID4"></td>
                                     <td id="readerName4"></td>
                                     <td id="Email4"></td>
@@ -98,7 +100,7 @@
                                     </td>
                                 </tr>
                                 <tr class="info">
-                                    <td id="number5">5</td>
+                                    <td id="number5" height="60px">5</td>
                                     <td id="readerID5"></td>
                                     <td id="readerName5"></td>
                                     <td id="Email5"></td>
@@ -116,7 +118,43 @@
                     </div>
                 </div>
             </div>
-        </div>
+
+            <!--编辑读者的表格-->
+            <div id="editTab" class="tab-pane in fade">
+                <div style="width:100% ;display:flex; justify-content:center;height:800px;padding-top:60px;">
+                    <div class="card" style="height:500px; width:800px;">
+                        <div class="modal-header">                          
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="searchReaderID" value="input ReaderID">
+                                <div class="input-group-append" id="button-addon1">
+                                    <button class="btn btn-outline-primary" type="button" id="readerID">Search Reader</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="ReaderID">ReaderID</label>
+                                    <input type="text" class="form-control" id="ReaderID" name="ReaderID">
+                                </div>
+                                <div class="form-group">
+                                    <label for="ReaderName">ReaderName</label>
+                                    <input type="text" class="form-control" id="ReaderName" name="ReaderName">
+                                </div>
+                                <div class="form-group">
+                                    <label for="Email">Email</label>
+                                    <input type="text" class="form-control" id="Email" name="Email">
+                                </div>
+
+                                <button type="button" id="editsubmit" class="btn btn-primary" style="width:100%">update</button>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+         </div>
 
     </contentBody>
 
@@ -125,11 +163,14 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
 
+
+
     <script>
         var callbackdata;                           //类型：对象数组；作用：用来存放数据库readerlogon的现有项
         var firstdata = 0;                          //类型：整数； 作用：用来表示表格当前状态的第一项是callbackdata的第几号对象，点击searchsubmit时清零，方便点击last和next时的输出
         //获取当前用户名
         $(function () {
+            cleartable();
             $.get("/librarian/username", function (data) {
                 console.log("the current user is:" + data.librarianNM);
                 $("#username").html(data.librarianNM);
@@ -148,6 +189,8 @@
                 $(("#readerID" + i)).html("");
                 $(("#readerName" + i)).html("");
                 $(("#Email" + i)).html("");
+                $("#agree" + i).hide();
+                $("#refuse" + i).hide();
             }
         }
 
@@ -174,6 +217,8 @@
                         $(("#readerID" + i)).html(result[i - 1].ReaderID);
                         $(("#readerName" + i)).html(result[i - 1].ReaderName);
                         $(("#Email" + i)).html(result[i - 1].Email);
+                        $("#agree" + i).show();
+                        $("#refuse" + i).show();
                     }
                     firstdata = 0;                                                                           //表格当前状态第一项为callbackdata[0]
                 },
@@ -196,6 +241,8 @@
                     $(("#readerID" + i)).html(callbackdata[firstdata + i - 1].ReaderID);
                     $(("#readerName" + i)).html(callbackdata[firstdata + i - 1].ReaderName);
                     $(("#Email" + i)).html(callbackdata[firstdata + i - 1].Email);
+                    $("#agree" + i).show();
+                    $("#refuse" + i).show();
                 }
             }
         });
@@ -212,6 +259,8 @@
                     $(("#readerID" + i)).html(callbackdata[firstdata + i - 1].ReaderID);
                     $(("#readerName" + i)).html(callbackdata[firstdata + i - 1].ReaderName);
                     $(("#Email" + i)).html(callbackdata[firstdata + i - 1].Email);
+                    $("#agree" + i).show();
+                    $("#refuse" + i).show();
                 }
 
             }

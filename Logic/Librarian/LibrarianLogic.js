@@ -31,6 +31,9 @@ function EditBook(Category, Floor, Section, Shelf, bookName, callback) {
     });
 }
 
+
 module.exports = {
-    EditBook
+    EditBook,
+    queryreaderID,
+    queryreadername
 }

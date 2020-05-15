@@ -5,7 +5,7 @@ var mysqlbook = require(path.join(__dirname, '../librariancode/bookmanage/mysqlb
 var mysqluser = require(path.join(__dirname, '../librariancode/readermanage/mysqluser.js'));
 var router = express.Router();
 
-var loginlibrarian = {                       //(��ǰ��½�Ĺ���Ա)currently logged in librarian
+var loginlibrarian = {                       //currently logged in librarian
     librarianNM:"",
     librarianID:"",
     librarianPW:""
@@ -53,7 +53,9 @@ router.get('/username', function (req, res) {
     res.json(loginlibrarian);
 })
 
-//��bookmanage.html
+
+//***************************Bookmanage********************************
+//open bookmanage.html
 router.get('/bookmanage', function (req, res) {
     console.log('the request open the bookmanage.html')
     res.render("bookmanage");
@@ -118,7 +120,7 @@ router.post('/addbook_post', function (req, res) {
         var bookID;
         mysqlbook.produceBookID(response.bookName, response.bookType, function (error, data) {    
             bookID = data;  
-            console.log("*****��******"+response.bookName + ": automatically generated bookID is :" + bookID);         //�Զ��������ID
+            console.log("      "+response.bookName + ": automatically generated bookID is :" + bookID);         //consloe.log the bookID
             mysqlbook.insertbook(response.bookName, bookID, response.bookAuthor, response.bookFloor, response.bookShelf, response.bookSection, response.bookPrice, state, function (error, data) {
                 if (error) console.log('error:bug is in function insertbook!!!!!');
                 console.log('the addbook callback is' + data);
@@ -197,9 +199,58 @@ router.post('/updatebook_post', function (req, res) {
 })
 
 
+//lendbook
+router.post('/lendbook_post', function (req, res) {
+    var lend = {
+        "lendreaderID": req.body.lendreaderID,
+        "lendbookID": req.body.lendbookID
+    }
+    //console.log(lend);
+    mysqlbook.lendbook(lend.lendreaderID, lend.lendbookID, function (error, data) {
+        console.log("lend book result is : " + data);
+        res.send(data);
+    });
+
+})
 
 
-//********************Reader**************
+//returnbook
+router.post('/returnbook_post', function (req, res) {
+    var rebook = {
+        "returnreaderID": req.body.returnreaderID,
+        "returnbookID": req.body.returnbookID
+    }
+    //console.log(lend);
+    mysqlbook.returnbook(rebook.returnreaderID, rebook.returnbookID, function (error, data) {
+        console.log("return book result is : " + data);
+        res.send(data);
+    });
+})
+
+
+//queryhistory_readerID
+router.post('/historysearch_post', function (req, res) {
+    var history_readerID = {
+        "history_readerID": req.body.history_readerID
+    }
+    console.log("the need search history readerID is :");
+    console.log(history_readerID);
+    mysqlbook.queryhistory_readerID(history_readerID.history_readerID, function (error, data) {
+        res.json(data);
+    })
+
+})
+//***************************Bookmanage********************************
+
+
+
+
+
+
+
+
+
+//***************************Readermanage******************************
 //open the addreader.html page
 router.get('/addreader', function (req,res) {
     //console.log("sever send the GET request open the addreader.html page");
@@ -244,7 +295,7 @@ router.post('/refuse_post', function (req, res) {
         res.json("refuse is ok");
     });
 })
-//*******************Reader**************
+//***************************Readermanage******************************
 
 
 module.exports = router;

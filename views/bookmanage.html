@@ -36,7 +36,10 @@
                 <a class="nav-link" href="#searchbooktab" data-toggle="pill">Search Book</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Lend/Return Book</a>
+                <a class="nav-link" href="#lendbooktab" data-toggle="pill">Lend/Return Book</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#historytab" data-toggle="pill">Search History</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Link</a>
@@ -114,7 +117,7 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td id="bookID1"></td>
+                                        <td id="bookID1" height="100px"></td>
                                         <td id="bookname1"></td>
                                         <td id="barcode1"><img id="imgcode1" style="height: 80px" /></td>
                                         <td>
@@ -123,7 +126,7 @@
                                         </td>
                                     </tr>
                                     <tr class="success">
-                                        <td id="bookID2"></td>
+                                        <td id="bookID2" height="100px"></td>
                                         <td id="bookname2"></td>
                                         <td id="barcode2"><img id="imgcode2" style="height: 80px" /></td>
                                         <td>
@@ -132,7 +135,7 @@
                                         </td>
                                     </tr>
                                     <tr class="error">
-                                        <td id="bookID3"></td>
+                                        <td id="bookID3" height="100px"></td>
                                         <td id="bookname3"></td>
                                         <td id="barcode3"><img id="imgcode3" style="height: 80px" /></td>
                                         <td>
@@ -142,14 +145,146 @@
                                     </tr>
                                 </tbody>
                             </table>
-                                    <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" id="last">Last</button>
-                                    <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" id="next">Next</button>
+                            <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" id="last">Last</button>
+                            <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" id="next">Next</button>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!--借还书的表单-->
+            <div id="lendbooktab" class="tab-pane in fade" >
+                <div style="display:flex ;height:100%; padding-top:50px">
+                    <div class="card" style="height:400px; width:600px">
+                        <div class="modal-header bg-primary">
+                            <div class="card-header text-white font-weight-bold">Lend Book</div>
+                        </div>
+                        <div class="card-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="LendreaderID">Lend ReaderID</label>
+                                    <input type="text" class="form-control" id="lendreaderID" name="readerID">
+                                </div>
+                                <div class="form-group">
+                                    <label for="bookID">Lend BookID</label>
+                                    <input type="text" class="form-control" id="lendbookID" name="bookID">
+                                </div>
+                                <button type="button" id="lend" class="btn btn-primary" style="width:100%">Lend</button>
+
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card" style="height:400px; width:600px">
+                        <div class="modal-header bg-primary">
+                            <div class="card-header text-white font-weight-bold">Rend Book</div>
+                        </div>
+                        <div class="card-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="returnreaderID">Return ReaderID</label>
+                                    <input type="text" class="form-control" id="returnreaderID" name="readerID">
+                                </div>
+                                <div class="form-group">
+                                    <label for="returnbookID">Return BookID</label>
+                                    <input type="text" class="form-control" id="returnbookID" name="bookID">
+                                </div>
+                                <button type="button" id="return" class="btn btn-primary" style="width:100%">Return</button>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--查询借阅信息的表格-->
+            <div id="historytab" class="tab-pane in fade ">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="modal-header">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="history_readerID" value="input ReaderID">
+                                <div class="input-group-append" id="button-addon1">
+                                    <button type="button" class="btn btn-outline-primary" id="history_search">Search Reader</button>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="table table-bordered" id="history_table">
+                            <thead>
+                                <tr>
+                                    <th>readerID</th>
+                                    <th>readerName</th>
+                                    <th>bookID</th>
+                                    <th>borrowtime</th>
+                                    <th>returntime</th>
+                                    <th>overduetime</th>
+                                    <th>fine</th>
+                                    <th>paid</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td id="readerID1" height="60px"></td>
+                                    <td id="readerName1"></td>
+                                    <td id="history_bookID1"></td>
+                                    <td id="borrowtime1"></td>
+                                    <td id="returntime1"></td>
+                                    <td id="overduetime1"></td>
+                                    <td id="fine1"></td>
+                                    <td id="paid1"></td>
+                                </tr>
+                                <tr class="success">
+                                    <td id="readerID2" height="60px"></td>
+                                    <td id="readerName2"></td>
+                                    <td id="history_bookID2"></td>
+                                    <td id="borrowtime2"></td>
+                                    <td id="returntime2"></td>
+                                    <td id="overduetime2"></td>
+                                    <td id="fine2"></td>
+                                    <td id="paid2"></td>
+                                </tr>
+                                <tr class="error">
+                                    <td id="readerID3" height="60px"></td>
+                                    <td id="readerName3"></td>
+                                    <td id="history_bookID3"></td>
+                                    <td id="borrowtime3"></td>
+                                    <td id="returntime3"></td>
+                                    <td id="overduetime3"></td>
+                                    <td id="fine3"></td>
+                                    <td id="paid3"></td>
+                                </tr>
+                                <tr class="warning">
+                                    <td id="readerID4" height="60px"></td>
+                                    <td id="readerName4"></td>
+                                    <td id="history_bookID4"></td>
+                                    <td id="borrowtime4"></td>
+                                    <td id="returntime4"></td>
+                                    <td id="overduetime4"></td>
+                                    <td id="fine4"></td>
+                                    <td id="paid4"></td>
+                                </tr>
+                                <tr class="info">
+                                    <td id="readerID5" height="60px"></td>
+                                    <td id="readerName5"></td>
+                                    <td id="history_bookID5"></td>
+                                    <td id="borrowtime5"></td>
+                                    <td id="returntime5"></td>
+                                    <td id="overduetime5"></td>
+                                    <td id="fine5"></td>
+                                    <td id="paid5"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="pagination pagination-centered">
+                            <button type="button" class="btn btn-primary btn-xs mx-2" data-toggle="modal" id="history_last">Last</button>
+                            <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" id="history_next">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+           
         </div>
-    </contentBody>
+</contentBody>
 
     <!-- 编辑书的模态框 -->
     <div class="modal fade" id="editbookModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -245,6 +380,7 @@
         //获取当前登陆用户,输出图书列表信息
         $(function () {
             cleartable();
+            cleartable_history();
             getbooktyple();
             $.get("/librarian/username", function (data) {
                 console.log("the current user is:" + data.librarianNM);
@@ -392,7 +528,7 @@
         });
 
 
-        //编辑书籍按钮
+        //编辑书籍按钮      注意: **此处代码可以编写接口来优化** 可以省去100行左右代码
         $("#edit1").click(function () {
             var book = {
                 "searchbookID": $("#bookID1").text()
@@ -606,6 +742,172 @@
                 });//ajax
             }//else
         });//delete1
+
+        //借书
+        $("#lend").click(function () {
+            var lend = {
+                "lendreaderID": $("#lendreaderID").val(),
+                "lendbookID": $("#lendbookID").val()
+            }
+            console.log(lend);
+            if (lend.lendbookID == "" || (lend.lendbookID).length > 6) alert("the lendbookID is null or out of range");
+            else if (lend.lendreaderID == "" || (lend.lendreaderID).length > 11) alert("the lendreaderID is null or out of range");
+            else {
+                $.ajax({
+                    type: "POST",
+                    url: "/librarian/lendbook_post",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(lend),
+                    dataType: "text",
+                    async: "false",
+                    success: function (result) {
+                        console.log("服务器请求成功");
+                        alert(result);
+                    },
+                    error: function () {
+                        console.log("404 服务器请求失败");
+                    }
+
+                });
+            }
+            
+        });
+        //还书
+        $("#return").click(function () {
+            var returnbook = {
+                "returnreaderID": $("#returnreaderID").val(),
+                "returnbookID": $("#returnbookID").val()
+            }
+            console.log(returnbook);
+            if (returnbook.returnbookID == "" || (returnbook.returnbookID).length > 6) alert("the returnbookID is null or out of range");
+            else if (returnbook.returnreaderID == "" || (returnbook.returnbookID).length > 11) alert("the returnbookID is null or out of range");
+            else {
+                $.ajax({
+                    type: "POST",
+                    url: "/librarian/returnbook_post",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(returnbook),
+                    dataType: "text",
+                    async: "false",
+                    success: function (result) {
+                        console.log("服务器请求成功");
+                        alert(result);
+                    },
+                    error: function () {
+                        console.log("404 服务器请求失败");
+                    }
+                });
+            }
+            
+        });
+
+
+        //查询借还书历史记录
+        var callbackhistory;                        //类型：对象数组；作用：用来存放数据库bookgoing230的readerID=history_readerID的项
+        var firsthistory = 0;                         //类型：整数； 作用：用来表示表格当前状态的第一项是callbackhistory的第几号对象，点击search_history时清零，方便点击last和next时的输出
+
+        var cleartable_history = function () {
+            for (i = 1; i <= 5; i++) {
+                $(("#readerID" + i)).html("");
+                $(("#readerName" + i)).html("");
+                $(("#history_bookID" + i)).html("");
+                $(("#borrowtime" + i)).html("");
+                $(("#returntime" + i)).html("");
+                $(("#overduetime" + i)).html("");
+                $(("#fine" + i)).html("");
+                $(("#paid" + i)).html("");
+            }
+        }
+
+        $("#history_search").click(function () {
+            var history_readerID = {
+                "history_readerID": $("#history_readerID").val()
+            }
+            if (history_readerID.history_readerID == "input ReaderID") history_readerID.history_readerID = "";
+            console.log(history_readerID);
+            cleartable_history();
+            $.ajax({
+                type: "POST",
+                url: "/librarian/historysearch_post",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(history_readerID),
+                dataType: "json",
+                async: "false",
+                success: function (result) {
+                    console.log("服务器请求成功");
+                    console.log("there are " + result.length + " history");
+                    if (result == "") alert("There are not borrow history !")
+                    callbackhistory = result;                 
+                    var num = 5;
+                    if (result.length <= 5) num = result.length;
+                    for (i = 1; i <= num; i++) {                      
+                        $(("#readerID" + i)).html(callbackhistory[i - 1].readerID);
+                        $(("#readerName" + i)).html(callbackhistory[i - 1].readername);
+                        $(("#history_bookID" + i)).html(callbackhistory[i - 1].bookID);
+                        $(("#borrowtime" + i)).html(callbackhistory[i - 1].borrowtime);
+                        $(("#returntime" + i)).html(callbackhistory[i - 1].returntime);
+                        $(("#overduetime" + i)).html(callbackhistory[i - 1].overduetime);
+                        $(("#fine" + i)).html(callbackhistory[i - 1].fine);
+                        if (callbackhistory[i - 1].paid == 1) $(("#paid" + i)).html("yes");
+                        else if (callbackhistory[i - 1].paid == 0) $(("#paid" + i)).html("no");
+                        else $(("#paid" + i)).html();
+
+                    }
+                    firsthistory = 0;  
+
+                },
+                error: function () {
+                    console.log("404 服务器请求失败");
+                }
+            })
+
+
+        });
+        //上一页
+        $("#history_last").click(function () {
+            if (firsthistory == 0) alert("this is the first page");
+            else {
+                cleartable_history();
+                firsthistory -= 5;
+                for (i = 1; i <= 5; i++) {
+                    $(("#readerID" + i)).html(callbackhistory[firsthistory + i - 1].readerID);
+                    $(("#readerName" + i)).html(callbackhistory[firsthistory + i - 1].readername);
+                    $(("#history_bookID" + i)).html(callbackhistory[firsthistory + i - 1].bookID);
+                    $(("#borrowtime" + i)).html(callbackhistory[firsthistory + i - 1].borrowtime);
+                    $(("#returntime" + i)).html(callbackhistory[firsthistory + i - 1].returntime);
+                    $(("#overduetime" + i)).html(callbackhistory[firsthistory + i - 1].overduetime);
+                    $(("#fine" + i)).html(callbackhistory[firsthistory + i - 1].fine);
+                    if (callbackhistory[firsthistory + i - 1].paid == 1) $(("#paid" + i)).html("yes");
+                    else if (callbackhistory[firsthistory + i - 1].paid == 0) $(("#paid" + i)).html("no");
+                    else $(("#paid" + i)).html();
+
+                }
+            }
+        });
+        //下一页
+        $("#history_next").click(function () {
+            if (firsthistory + 5 + 1 > callbackhistory.length) alert("this is the last page");
+            else {
+                cleartable_history();
+                firsthistory += 5;
+                var num = 5;
+                if (num > callbackhistory.length - firsthistory) num = callbackhistory.length - firsthistory;
+                for (i = 1; i <= num; i++) {
+                    $(("#readerID" + i)).html(callbackhistory[firsthistory + i - 1].readerID);
+                    $(("#readerName" + i)).html(callbackhistory[firsthistory + i - 1].readername);
+                    $(("#history_bookID" + i)).html(callbackhistory[firsthistory + i - 1].bookID);
+                    $(("#borrowtime" + i)).html(callbackhistory[firsthistory + i - 1].borrowtime);
+                    $(("#returntime" + i)).html(callbackhistory[firsthistory + i - 1].returntime);
+                    $(("#overduetime" + i)).html(callbackhistory[firsthistory + i - 1].overduetime);
+                    $(("#fine" + i)).html(callbackhistory[firsthistory + i - 1].fine);
+                    if (callbackhistory[firsthistory + i - 1].paid == 1) $(("#paid" + i)).html("yes");
+                    else if (callbackhistory[firsthistory + i - 1].paid == 0) $(("#paid" + i)).html("no");
+                    else $(("#paid" + i)).html();
+
+                }
+
+            }
+        });
 
 
     </script>
