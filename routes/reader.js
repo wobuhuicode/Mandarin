@@ -13,6 +13,10 @@ router.get('/login', function (req, res) {
     res.render("Login");
 });
 
+router.get('/recoverpwd', function (req, res) {
+    res.render("RecoverPassword");
+})
+
 router.post('/authen', function (req, res) {
     if (req.body.logType == 'reader') {
         console.log("is a reader");
@@ -66,11 +70,33 @@ router.post('/reader/login', function (req, res) {
     readerlogic.compare(req.body.account, req.body.pwd, authenResult);
 });
 
+router.get('/reader/logout', function (req, res) {
+    if (typeof (req.session.readerUser) == "undefined") {
+        res.json({ code: 0 });
+
+    }
+    else {
+        console.log(req.session.readerUser);
+        req.session.readerUser = "undefined";
+
+        console.log(req.session.readerUser);
+        res.json({ code: 0 });
+    }
+
+})
+
 router.get('/reader', function (req, res) {
     if (typeof (req.session.readerUser) == "undefined") {
         res.redirect("/login");
     }
-    else res.render("ReaderMain");
+    else {
+        res.render("ReaderMain");
+        readerlogic.selectname(req.session.readerUser, function (info) {
+            //res.send(info);
+            console.log(info);
+        });
+        console.log(req.session.readerUser);
+    }
 });
 
 router.get('/reader/id', async function (req, res) {
@@ -94,6 +120,35 @@ router.post('/changepass/:id', async function (req, res) {
     const id = req.params.id
     let reader = await readerlogic.changePass(pass, id)
     return res.json({ code: 0, msg: '�޸ĳɹ�', data: reader });
+})
+
+router.post('/recover_pwd', function (req, res) {
+    function confirmResult(bool) {
+        var result = 0;
+        if (bool) {
+            res.json({ code: 0 });
+            console.log('success');
+        }
+        else {
+            res.json({ code: 1 });
+            console.log('fail');
+        }
+    };
+    console.log(req.body.email);
+    readerlogic.comparemail(req.body.account, req.body.email, confirmResult);
+
+})
+
+router.get('/reserve', function (req, res) {
+    var info = req.query;
+    readerlogic.reserveBook(info, function (code) {
+        if (code == true) {
+            res.json({ code: 0 });
+        }
+        else {
+            res.json({ code: 1 });
+        }
+    })
 })
 
 module.exports = router;

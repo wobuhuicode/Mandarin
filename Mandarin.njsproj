@@ -67,6 +67,9 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="views\bookmanage.html" />
+    <Content Include="views\RecoverPassword.html">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="views\Login.html" />
     <Content Include="views\addreader.html" />
     <Content Include="views\AdminMain.html">
@@ -78,9 +81,6 @@
     <Content Include="views\ChangeReaderInfo.html" />
     <Content Include="views\ChangeReaderPassword.html" />
     <Content Include="views\error.html">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="views\libLog.html">
       <SubType>Code</SubType>
     </Content>
     <Content Include="views\ReaderMain.html" />
