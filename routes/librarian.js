@@ -301,13 +301,13 @@ router.post('/edit_post', function (req, res) {
     console.log(response);
 
     if (response != null) {
-        AccountManage.queryaccount(response.readerID, function (error, data) {
+        AccountManage.queryaccount(response.updatereaderID, function (error, data) {
             if (error) console.log('error:bug is in function queryaccount!');
-            if (data == null) {
+            if (data[0] == null) {
                 res.send("reader does not exist");
             }
             else{
-                AccountManage.updateaccount(response.readerID, response.readerName, response.Email, response.Password, response.Balance, function (error, data) {
+                AccountManage.updateaccount(response.updatereaderID,response.ReaderName, response.Email, response.Password, response.Balance, function (error, data) {
                     if (error) console.log("bug is in function updateaccount");
                     console.log("the updatebook callback is: " + data);
                     res.send(data);

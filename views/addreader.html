@@ -429,6 +429,39 @@
             }
         });
 
+        $("#editsubmit").click(function () {
+            var reader = {
+                "updatereaderID": $("#ReaderID").val(),
+                "ReaderName": $("#ReaderName").val(),
+                "Email": $("#Email").val(),
+                "Password": $("#Password").val(),
+                "Balance": $("#Balance").val(),
+            }
+            console.log(reader);
+            //if (reader.ReaderID == "" || (reader.ReaderID).length > 11) alert("the readerID is null or out of range");
+            if (reader.ReaderName == "" || (reader.ReaderName).length > 20) alert("the readerName is null or out of range");
+            else if (reader.Email == "") alert("the Email is null");
+            else {
+                $.ajax({
+                    type: "POST",
+                    url: "/librarian/edit_post", //updatereader
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(reader),                            //发送的数据格式，body-parser解析的是字符串，所以需要把json对象转换成字符串
+                    dataType: "text",                                       //服务端返回的数据格式
+                    async: "false",                                         //默认为(true)异步,设置为false(同步)虽然慢但方便找哪步bug.
+                    success: function (result) {
+                        console.log("服务器请求成功");
+                        console.log(result);
+                        if (result == "update is ok") alert("update is ok!");
+                        else if (result == "reader is not here") alert("the reader is not found")
+                    },
+                    error: function () {
+                        console.log("404 服务器请求失败");
+                    }
+                });//ajax
+            }//else
+        });//editsubmit
+
         $("#refuse1").click(function () {
             var reader = {
                 readerID: $("#readerID1").text()
@@ -683,7 +716,7 @@
             $.ajax({
                 type: "POST",
                 url: "/librarian/querynews_post",
-                contentType: "application/json; charset=utf-8",               
+                contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 async: "false",
                 success: function (result) {
@@ -697,7 +730,7 @@
                 }
             });
 
-        } 
+        }
 
     </script>
 

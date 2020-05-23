@@ -1,4 +1,4 @@
-var mysql = require('mysql')
+//var mysql = require('mysql')
 var path = require('path');
 var mysqlbook = require(path.join(__dirname, '../mysqlconnect.js'));
 var mysql = require(path.join(__dirname, '../MysqlCon.js'));
@@ -8,8 +8,8 @@ var mysql = require(path.join(__dirname, '../MysqlCon.js'));
 
 function queryaccount(readerID, callback) {
     //if (readerID == "find all") var selectSQL = 'select * from reader';
-    var selectSQL = 'select * from reader where readerID =?';
-    mysql.connection.query(selectSQL, [readerID], function (err, result) {
+    var selectSQL = 'select * from reader where readerID ='+ readerID;
+    mysql.connection.query(selectSQL, function (err, result) {  // [readerID], 
         if (err) {
             console.log('[query ERROR] - ', err.message);
         }
