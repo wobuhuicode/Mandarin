@@ -266,7 +266,7 @@
                     success: function (result) {
                         console.log("服务器请求成功");
                         console.log(result);
-                        if (result[0] == null) alert("There are no readers found!");
+                        if (result == null) alert("There are no readers found!");
                     },
                     error: function () {
                         console.log("404 服务器请求失败");

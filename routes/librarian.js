@@ -280,14 +280,15 @@ router.post('/search_post', function (req, res) {
     console.log("the need find readerID is")
     console.log(response);
     AccountManage.queryaccount(response.readerID, function (error, data) {
-        if (error) console.log("bug is in function deletelogon!");
-        if (data[0] == null) {
+        if (error) console.log("bug is in function queryaccoung!");
+        if (data == null) {
             res.send("reader does not exist");
         }
         console.log(data);
         res.json("search is ok");
     });
 })
+
 //update reader account from table reader
 router.post('/edit_post', function (req, res) {
     console.log("server send the POST request update the reader data");

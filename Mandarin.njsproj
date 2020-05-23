@@ -88,6 +88,9 @@
     <Content Include="views\libLog.html">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="views\Page1.html">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="views\ReaderMain.html" />
     <Content Include="views\SearchMain.html">
       <SubType>Code</SubType>
