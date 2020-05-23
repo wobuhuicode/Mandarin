@@ -34,6 +34,7 @@
     <Content Include="librariancode\bookmanage\mysqlbook.js" />
     <Content Include="librariancode\MysqlCon.js" />
     <Content Include="librariancode\mysqlconnect.js" />
+    <Content Include="librariancode\readermanage\AccountManage.js" />
     <Content Include="librariancode\readermanage\mysqluser.js" />
     <Content Include="Logic\Librarian\LibrarianLogic.js">
       <SubType>Code</SubType>

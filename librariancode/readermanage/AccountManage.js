@@ -1,6 +1,6 @@
 var mysql = require('mysql')
 var path = require('path');
-var mysql = require(path.join(__dirname, '../mysqlconnect.js'));
+var mysqlbook = require(path.join(__dirname, '../mysqlconnect.js'));
 var mysql = require(path.join(__dirname, '../MysqlCon.js'));
 
 //edit account
@@ -57,7 +57,7 @@ function updateaccount(readerID, readername, email, password, balance, callback)
 
 //delete data when balance is not enough
 function deleteaccount(readerID, callback) {
-    var delSql = 'DELETE FROM reader where balance readerID=' + readerID;
+    var delSql = 'DELETE FROM reader where readerID=' + readerID;
     mysql.connection.query(delSql, function (err, result) {
         if (err) {
             console.log('[DELETE ERROR] - ', err.message);

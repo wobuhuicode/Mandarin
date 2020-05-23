@@ -138,7 +138,7 @@
                             <form>
                                 <div class="form-group">
                                     <label for="ReaderID">ReaderID</label>
-                                    <input type="text" class="form-control" id="ReaderID" name="ReaderID">
+                                    <input type="text" class="form-control" id="ReaderID" name="ReaderID" readonly>
                                 </div>
                                 <div class="form-group">
                                     <label for="ReaderName">ReaderName</label>
@@ -148,8 +148,17 @@
                                     <label for="Email">Email</label>
                                     <input type="text" class="form-control" id="Email" name="Email">
                                 </div>
+                                <div class="form-group">
+                                    <label for="Password">Password</label>
+                                    <input type="text" class="form-control" id="Password" name="Password">
+                                </div>
+                                <div class="form-group">
+                                    <label for="Balance">Balance</label>
+                                    <input type="text" class="form-control" id="Balance" name="Balance">
+                                </div>
 
-                                <button type="button" id="editsubmit" class="btn btn-primary" style="width:100%">update</button>
+                                <button type="button" id="editsubmit" class="btn btn-outline-primary" style="width:45%">Update</button>
+                                <button type="button" id="deletsubmit" class="btn btn-outline-primary" style="width:45%">Delete the reader</button>
 
                             </form>
                         </div>
@@ -547,6 +556,100 @@
         });
 
 
+
+        //提交要搜索的readerID
+        $("#readerID").click(function () {
+            var reader = {
+                "readerID": $("#searchReaderID").val(),
+            }
+            if (reader.readerID == "" || reader.readerID == "input ReaderID" ||(reader.readerID).length > 11) alert("the readerID is null or out of range");
+            else {
+                $.ajax({
+                    type: "POST",
+                    url: "/librarian/search_post", //updatereader
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(reader),                            //发送的数据格式，body-parser解析的是字符串，所以需要把json对象转换成字符串
+                    dataType: "json",                                       //服务端返回的数据格式
+                    async: "false",                                         //默认为(true)异步,设置为false(同步)虽然慢但方便找哪步bug.
+                    success: function (result) {
+                        console.log("服务器请求成功  ");
+                        if (result.length == 0) alert("reader does not exist");
+                        console.log(result[0]);
+                        $("#ReaderID").val(result[0].readerID);
+                        $("#ReaderName").val(result[0].readername);
+                        $("#Email").val(result[0].email);
+                        $("#Password").val(result[0].password);
+                        $("#Balance").val(result[0].balance);
+                    },
+                    error: function () {
+                        console.log("404 服务器请求失败");
+                    }
+                });//ajax
+            }//else
+        });//editsubmit
+        //编辑读者
+        $("#editsubmit").click(function () {
+            var reader = {
+                "updatereaderID": $("#ReaderID").val(),
+                "ReaderName": $("#ReaderName").val(),
+                "Email": $("#Email").val(),
+                "Password": $("#Password").val(),
+                "Balance": $("#Balance").val(),
+            }
+            console.log(reader);
+            //if (reader.ReaderID == "" || (reader.ReaderID).length > 11) alert("the readerID is null or out of range");
+            if (reader.ReaderName == "" || (reader.ReaderName).length > 20) alert("the readerName is null or out og range");
+            else if (reader.Email == "") alert("the Email is null");
+            else if (reader.Password == "" || (reader.Password).length > 20) alert("the password is null or out of range");
+            else if (reader.Balance == "") alert("the Balance is null");
+            else {
+                $.ajax({
+                    type: "POST",
+                    url: "/librarian/edit_post", //updatereader
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(reader),                            //发送的数据格式，body-parser解析的是字符串，所以需要把json对象转换成字符串
+                    dataType: "text",                                       //服务端返回的数据格式
+                    async: "false",                                         //默认为(true)异步,设置为false(同步)虽然慢但方便找哪步bug.
+                    success: function (result) {
+                        console.log("服务器请求成功");
+                        console.log(result);
+                        if (result == "update is ok") alert("update is ok!");
+                        else if (result == "reader is not here") alert("the reader is not found")
+                    },
+                    error: function () {
+                        console.log("404 服务器请求失败");
+                    }
+                });//ajax
+            }//else
+        });//editsubmit
+        //删除读者
+        $("#deletsubmit").click(function () {
+            var reader = {
+                "readerID": $("#ReaderID").val(),
+            }
+            $.ajax({
+                type: "POST",
+                url: "/librarian/deletereader_post", //updatereader
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(reader),                            //发送的数据格式，body-parser解析的是字符串，所以需要把json对象转换成字符串
+                dataType: "text",                                       //服务端返回的数据格式
+                async: "false",                                         //默认为(true)异步,设置为false(同步)虽然慢但方便找哪步bug.
+                success: function (result) {
+                    console.log("服务器请求成功  ");
+                    alert(result);
+
+                },
+                error: function () {
+                    console.log("404 服务器请求失败");
+                }
+            });//ajax            
+        })
+
+
+
+
+
+        //编辑公告
         $("#postsubmit").click(function () {
             var news = {
                 "newstitle": $("#addnewstitle").val(),
@@ -574,7 +677,6 @@
             }
         }
         )
-
         //展示公告函数，*****可放到首页*****
         var postnews = function () {
 

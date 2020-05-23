@@ -281,14 +281,11 @@ router.post('/search_post', function (req, res) {
     console.log(response);
     AccountManage.queryaccount(response.readerID, function (error, data) {
         if (error) console.log("bug is in function queryaccoung!");
-        if (data == null) {
-            res.send("reader does not exist");
-        }
+
         console.log(data);
-        res.json("search is ok");
+        res.json(data);
     });
 })
-
 //update reader account from table reader
 router.post('/edit_post', function (req, res) {
     console.log("server send the POST request update the reader data");
@@ -312,7 +309,7 @@ router.post('/edit_post', function (req, res) {
             else{
                 AccountManage.updateaccount(response.readerID, response.readerName, response.Email, response.Password, response.Balance, function (error, data) {
                     if (error) console.log("bug is in function updateaccount");
-                    //console.log("the updatebook callback is" + data);
+                    console.log("the updatebook callback is: " + data);
                     res.send(data);
 
                 });//AccountManage.updateaccount
@@ -320,6 +317,18 @@ router.post('/edit_post', function (req, res) {
         })//AccountManage.queryaccount
     }//if
 
+
+})
+//delete reader caaount from table reader
+router.post('/deletereader_post', function (req, res) {
+    console.log("server send the POST request delete the reader data");
+    var response = {
+        "readerID" : req.body.readerID
+    }
+    AccountManage.deleteaccount(response.readerID, function (err, data) {
+
+        res.send(data);
+    })
 
 })
 //*******************Reader**************
