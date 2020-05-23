@@ -606,6 +606,28 @@
             }
         });
 
+        $("#postsubmit").click(function () {
+            var news = {
+                "newstitle": $("#addnewstitle").val(),
+                "newscontent": $("#addnewscontent").val(),
+            }
+            $.ajax({
+                type: "POST",
+                url: "/librarian/addnews_post",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(news),
+                dataType: "text",
+                async: "false",
+                success: function (result) {
+                    console.log("服务器请求成功");
+                    console.log("the result is" + result);
+                    if (result == "add news is ok") alert("add news is ok!");
+                },
+                error: function () {
+                    console.log("404 服务器请求失败");
+                }
+            });
+        });
 
 
     </script>
