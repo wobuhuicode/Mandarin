@@ -378,11 +378,50 @@ function queryhistory_readername(readername, callback) {
 }
 
 
+
+//insert news
+function addnews(newstitle, newscontent,callback) {
+    var modSql = 'insert into news values(?,?,?)';
+    var nowdate = new Date();
+    var time = nowdate.toLocaleString('english', { hour12: false });               //获取当前时间
+
+    var modSqlParams = [time,newstitle, newscontent];
+
+    mysql.connection.query(modSql, modSqlParams, function (err, result) {
+        if (err) {
+            console.log('[ADD ERROR]-', err.message);
+            return;
+        }
+        callback(null, 'add news is ok')
+    });
+}//mysqlbook.js
+
+
+//查询最新的公告
+function querynews(callback) {
+    var modSql = 'select * from news order by newstime desc limit 1';
+    
+    mysql.connection.query(modSql, function (err, result) {
+        if (err) {
+            console.log('[ADD ERROR]-', err.message);
+            return;
+        }
+        callback(null, result);
+    });
+}//mysqlbook.js
+
+
 /*
 queryhistory_readerID("12345678901", function (err, data) {
 
     console.log(data);
 })
+
+
+querynews(function (err, data) {
+    console.log(data);
+});
+
 */
 module.exports = {
     querybookID,
@@ -396,5 +435,7 @@ module.exports = {
     editcategory,
     lendbook,
     returnbook,
-    queryhistory_readerID
+    queryhistory_readerID,
+    addnews,
+    querynews
 };

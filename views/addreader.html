@@ -164,14 +164,14 @@
                         <div class="card-body">
                             <form>
                                 <div class="form-group">
-                                    <label for="Title">Title</label>
-                                    <input type="text" class="form-control" id="Title" name="Title">
+                                    <label for="Title">Title(Limited to 150 letters)</label>
+                                    <input type="text" class="form-control" id="addnewstitle" name="Title">
                                 </div>
                                 <div class="form-group">
-                                    <label for="Content">Content</label>
-                                    <textarea rows="15" class="form-control" id="Content" name="Content"></textarea>
+                                    <label for="Content">Content(Limited to 700 letters)</label>
+                                    <textarea rows="15" class="form-control" id="addnewscontent" name="Content"></textarea>
                                 </div>
-                                <button type="submit" id="postsubmit" class="btn btn-primary" style="width:100%">Post</button>
+                                <button type="button" id="postsubmit" class="btn btn-primary" style="width:100%">Post</button>
 
                             </form>
                         </div>
@@ -195,6 +195,7 @@
         //获取当前用户名
         $(function () {
             cleartable();
+            postnews();
             $.get("/librarian/username", function (data) {
                 console.log("the current user is:" + data.librarianNM);
                 $("#username").html(data.librarianNM);
@@ -544,30 +545,57 @@
                 });
             }
         });
+
+
         $("#postsubmit").click(function () {
             var news = {
                 "newstitle": $("#addnewstitle").val(),
                 "newscontent": $("#addnewscontent").val(),
             }
+            if (news.newstitle.length > 150) alert("The number of title words exceeds the limit");
+            else if (news.newscontent.length > 150) alert("The number of Content words exceeds the limit");
+            else {
+                $.ajax({
+                    type: "POST",
+                    url: "/librarian/addnews_post",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(news),
+                    dataType: "text",
+                    async: "false",
+                    success: function (result) {
+                        console.log("服务器请求成功");
+                        console.log("the result is" + result);
+                        if (result == "add news is ok") alert("add news is ok!");
+                    },
+                    error: function () {
+                        console.log("404 服务器请求失败");
+                    }
+                });
+            }
+        }
+        )
+
+        //展示公告函数，*****可放到首页*****
+        var postnews = function () {
+
             $.ajax({
                 type: "POST",
-                url: "/librarian/addnews_post",
-                contentType: "application/json; charset=utf-8",
-                data: JSON.stringify(news),
-                dataType: "text",
+                url: "/librarian/querynews_post",
+                contentType: "application/json; charset=utf-8",               
+                dataType: "json",
                 async: "false",
                 success: function (result) {
                     console.log("服务器请求成功");
-                    console.log("the result is" + result);
-                    if (result == "add news is ok") alert("add news is ok!");
+                    console.log(result[0]);
+                    $("#addnewstitle").val(result[0].newstitle);
+                    $("#addnewscontent").val(result[0].newscontent);
                 },
                 error: function () {
                     console.log("404 服务器请求失败");
                 }
             });
-        }
-        )
 
+        } 
 
     </script>
 

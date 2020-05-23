@@ -298,4 +298,39 @@ router.post('/refuse_post', function (req, res) {
 //***************************Readermanage******************************
 
 
+
+
+//insert news
+router.post('/addnews_post', function (req, res) {
+    console.log("server send the POST request add news");
+    var news = {
+        "newstitle": req.body.newstitle,
+        "newscontent": req.body.newscontent
+    }
+    mysqlbook.addnews(news.newstitle, news.newscontent, function (error, data) {
+        if (error) console.log('error:bug is in function insert news!!!!!');
+        console.log("the news add result is:" + data);
+        res.send(data);
+    });
+});//librarian.js
+
+
+
+//query news
+router.post('/querynews_post', function (req, res) {
+    console.log("server send the POST request query news");
+  
+    mysqlbook.querynews(function (error, data) {
+        if (error) console.log('error:bug is in function query news!!!!!');
+        console.log("the query news is:");
+        console.log(data)
+        res.json(data);
+    });
+});//librarian.js
+
+
+
+
+
+
 module.exports = router;
