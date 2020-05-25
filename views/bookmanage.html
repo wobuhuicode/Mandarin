@@ -42,7 +42,7 @@
                 <a class="nav-link" href="#historytab" data-toggle="pill">Search History</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
+                <a class="nav-link" href="#incometab" data-toggle="pill">Income</a>
             </li>
         </ul>
 
@@ -153,7 +153,7 @@
             </div>
 
             <!--借还书的表单-->
-            <div id="lendbooktab" class="tab-pane in fade" >
+            <div id="lendbooktab" class="tab-pane in fade">
                 <div style="display:flex ;height:100%; padding-top:50px">
                     <div class="card" style="height:400px; width:600px">
                         <div class="modal-header bg-primary">
@@ -281,9 +281,69 @@
                     </div>
                 </div>
             </div>
-            
-           
+            <!--查询收入的表格-->
+            <div id="incometab" class="tab-pane in fade ">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="modal-header">
+                            <div class="input-group">
+                                <button type="button" class="btn btn-outline-primary" id="lday">Last day</button>
+                                <button type="button" class="btn btn-outline-primary" id="lweek">Last week</button>
+                                <button type="button" class="btn btn-outline-primary" id="lmonth">Last month</button>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-bordered" id="income_table">
+                        <thead>
+                            <tr>
+                                <th>incometime</th>
+                                <th>ReaderID</th>
+                                <th>incomeway</th>
+                                <th>money</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td id="incometime1" height="60px"></td>
+                                <td id="ReaderID1"></td>
+                                <td id="incomeway1"></td>
+                                <td id="money1"></td>
+                            </tr>
+                            <tr class="success">
+                                <td id="incometime2" height="60px"></td>
+                                <td id="ReaderID2"></td>
+                                <td id="incomeway2"></td>
+                                <td id="money2"></td>
+                            </tr>
+                            <tr class="error">
+                                <td id="incometime3" height="60px"></td>
+                                <td id="ReaderID3"></td>
+                                <td id="incomeway3"></td>
+                                <td id="money3"></td>
+                            </tr>
+                            <tr class="warning">
+                                <td id="incometime4" height="60px"></td>
+                                <td id="ReaderID4"></td>
+                                <td id="incomeway4"></td>
+                                <td id="money4"></td>
+                            </tr>
+                            <tr class="info">
+                                <td id="incometime5" height="60px"></td>
+                                <td id="ReaderID5"></td>
+                                <td id="incomeway5"></td>
+                                <td id="money5"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="pagination pagination-centered">
+                        <button type="button" class="btn btn-primary btn-xs mx-2" data-toggle="modal" id="income_last">Last</button>
+                        <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" id="income_next">Next</button>
+                    </div>
+                </div>
+            </div>
         </div>
+           
+        
 </contentBody>
 
     <!-- 编辑书的模态框 -->
@@ -909,6 +969,146 @@
             }
         });
 
+        var callbackincome;
+        var firstincome = 0;
+        var cleartable_income = function () {
+            for (i = 1; i <= 5; i++) {
+                $(("#incometime" + i)).html("");
+                $(("#ReaderID" + i)).html("");
+                $(("#incomeway" + i)).html("");
+                $(("#money" + i)).html("");
+            }
+        }
+
+        $("#lday").click(function () {
+            cleartable_income();
+            $.ajax({
+                type: "POST",
+                url: "/librarian/income_lday",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: "false",
+                success: function (result) {
+                    console.log("服务器请求成功");
+                    console.log("there are " + result.length + " income");
+                    if (result == "") alert("There are not income !")
+                    callbackincome = result;
+                    var num = 5;
+                    if (result.length <= 5) num = result.length;
+                    for (i = 1; i <= num; i++) {
+                        $(("#incometime" + i)).html(callbackincome[i - 1].incometime);
+                        $(("#ReaderID" + i)).html(callbackincome[i - 1].readerID);
+                        $(("#incomeway" + i)).html(callbackincome[i - 1].incomeway);
+                        $(("#money" + i)).html(callbackincome[i - 1].money);
+
+                    }
+                    firstincome = 0;
+                },
+                error: function () {
+                    console.log("404 服务器请求失败");
+                }
+            })
+
+
+        });
+
+        $("#lweek").click(function () {
+            cleartable_income();
+            $.ajax({
+                type: "POST",
+                url: "/librarian/income_lweek",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: "false",
+                success: function (result) {
+                    console.log("服务器请求成功");
+                    console.log("there are " + result.length + " income");
+                    if (result == "") alert("There are not income !")
+                    callbackincome = result;
+                    var num = 5;
+                    if (result.length <= 5) num = result.length;
+                    for (i = 1; i <= num; i++) {
+                        $(("#incometime" + i)).html(callbackincome[i - 1].incometime);
+                        $(("#ReaderID" + i)).html(callbackincome[i - 1].readerID);
+                        $(("#incomeway" + i)).html(callbackincome[i - 1].incomeway);
+                        $(("#money" + i)).html(callbackincome[i - 1].money);
+
+                    }
+                    firstincome = 0;
+                },
+                error: function () {
+                    console.log("404 服务器请求失败");
+                }
+            })
+
+
+        });
+
+        $("#lmonth").click(function () {
+            cleartable_income();
+            $.ajax({
+                type: "POST",
+                url: "/librarian/income_lmonth",
+                contentType: "application/json; charset=utf-8",
+
+                dataType: "json",
+                async: "false",
+                success: function (result) {
+                    console.log("服务器请求成功");
+                    console.log("there are " + result.length + " income");
+                    if (result == "") alert("There are not income !")
+                    callbackincome = result;
+                    var num = 5;
+                    if (result.length <= 5) num = result.length;
+                    for (i = 1; i <= num; i++) {
+                        $(("#incometime" + i)).html(callbackincome[i - 1].incometime);
+                        $(("#ReaderID" + i)).html(callbackincome[i - 1].readerID);
+                        $(("#incomeway" + i)).html(callbackincome[i - 1].incomeway);
+                        $(("#money" + i)).html(callbackincome[i - 1].money);
+
+                    }
+                    firstincome = 0;
+                },
+                error: function () {
+                    console.log("404 服务器请求失败");
+                }
+            })
+
+
+        });
+
+        //上一页
+        $("#income_last").click(function () {
+            if (firstincome == 0) alert("this is the first page");
+            else {
+                cleartable_income();
+                firstincome -= 5;
+                for (i = 1; i <= 5; i++) {
+                    $(("#incometime" + i)).html(callbackincome[firstincome + i - 1].incometime);
+                    $(("#ReaderID" + i)).html(callbackincome[firstincome + i - 1].readerID);
+                    $(("#incomeway" + i)).html(callbackincome[firstincome + i - 1].incomeway);
+                    $(("#money" + i)).html(callbackincome[firstincome + i - 1].money);
+
+                }
+            }
+        });
+        //下一页
+        $("#income_next").click(function () {
+            if (firstincome + 5 + 1 > callbackincome.length) alert("this is the last page");
+            else {
+                cleartable_income();
+                firstincome += 5;
+                var num = 5;
+                if (num > callbackhistory.length - firsthistory) num = callbackincome.length - firstincome;
+                for (i = 1; i <= num; i++) {
+                    $(("#incometime" + i)).html(callbackincome[firstincome + i - 1].incometime);
+                    $(("#ReaderID" + i)).html(callbackincome[firstincome + i - 1].readerID);
+                    $(("#incomeway" + i)).html(callbackincome[firstincome + i - 1].incomeway);
+                    $(("#money" + i)).html(callbackincome[firstincome + i - 1].money);
+                }
+
+            }
+        });
 
     </script>
 </body>

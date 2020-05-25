@@ -364,7 +364,29 @@ router.post('/querynews_post', function (req, res) {
     });
 });//librarian.js
 
+//Transfer income information
+router.post('/income_lday', function (req, res) {
+    console.log("get the daily income table");
+    mysqlbook.queryincome_time(1, function (error, data) {
+        res.json(data);
+    })
 
+})
+
+router.post('/income_lweek', function (req, res) {
+    console.log("get the weekly income table");
+    mysqlbook.queryincome_time(7, function (error, data) {
+        res.json(data);
+    })
+
+})
+
+router.post('/income_lmonth', function (req, res) {
+    console.log("get the monthly income table");
+    mysqlbook.queryincome_time(30, function (error, data) {
+        res.json(data);
+    })
+})
 
 
 

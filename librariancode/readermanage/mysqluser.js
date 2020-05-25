@@ -68,7 +68,10 @@ function addreader(readerID,callback) {
             }
             callback(null, 'add reader is done');
         });
-    });   
+    });  
+    var nowdate = new Date();
+    var time = nowdate.toLocaleString('english', { hour12: false })             //交保证金时间                             
+    mysqlbook.insertincome(time, result1[0].ReaderID, 'deposit', '300');
 }
 
 
