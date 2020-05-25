@@ -61,6 +61,21 @@ function compare(name, pwd, callback) {
     });
 }
 
+function selectname(id, callback) {
+    var sql = 'SELECT readername FROM reader where readerID = "' + id + '"';
+    mysql.connection.query(sql, function (err, result) {
+        if (err || result.length == 0) {
+
+            console.log('wocuole');
+        }
+        else {
+            callback(result[0].readername);
+            console.log(result[0].readername);
+            console.log('duile');
+        }
+    });
+}
+
 function applyAccount(newone, callback) {
     mysql.connection.query("INSERT INTO readerlogon VALUES ('" + newone.readerID + "','" + newone.readerName + "','" + newone.readerEmail + "');", function (error, result) {
         if (error)
@@ -241,6 +256,7 @@ module.exports = {
     searchBook,
     reserveBook,
     compare,
+    selectname,
     applyAccount,
     getReaderInfoById,
     updateReaderInfo,

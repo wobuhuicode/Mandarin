@@ -21,7 +21,11 @@
                 </li>
             </ul>
             <a class="text-white mx-2" href="#" id="username">Disabled</a>
-            <button class="btn btn-light my-0">Log out</button>
+          
+   
+            <button class="btn btn-light my-0" type="button" id="logout">Log Out</button>
+            
+
         </div>
     </nav>
 
@@ -247,6 +251,20 @@
             s.innerHTML= msg;
         }
         */
+        $("#logout").click(function () {
+            $.get("/reader/logout", function (num) {
+                if (num.code == 1) {
+
+
+                    console.log('shibai');
+                }
+                else {
+                    window.location.href = "http://localhost:8081/login";
+                }
+
+            });
+
+        })
     </script>
 </body>
 </html>

@@ -70,11 +70,33 @@ router.post('/reader/login', function (req, res) {
     readerlogic.compare(req.body.account, req.body.pwd, authenResult);
 });
 
+router.get('/reader/logout', function (req, res) {
+    if (typeof (req.session.readerUser) == "undefined") {
+        res.json({ code: 0 });
+
+    }
+    else {
+        console.log(req.session.readerUser);
+        req.session.readerUser = "undefined";
+
+        console.log(req.session.readerUser);
+        res.json({ code: 0 });
+    }
+
+})
+
 router.get('/reader', function (req, res) {
     if (typeof (req.session.readerUser) == "undefined") {
         res.redirect("/login");
     }
-    else res.render("ReaderMain");
+    else {
+        res.render("ReaderMain");
+        readerlogic.selectname(req.session.readerUser, function (info) {
+            //res.send(info);
+            console.log(info);
+        });
+        console.log(req.session.readerUser);
+    }
 });
 
 router.get('/reader/id', async function (req, res) {
