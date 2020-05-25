@@ -13,7 +13,7 @@ function searchBook(ptname, callback) {
         }
         //console.log('connected as id ' + connection.threadId);
     });
-    connection.query("SELECT * FROM book230 where bookname REGEXP'" + ptname + "';", function (error, results) {
+    connection.query("SELECT * FROM book230 where bookname REGEXP '" + ptname + "' ORDER BY state DESC;", function (error, results) {
         if (error) throw error;
         connection.end();
         callback(results);
