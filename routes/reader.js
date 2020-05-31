@@ -151,4 +151,17 @@ router.get('/reserve', function (req, res) {
     })
 })
 
+router.get('/reader/reserve', function (req, res) {
+    var info = req.query.readerID;
+    readerlogic.getReserve(info, function (result) {
+        res.json(result);
+    })
+})
+
+router.get('/reader/recommend', function (req, res) {
+    readerlogic.recommendBook(function (recmd) {
+        res.json(recmd);
+    })
+})
+
 module.exports = router;

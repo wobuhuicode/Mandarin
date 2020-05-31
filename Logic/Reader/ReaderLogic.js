@@ -36,11 +36,82 @@ function reserveBook(info, callback) {
         }
         //console.log('connected as id ' + connection.threadId);
     });
-    connection.query("INSERT INTO reserve230 VALUES ('" + info.bookID+"','"+info.time+"','"+ info.readerID + "');", function (error, results) {
+    connection.query("INSERT INTO reserve230 VALUES ('" + info.bookID+"','NOW()','"+ info.readerID + "');", function (error, results) {
         connection.end();
         if (error) throw error;
         else
             callback(true);
+    });
+
+}
+
+function reserveBook(info, callback) {
+    var mysql = require("mysql");
+    var connection = mysql.createConnection({
+        host: '49.234.115.108',
+        user: 'memeda',
+        password: 'mysqldemima',
+        database: 'library230'
+    });
+
+    connection.connect(id, function (err) {
+        if (err) {
+            console.error('error connecting:' + err.stack)
+        }
+        //console.log('connected as id ' + connection.threadId);
+    });
+    connection.query("SELECT * FROM reserve230 WHERE readerID ='" + id + "');", function (error, results) {
+        connection.end();
+        if (error) throw error;
+        else
+            callback(result);
+    });
+
+}
+
+function getReserve(id, callback) {
+    var mysql = require("mysql");
+    var connection = mysql.createConnection({
+        host: '49.234.115.108',
+        user: 'memeda',
+        password: 'mysqldemima',
+        database: 'library230'
+    });
+
+    connection.connect(function (err) {
+        if (err) {
+            console.error('error connecting:' + err.stack)
+        }
+        //console.log('connected as id ' + connection.threadId);
+    });
+    connection.query("SELECT * FROM book230 where readerID = '" + id + "' ORDER BY time DESC;", function (error, results) {
+        if (error) throw error;
+        connection.end();
+        callback(results);
+    });
+
+}
+
+function recommendBook(callback) {
+    var mysql = require("mysql");
+    var connection = mysql.createConnection({
+        host: '49.234.115.108',
+        user: 'memeda',
+        password: 'mysqldemima',
+        database: 'library230'
+    });
+
+    connection.connect(function (err) {
+        if (err) {
+            console.error('error connecting:' + err.stack)
+        }
+        //console.log('connected as id ' + connection.threadId);
+    });
+    connection.query("SELECT * FROM book230 GROUP BY bookname);", function (error, results) {
+        connection.end();
+        if (error) throw error;
+        else
+            callback(results);
     });
 
 }
@@ -308,6 +379,8 @@ function comparemail(id, email, callback) {
 module.exports = {
     searchBook,
     reserveBook,
+    getReserve,
+    recommendBook,
     compare,
     selectname,
     applyAccount,
