@@ -130,64 +130,117 @@ const changePass = async (pass, id) => {
     }
 }
 
-//计算还有多少天还书
-var mysql = require('mysql');
-
-var connection = mysql.createConnection({
-    host: '49.234.115.108',
-    user: 'memeda',
-    password: 'mysqldemima',
-    database: 'library230'
-});
-connection.connect();
-
-var sql = 'select borrowTime from history where bookID = 00001 ';
-
-connection.query(sql, function (err, result) {
-    if (err) {
-        console.log('[SELECT ERROR] - ', err.message);
-        return;
-    }
-    var temp = new String(result[0].borrowTime);
-    var borrowTime = new Date(temp).getTime();
-    var nowTime = Date.now();
-    var differ = nowTime - borrowTime;
-    console.log("已经借书" + Math.round(differ / (24 * 60 * 60 * 1000)) + "天");
-});
-
-connection.end();
-//书籍要到期时接收邮件提醒
-function sendemail(differ)
+function history()
 {
-    var nodemailer = require('nodemailer');
+    connection.connect();
 
-    const Transport = nodemailer.createTransport({
-        service: 'qq',
-        secure: true,
-        auth: {
-            user: '709472048@qq.com',
-            pass: 'utaxgtgbfulkbfcj',
+    var sql = 'SELECT * FROM bookgoing230 ';
+
+    connection.query(sql, function (err, result) {
+        if (err) {
+            console.log('[SELECT ERROR] - ', err.message);
+            return;
         }
+
+        console.log('--------------------------SELECT----------------------------');
+        console.log(result);
+        console.log('------------------------------------------------------------\n\n');
     });
 
-    const mailOptions = {
-        from: "709472048@qq.com",
-        to: "sxhqzhc@126.com",
-        subject: "还书提醒",
-        text: "您借的图书即将到期，请按时归还！"
-    };
+    connection.end();
+}
 
-    if (differ < 5 && differ == 5) {
-        Transport.sendMail(mailOptions, (err, data) => {
-            if (err) {
-                console.log(err);
-                res.json({ status: 400, msg: "send fail....." })
-            } else {
-                console.log(data);
-                res.json({ status: 200, msg: "邮件发送成功....." })
+//计算某本书的借阅时间
+function borrowtime(bookID)
+{
+    var mysql = require('mysql');
+
+    var connection = mysql.createConnection({
+        host: '49.234.115.108',
+        user: 'memeda',
+        password: 'mysqldemima',
+        database: 'library230'
+    });
+    connection.connect();
+
+    var sql = `select borrowTime from bookgoing230 where bookID = ${bookID} `;
+
+    connection.query(sql, function (err, result) {
+        if (err) {
+            console.log('[SELECT ERROR] - ', err.message);
+            return;
+        }
+        var temp = new String(result[0].borrowTime);
+        var borrowTime = new Date(temp).getTime();
+        var nowTime = Date.now();
+        var differ = nowTime - borrowTime;
+        //如果逾期则发出邮件提醒
+        var nodemailer = require('nodemailer');
+        const Transport = nodemailer.createTransport({
+            service: 'qq',
+            secure: true,
+            auth: {
+                user: '709472048@qq.com',
+                pass: 'utaxgtgbfulkbfcj',
             }
         });
-    }
+
+        const mailOptions = {
+            from: "709472048@qq.com",
+            to: "sxhqzhc@126.com",
+            subject: "还书提醒",
+            text: "您借的图书即将到期，请按时归还！"
+        };
+
+        if (differ > 3 && differ == 3) {
+            Transport.sendMail(mailOptions, (err, data) => {
+                if (err) {
+                    console.log(err);
+                    res.json({ status: 400, msg: "send fail....." })
+                } else {
+                    console.log(data);
+                    res.json({ status: 200, msg: "邮件发送成功....." })
+                }
+            });
+        }
+    });
+    connection.end();
+}
+
+//定时遍历数据库中的bookID，并作为参数传递给borrowtime函数，以实时更新借阅天数，然后决定是否要发出提醒
+function alert()
+{
+    var schedule = require('node-schedule');
+    var rule = new schedule.RecurrenceRule();
+    rule.dayOfWeek = [0, new schedule.Range(0, 6)];
+    rule.hour = 18;
+    rule.minute = 0;
+    //每天18点定时查询
+    var j = schedule.scheduleJob(rule, function () {
+        //获取数据表中的记录条数，便于循环检查借阅是否超时
+        var connection = mysql.createConnection({
+            host: '49.234.115.108',
+            user: 'memeda',
+            password: 'mysqldemima',
+            database: 'library230',
+            //允许执行多条sql语句
+            multipleStatements: true
+        });
+        connection.connect();
+        var sql = 'select count(*) as count from history; select bookID from bookgoing230 ';
+
+        connection.query(sql, function (err, result) {
+            if (err) {
+                console.log('[SELECT ERROR] - ', err.message);
+                return;
+            }
+            for (i = 0; i < result[0].count; i++)
+            {
+                var bookID = result[1].bookID;
+                borrowTime(bookID);
+            }
+        });
+    });
 }
 
 var nodemailer = require('nodemailer');
@@ -264,5 +317,8 @@ module.exports = {
     changePass,
     sendemail,
     mailOptions,
-    comparemail
+    comparemail,
+    borrowtime,
+    alert,
+    history
 };
