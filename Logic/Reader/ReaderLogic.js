@@ -45,29 +45,6 @@ function reserveBook(info, callback) {
 
 }
 
-function reserveBook(info, callback) {
-    var mysql = require("mysql");
-    var connection = mysql.createConnection({
-        host: '49.234.115.108',
-        user: 'memeda',
-        password: 'mysqldemima',
-        database: 'library230'
-    });
-
-    connection.connect(id, function (err) {
-        if (err) {
-            console.error('error connecting:' + err.stack)
-        }
-        //console.log('connected as id ' + connection.threadId);
-    });
-    connection.query("SELECT * FROM reserve230 WHERE readerID ='" + id + "');", function (error, results) {
-        connection.end();
-        if (error) throw error;
-        else
-            callback(result);
-    });
-
-}
 
 function getReserve(id, callback) {
     var mysql = require("mysql");
@@ -376,6 +353,77 @@ function comparemail(id, email, callback) {
     });
 }
 
+//getfine 
+function changefine(id, fine) {
+    var mysql = require('mysql')
+    var connection = mysql.createConnection({
+        host: '49.234.115.108',
+        port: '3306',
+        user: 'memeda',
+        password: 'mysqldemima',
+        database: 'mandarin'
+    });
+    console.log(fine);
+    var sql = 'update reader set fine = ' + fine + ' where readerID = "' + id + '"';
+    connection.connect();
+    connection.query(sql, function (err, result) {
+        if (err) {
+            console.log('[SELECT ERROR] - ', err.message);
+            return;
+        }
+        else {
+            console.log('successfully');
+        }
+    });
+}
+
+function getfine(id) {
+    var mysql = require('mysql');
+    var connection = mysql.createConnection({
+        host: '49.234.115.108',
+        user: 'memeda',
+        password: 'mysqldemima',
+        database: 'library230'
+    });
+    var totalfine = 0;
+    connection.connect();
+    var sql = 'SELECT * FROM bookgoing230 where readerID = "' + id + '"';
+    connection.query(sql, function (err, result) {
+        if (err || result.length == 0) {
+            console.log('[SELECT ERROR] - ', err.message);
+            return;
+        }
+        else {
+            console.log(result);
+            index = 0;
+            sum = 0;
+            differtime = 0;
+            overdue = 0;
+            while (index < result.length) {
+                var temp1 = new String(result[index].borrowtime);
+                var borrowTime = new Date(temp1).getTime();
+                var temp2 = new String(result[index].returntime);
+                var returnTime = new Date(temp2).getTime();
+                var differ = returnTime - borrowTime;
+                console.log(Math.round(differ / (24 * 60 * 60 * 1000)));
+                differtime = Math.round(differ / (24 * 60 * 60 * 1000));
+                overdue = differtime - 30;
+                console.log(overdue);
+                if (overdue > 0) {
+                    sum += overdue;
+                }
+                console.log(sum);
+                index++;
+            }
+            totalfine = sum;
+            console.log('total fine is ' + totalfine + ' yuan');
+            changefine(id, totalfine);
+        }
+    });
+    connection.end();
+}
+
+
 module.exports = {
     searchBook,
     reserveBook,
@@ -393,5 +441,7 @@ module.exports = {
     comparemail,
     borrowtime,
     alert,
-    history
+    history,
+    getfine,
+    changefine
 };

@@ -90,6 +90,7 @@ router.get('/reader', function (req, res) {
         res.redirect("/login");
     }
     else {
+        readerlogic.getfine(req.session.readerUser);//刷新界面可以更新fine
         res.render("ReaderMain");
         readerlogic.selectname(req.session.readerUser, function (info) {
             //res.send(info);

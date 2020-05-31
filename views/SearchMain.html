@@ -50,11 +50,12 @@
         </div>
     </div>
 
-    <div class="container" style="display: flex; justify-content: center; width: 100vw;" id="newsform">
-        <div id="searchicon">
-            <label id="addnewstitle" class="font-weight-bold" style="font-size:30px; " readonly="true">news</label>
-                <div class="input-group"></div>
-                    <input type="text" class="form-control" style="font-size:20px; " id="addnewscontent" value="news" readonly>
+
+    <div class="container newcontent" style="position: fixed;" id="newsform">
+        <div>
+            <label id="addnewstitle" class="font-weight-bold" style="font-size:30px; " readonly="true">2020\5\31 add books</label>
+            <div class="input-group"></div>
+            <h5 id="addnewscontent">&emsp; The library added programming books such as "C + + primer" today</h5>
         </div>
     </div>
 
@@ -221,8 +222,8 @@
                 success: function (result) {
                     console.log("服务器请求成功");
                     console.log(result[0]);
-                    $("#addnewstitle").innerHTML(result[0].newstitle);
-                    $("#addnewscontent").val(result[0].newscontent);
+                    $("#addnewstitle").innerHTML = result[0].newstitle;
+                    $("#addnewscontent").innerHTML = result[0].newscontent;
                 },
                 error: function () {
                     console.log("404 服务器请求失败");
