@@ -308,6 +308,8 @@ function returnbook(readerID, bookID, callback) {
                             console.log('[returnbook ERROR] - ', err.message);
                             return;
                         }
+                        //还书成功，插入收入数据
+                        insertincome(time2, result2[0].readerID, 'fine', fine);
                         //还书成功，修改图书馆该书状态
                         mysql.connection.query("update book230 set state=1  where bookID=?" ,[bookID], function (err, result4) { });
                         callback(null, "return is ok but the reader has overduetime ,please pay a fine of " + fine);
@@ -378,11 +380,98 @@ function queryhistory_readername(readername, callback) {
 }
 
 
+
+//insert news
+function addnews(newstitle, newscontent,callback) {
+    var modSql = 'insert into news values(?,?,?)';
+    var nowdate = new Date();
+    var time = nowdate.toLocaleString('english', { hour12: false });               //获取当前时间
+
+    var modSqlParams = [time,newstitle, newscontent];
+
+    mysql.connection.query(modSql, modSqlParams, function (err, result) {
+        if (err) {
+            console.log('[ADD ERROR]-', err.message);
+            return;
+        }
+        callback(null, 'add news is ok')
+    });
+}//mysqlbook.js
+
+
+//查询最新的公告
+function querynews(callback) {
+    var modSql = 'select * from news order by newstime desc limit 1';
+    
+    mysql.connection.query(modSql, function (err, result) {
+        if (err) {
+            console.log('[ADD ERROR]-', err.message);
+            return;
+        }
+        callback(null, result);
+    });
+}//mysqlbook.js
+
+//获得searchtime以内的收入信息
+function queryincome_time(searchtime, callback) {
+    var arrayobject = new Array();
+    var sql = "select * from income230  ";
+    mysql.connection.query(sql, function (err, result) {
+        if (err) {
+            console.log('[queryincome_time ERROR] - ', err.message);
+            return;
+        }
+        i = 0;
+        j = 0;
+        for (i; i < result.length; i++) {
+            var time1 = result[i].incometime;
+            var nowdate = new Date();
+            var time2 = nowdate.toLocaleString('english', { hour12: false })             //时间
+            var arrytime1 = (time1.split(" "))[0];                                       //只截取日期，具体的几点钟忽略
+            var arrytime2 = (time2.split(" "))[0];
+            var key = '/';
+            var testtime1 = arrytime1.replace(new RegExp(key, 'g'), '-')                   //2020/5/8转化为2020-5-8
+            var testtime2 = arrytime2.replace(new RegExp(key, 'g'), '-')
+            var diftime = datedifference(testtime2, testtime1);
+            if (diftime <= searchtime) {
+                arrayobject[j++] = {
+                    "incometime": result[i].incometime,
+                    "readerID": result[i].readerID,
+                    "incomeway": result[i].incomeway,
+                    "money": result[i].money
+                }
+            }
+        } callback(null, arrayobject);
+    });
+
+
+}
+
+
+//插入收入到income230
+function insertincome(incometime, readerID, incomeway, money) {
+    var sql = "insert into income230 values(?,?,?,?)";
+    sqlParams = [incometime, readerID, incomeway, money];
+    mysql.connection.query(sql, sqlParams, function (err, result) {
+        if (err) {
+            console.log('[insertincome ERROR] - ', err.message);
+            return;
+        }
+
+    });
+}
+
 /*
 queryhistory_readerID("12345678901", function (err, data) {
 
     console.log(data);
 })
+
+
+querynews(function (err, data) {
+    console.log(data);
+});
+
 */
 module.exports = {
     querybookID,
@@ -396,5 +485,9 @@ module.exports = {
     editcategory,
     lendbook,
     returnbook,
-    queryhistory_readerID
+    queryhistory_readerID,
+    addnews,
+    querynews,
+    queryincome_time,
+    insertincome
 };

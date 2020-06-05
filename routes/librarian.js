@@ -3,6 +3,7 @@ var path = require('path');
 var express = require('express');
 var mysqlbook = require(path.join(__dirname, '../librariancode/bookmanage/mysqlbook.js'));
 var mysqluser = require(path.join(__dirname, '../librariancode/readermanage/mysqluser.js'));
+var AccountManage = require(path.join(__dirname, '../librariancode/readermanage/AccountManage.js'));
 var router = express.Router();
 
 var loginlibrarian = {                       //currently logged in librarian
@@ -53,8 +54,6 @@ router.get('/username', function (req, res) {
     res.json(loginlibrarian);
 })
 
-
-//***************************Bookmanage********************************
 //open bookmanage.html
 router.get('/bookmanage', function (req, res) {
     console.log('the request open the bookmanage.html')
@@ -228,29 +227,7 @@ router.post('/returnbook_post', function (req, res) {
 })
 
 
-//queryhistory_readerID
-router.post('/historysearch_post', function (req, res) {
-    var history_readerID = {
-        "history_readerID": req.body.history_readerID
-    }
-    console.log("the need search history readerID is :");
-    console.log(history_readerID);
-    mysqlbook.queryhistory_readerID(history_readerID.history_readerID, function (error, data) {
-        res.json(data);
-    })
-
-})
-//***************************Bookmanage********************************
-
-
-
-
-
-
-
-
-
-//***************************Readermanage******************************
+//********************Reader**************
 //open the addreader.html page
 router.get('/addreader', function (req,res) {
     //console.log("sever send the GET request open the addreader.html page");
@@ -295,7 +272,123 @@ router.post('/refuse_post', function (req, res) {
         res.json("refuse is ok");
     });
 })
-//***************************Readermanage******************************
+//search readerID from table reader
+router.post('/search_post', function (req, res) {
+    var response = {
+        "readerID": req.body.readerID
+    }
+    console.log("the need find readerID is")
+    console.log(response);
+    AccountManage.queryaccount(response.readerID, function (error, data) {
+        if (error) console.log("bug is in function queryaccoung!");
+
+        console.log(data);
+        res.json(data);
+    });
+})
+//update reader account from table reader
+router.post('/edit_post', function (req, res) {
+    console.log("server send the POST request update the reader data");
+
+    var response = {
+        "updatereaderID": req.body.updatereaderID,
+        "ReaderName": req.body.ReaderName,
+        "Email": req.body.Email,
+        "Password": req.body.Password,
+        "Balance": req.body.Balance
+    }
+    console.log('the need updatereader is');
+    console.log(response);
+
+    if (response != null) {
+        AccountManage.queryaccount(response.updatereaderID, function (error, data) {
+            if (error) console.log('error:bug is in function queryaccount!');
+            if (data[0] == null) {
+                res.send("reader does not exist");
+            }
+            else{
+                AccountManage.updateaccount(response.updatereaderID,response.ReaderName, response.Email, response.Password, response.Balance, function (error, data) {
+                    if (error) console.log("bug is in function updateaccount");
+                    console.log("the updatebook callback is: " + data);
+                    res.send(data);
+
+                });//AccountManage.updateaccount
+            }//else
+        })//AccountManage.queryaccount
+    }//if
+
+
+})
+//delete reader caaount from table reader
+router.post('/deletereader_post', function (req, res) {
+    console.log("server send the POST request delete the reader data");
+    var response = {
+        "readerID" : req.body.readerID
+    }
+    AccountManage.deleteaccount(response.readerID, function (err, data) {
+
+        res.send(data);
+    })
+
+})
+//*******************Reader**************
+
+
+
+
+//insert news
+router.post('/addnews_post', function (req, res) {
+    console.log("server send the POST request add news");
+    var news = {
+        "newstitle": req.body.newstitle,
+        "newscontent": req.body.newscontent
+    }
+    mysqlbook.addnews(news.newstitle, news.newscontent, function (error, data) {
+        if (error) console.log('error:bug is in function insert news!!!!!');
+        console.log("the news add result is:" + data);
+        res.send(data);
+    });
+});//librarian.js
+
+
+
+//query news
+router.post('/querynews_post', function (req, res) {
+    console.log("server send the POST request query news");
+  
+    mysqlbook.querynews(function (error, data) {
+        if (error) console.log('error:bug is in function query news!!!!!');
+        console.log("the query news is:");
+        console.log(data)
+        res.json(data);
+    });
+});//librarian.js
+
+//Transfer income information
+router.post('/income_lday', function (req, res) {
+    console.log("get the daily income table");
+    mysqlbook.queryincome_time(1, function (error, data) {
+        res.json(data);
+    })
+
+})
+
+router.post('/income_lweek', function (req, res) {
+    console.log("get the weekly income table");
+    mysqlbook.queryincome_time(7, function (error, data) {
+        res.json(data);
+    })
+
+})
+
+router.post('/income_lmonth', function (req, res) {
+    console.log("get the monthly income table");
+    mysqlbook.queryincome_time(30, function (error, data) {
+        res.json(data);
+    })
+})
+
+
 
 
 module.exports = router;
