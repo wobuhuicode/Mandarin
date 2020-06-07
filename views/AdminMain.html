@@ -21,7 +21,7 @@
                 </li>
             </ul>
             <a class="text-white mx-2" href="#" id="username">Disabled</a>
-            <button class="btn btn-light my-0">Log out</button>
+            <button class="btn btn-light my-0" id="logout">Log out</button>
         </div>
     </nav>
 
@@ -233,6 +233,13 @@
         });
 
         var curName;
+
+        $("#logout").click(function () {
+            $.post("/admin/logout", { account: $('#Account').val() }, function (data) {
+                if (data.code == 1) window.location.href = "http://localhost:8081/admin";
+                else alert("Logout failed!");
+            });
+        });
 
         $("#searchLibrarian").click(function () {
             $("#searchLibForm").addClass("was-validated");
