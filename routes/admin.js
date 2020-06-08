@@ -84,6 +84,18 @@ router.post('/authen', function (req, res) {
     adminlogic.compare(req.body.account, req.body.pwd, authenResult);
 });
 
+router.post('/logout', function (req, res) {
+    req.session.destroy(function (err) {
+        if (err) {
+            res.json({ code: 0 });
+        }
+        else {
+            res.clearCookie(req.body.account)
+            res.json({ code: 1 });
+        }
+    })
+});
+
 //修改保证金及周期
 router.post('/modDepositandCyclePage', function (req, res) {
     function modResult(bool) {
