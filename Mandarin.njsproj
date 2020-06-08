@@ -67,7 +67,6 @@
     <Content Include="views\AdminLog.html">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="views\AdminRegister.html" />
     <Content Include="views\bookmanage.html" />
     <Content Include="views\RecoverPassword.html">
       <SubType>Code</SubType>
