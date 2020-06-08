@@ -237,10 +237,11 @@ function borrowtime(bookID)
             from: "709472048@qq.com",
             to: "sxhqzhc@126.com",
             subject: "还书提醒",
-            text: "您借的图书即将到期，请按时归还！"
+            //您借的图书即将到期，请登录系统确认并按时归还
+            text: "The book you borrowed is about to expire. Please log in to the system to confirm and return it on time"
         };
-
-        if (differ > 3 && differ == 3) {
+        //规定借书15天，在借书已经13天即大于12天的时候发出提醒
+        if (differ >= 1036800000) {
             Transport.sendMail(mailOptions, (err, data) => {
                 if (err) {
                     console.log(err);
@@ -436,7 +437,6 @@ module.exports = {
     updateReaderInfo,
     changePassword,
     changePass,
-    sendemail,
     mailOptions,
     comparemail,
     borrowtime,
