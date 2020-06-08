@@ -92,6 +92,7 @@ router.post('/logout', function (req, res) {
         }
         else {
             res.clearCookie(req.body.account)
+            //清除cookie
             res.json({ code: 1 });
         }
     })
