@@ -85,6 +85,7 @@ router.post('/authen', function (req, res) {
 });
 
 router.post('/logout', function (req, res) {
+    //登出
     req.session.destroy(function (err) {
         if (err) {
             res.json({ code: 0 });
