@@ -121,6 +121,14 @@ function modFine(eve, max, callback) {
     })
 }
 
+function deleteLibrarian(curID, callback) {
+    var sql = "delete from librarian where librarian_ID = '" + curID + "'";
+    mysql.connection.query(sql, function (err, result) {
+        if (err) callback(false);
+        else callback(true);
+    })
+}
+
 module.exports = {
     compare,
     lookupLibrarian,
@@ -131,5 +139,6 @@ module.exports = {
     updateLibrarianPwd,
     moddeposit,
     getInfo,
-    modFine
+    modFine,
+    deleteLibrarian
 }

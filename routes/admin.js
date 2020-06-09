@@ -60,6 +60,19 @@ router.post('/updateLibrarian', function (req, res) {
     adminlogic.updateLibrarian(req.body.curID, req.body.newName, req.body.newID, updateResult);
 })
 
+router.post('/deleteLibrarian', function (req, res) {
+    function deleteResult(bool) {
+        if (bool) {
+            res.json({ code: 0 });
+        }
+        else {
+            res.json({ code: 1 });
+        }
+    }
+
+    adminlogic.deleteLibrarian(req.body.curID, deleteResult);
+})
+
 router.post('/updateLibrarianPwd', function (req, res) {
     function updateResult(bool) {
         if (bool) res.json({ code: 0 });

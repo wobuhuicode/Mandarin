@@ -22,6 +22,7 @@
             </ul>
             <a class="text-white mx-2" href="#" id="username">Disabled</a>
             <button class="btn btn-light my-0" id="logout">Log out</button>
+         
         </div>
     </nav>
 
@@ -35,9 +36,6 @@
             </li>
             <li id="moddepositandcycle" class="nav-item">
                 <a class="nav-link" href="#modDepositandCyclePage" data-toggle="pill">Modify Rulers</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
             </li>
         </ul>
 
@@ -131,7 +129,7 @@
                         <div class="col">
                             <div class="card">
                                 <div class="card-header  bg-primary text-white">
-                                    informations
+                                    Rulers
                                 </div>
                                 <div class="py-3 px-4">
                                     <ul class="list-group" id="Info">
@@ -216,7 +214,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#newPwdModal">Recovery Password</button>
-                    <button type="button" class="btn btn-danger">Delete Account</button>
+                    <button type="button" class="btn btn-danger" id="btnDeleteAccount">Delete Account</button>
                     <button type="button" class="btn btn-primary" id="editSubmit">Save Changes</button>
                 </div>
             </div>
@@ -310,11 +308,13 @@
             })
         });
 
-        $(function libList() {
+        function libList() {
             $.get("/admin/getLibs", function (data) {
                 get_list(data);
             })
-        })
+        }
+
+        $(libList());
 
        $(function () {
             $.get("/admin/getInfo", function (data) {
@@ -365,6 +365,21 @@
                 })
             }
         })
+
+        $('#btnDeleteAccount').click(
+            function () {
+                $.post("/admin/deleteLibrarian", { curID: curID }, function (data) {
+                    if (data.code == 0) {
+                        alert("Delete success!");
+                        $("#editLibrarian").modal('toggle');
+                        libList();
+                    } else {
+                        alert("Delete failed！");
+                        $("#editLibrarian").modal('toggle');
+                    }
+                });
+            }
+        )
 
         $("#submitNewPassword").click(function () {
             $("#passwordForm").addClass("was-validated");
