@@ -2,20 +2,27 @@ var path = require('path');
 var mysql = require(path.join(__dirname, '../MysqlCon')); 
 
 function compare(name, password, callback) {
-    //��ѯ���
     var sql = 'SELECT admin_pw FROM admin where admin_ID ="' + name + '"';
 
     mysql.connection.query(sql, function (err, result) {
-        //��������쳣����δ��ѯ�����������·���лص����������ݲ���false
         if (err || result.length == 0) {
             callback(false);
         }
-        //����ɹ���ѯ������������е����������ݿ��е�һ�£�����·���лص����������ݲ���true
         else if (password == result[0].admin_pw) callback(true);
     });
-
 }
 
+function regist(adminID, adminPwd, callback) {
+    mysql.connection.query('select * from admin where admin_ID="' + adminID + '"', function (error, result) {
+        if (error || result.length != 0) callback(false);
+        else {
+            mysql.connection.query("insert into admin values('" + adminID + "','" + adminPwd + "');", function (error, result) {
+                if (error) callback(false);
+                else callback(true);
+            });
+        }
+    })
+}
 
 function lookupLibrarian(name, callback) {
     mysql.connection.query('SELECT * from librarian where librarian_ID = "' + name + '"', function (error, results, fields) {
@@ -140,5 +147,6 @@ module.exports = {
     moddeposit,
     getInfo,
     modFine,
-    deleteLibrarian
+    deleteLibrarian,
+    regist,
 }

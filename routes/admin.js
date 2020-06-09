@@ -13,7 +13,11 @@ router.get('/', function (req, res) {
 });
 
 router.get('/login', function (req, res) {
-    res.render("adminLog");
+    res.render("AdminLog");
+});
+
+router.get('/register', function (req, res) {
+    res.render("AdminRegister");
 });
 
 router.get('/username', function (req, res) {
@@ -81,6 +85,16 @@ router.post('/updateLibrarianPwd', function (req, res) {
     adminlogic.updateLibrarianPwd(req.body.curID, req.body.newPwd, updateResult);
 })
 
+router.post('/adminregist', function (req, res) {
+    //注册
+    function registResult(bool) {
+        if (bool) {
+            res.redirect("/admin/login")
+        }
+        else res.send("Register Failed!")
+    }
+    adminlogic.regist(req.body.account, req.body.pwd, registResult);
+})
 
 router.post('/authen', function (req, res) {
     //回调函数
