@@ -5,7 +5,7 @@ var readerlogic = require(path.join(__dirname, '../Logic/Reader/ReaderLogic'));
 var router = express.Router();
 
 /* GET admin pages. */
-router.get('/search', function (req, res) {
+router.get('/', function (req, res) {
     res.render("SearchMain", { title: "HTML" });
 });
 
