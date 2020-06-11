@@ -226,6 +226,19 @@ router.post('/returnbook_post', function (req, res) {
     });
 })
 
+//queryhistory_readerID
+router.post('/historysearch_post', function (req, res) {
+    var history_readerID = {
+        "history_readerID": req.body.history_readerID
+    }
+    console.log("the need search history readerID is :");
+    console.log(history_readerID);
+    mysqlbook.queryhistory_readerID(history_readerID.history_readerID, function (error, data) {
+        res.json(data);
+    })
+
+})
+
 
 //********************Reader**************
 //open the addreader.html page
@@ -253,11 +266,12 @@ router.post('/agree_post', function (req, res) {
     mysqluser.addreader(response.readerID, function (error, data1) {
         if (error) console.log("bug is in function addreader!");
         //console.log(data1);                                              //input the function addreader result
-        mysqluser.deletelogon(response.readerID, function (error, data2) {
-            if (error) console.log("bug is in function deletelogon!");
-            //console.log(data2);                                          //input the function deletelogon result
-            res.json("add reader is ok");
-        });
+        else mysqluser.deletelogon(response.readerID, function (error, data2) {
+                if (error) console.log("bug is in function deletelogon!");
+                //console.log(data2);                                          //input the function deletelogon result
+                else res.json("add reader is ok");
+           
+             });
     });
     
 })
@@ -331,6 +345,19 @@ router.post('/deletereader_post', function (req, res) {
     })
 
 })
+//add readerlogon_post
+router.post('/readerlogon_post', function (req, res) {
+    var reader = {
+        "Name": req.body.Name,
+        "ID": req.body.ID,
+        "Email": req.body.Email,
+
+    }
+    console.log(reader);
+    mysqluser.addreaderlogon(reader.Name, reader.ID, reader.Email, "123456", function (error, data) {
+        res.send(data);
+    });
+})//post
 //*******************Reader**************
 
 
