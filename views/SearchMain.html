@@ -29,10 +29,7 @@
                     <a class="nav-link" href="#">Search Page</a>
                 </li>
             </ul>
-            <a class="text-white mx-2" href="#">Disabled</a>
-            <input name="Login" type="button" button class="btn btn-light my-0" id="btn1" title="Login" value="Login"
-                   onclick="window.location.href='http://localhost:8081/login'">
-          
+            <button onclick="location.href='/apply'" class="btn btn-light">Apply Account</button>
         </div>
     </nav>
 
@@ -48,6 +45,15 @@
                     </div>
                 </div>
             </form>
+        </div>
+    </div>
+
+
+    <div class="container newcontent" style="position: fixed;" id="newsform">
+        <div>
+            <label id="addnewstitle" class="font-weight-bold" style="font-size:30px; " readonly="true">2020\5\31 add books</label>
+            <div class="input-group"></div>
+            <h5 id="addnewscontent">&emsp; The library added programming books such as "C + + primer" today</h5>
         </div>
     </div>
 
@@ -74,7 +80,7 @@
                     <div class="py-3 px-4">
                         <ul class="list-group" id="books">
                             <li class="list-group-item list-group-item-action">
-                                 <table width="100%">
+                                <table width="100%">
                                     <tr>
                                         <th style="width:20%" align="center">
                                             <h5 class="mb-1">bookname</h5>
@@ -87,7 +93,7 @@
                                         <th style="width:12.5%" align="center"><h5 class="mb-1">price</h5></th>
                                         <th style="width:8.5%" align="center"><h5 class="mb-1">state</h5></th>
                                     </tr>
-                                 </table>
+                                </table>
                             </li>
                         </ul>
                     </div>
@@ -95,8 +101,8 @@
             </div>
         </div>
     </div>
-    
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js" ></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
@@ -114,22 +120,24 @@
             $("#searchicon").animate({
                 marginTop: '10px'
             });
-                $.ajax({
-                    type: 'get',
-                    url: '/search_result',
-                    data: $("#basic_url"),
-                    success: function (resp) {
-                        get_list(resp);
-                    },
-                    error: function () {
-                    }
+            $.ajax({
+                type: 'get',
+                url: '/search_result',
+                data: $("#basic_url"),
+                success: function (resp) {
+                    get_list(resp);
+                },
+                error: function () {
+                }
             });
 
 
             $("#cardContainer").animate({
                 opacity: '1'
             }, 2 * 1000);
-            
+
+            var newsform = document.getElementById('newsform');
+            newsform.style.display = "none";
             //搜索按钮的其他代码
         });
         function get_list(res) {
@@ -170,7 +178,7 @@
                 booklist.innerHTML = '<li class="list-group-item list-group-item-action"><h5 class="mb-1">Sorry, no such book.</h5></li>';
             else
                 booklist.innerHTML = msg;
-            
+
         }
 
         function reserve(info) {
@@ -178,8 +186,8 @@
             var time = new Date();
             var now = time.toLocaleDateString() + '/' + time.getHours() + '/' + time.getMinutes();
             info = JSON.parse(info);
-            var data = "book's name: " + info.bookname + "\nauthor: " + info.author + "\nbook's ID: " + info.bookID + "\ntime: " + now;
-            var judge = window.confirm(data);
+            var data = "book's name: " + info.bookname + "\nauthor: " + info.author + "\nbook's ID: " + info.bookID + "\ntime: " + time.toLocaleDateString() + '/ ' + time.getHours() + ':' + time.getMinutes() + "\nyour ID: 13700110111"
+            var judge = window.confirm("Do you want to reserve this book ?\n\n" + data);
             //alert(judge);
             if (judge == true) {
                 var reserveinfo = {
@@ -197,8 +205,28 @@
                         alert("Sorry, please try again.");
                     }
                 })
-                
+
             }
+        }
+
+        var postnews = function () {
+
+            $.ajax({
+                type: "POST",
+                url: "/librarian/querynews_post",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: "false",
+                success: function (result) {
+                    console.log("服务器请求成功");
+                    console.log(result[0]);
+                    $("#addnewstitle").innerHTML = result[0].newstitle;
+                    $("#addnewscontent").innerHTML = result[0].newscontent;
+                },
+                error: function () {
+                    console.log("404 服务器请求失败");
+                }
+            });
         }
 
     </script>

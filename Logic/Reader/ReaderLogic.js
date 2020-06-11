@@ -77,6 +77,7 @@ function selectname(id, callback) {
 }
 
 function applyAccount(newone, callback) {
+    let mysql = require(path.join(__dirname, '../MysqlCon'));
     mysql.connection.query("INSERT INTO readerlogon VALUES ('" + newone.readerID + "','" + newone.readerName + "','" + newone.readerEmail + "');", function (error, result) {
         if (error)
             callback(false);
