@@ -311,7 +311,7 @@ function returnbook(readerID, bookID, callback) {
                         //还书成功，插入收入数据
                         insertincome(time2, result2[0].readerID, 'fine', fine);
                         //还书成功，修改图书馆该书状态
-                        mysql.connection.query("update book230 set state=1  where bookID=?" ,[bookID], function (err, result4) { });
+                        mysql.connection.query("update book230 set `state` = '1'  where bookID=?" ,[bookID], function (err, result4) { });
                         callback(null, "return is ok but the reader has overduetime ,please pay a fine of " + fine);
                     })
                 }
@@ -324,7 +324,7 @@ function returnbook(readerID, bookID, callback) {
                             return;
                         }
                         //还书成功，修改图书馆该书状态
-                        mysql.connection.query("update book230 set state=1  where bookID=?" [bookID], function (err, result4) { });
+                        mysql.connection.query("update book230 set `state` = '1'  where bookID = ?" [bookID], function (err, result4) { });
                         callback(null, "return is ok");
                     })
                 }

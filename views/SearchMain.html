@@ -108,6 +108,9 @@
 
     <!--自定义的代码-->
     <script>
+        $(function () {
+            postnews();
+        })
         $('#basic_url').bind('keypress', function (event) {
             if (event.keyCode == "13") {
                 event.preventDefault();
@@ -210,7 +213,7 @@
         }
 
         var postnews = function () {
-
+               
             $.ajax({
                 type: "POST",
                 url: "/librarian/querynews_post",
@@ -220,8 +223,8 @@
                 success: function (result) {
                     console.log("服务器请求成功");
                     console.log(result[0]);
-                    $("#addnewstitle").innerHTML = result[0].newstitle;
-                    $("#addnewscontent").innerHTML = result[0].newscontent;
+                    $("#addnewstitle").html(result[0].newstitle);
+                    $("#addnewscontent").html(result[0].newscontent);
                 },
                 error: function () {
                     console.log("404 服务器请求失败");

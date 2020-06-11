@@ -75,10 +75,10 @@
             $("[role = 'alert']").alert('close');
             $("#applyForm").addClass("was-validated");
             if ($('#readerName')[0].validity.valid && $('#readerID')[0].validity.valid && $('#readerEmail')[0].validity.valid) {
-                var data = {
-                    "readerName": $("#readerName").val(),
-                    "readerID": $("#readerID").val(),
-                    "readerEmail": $("#readerEmail").val()
+                var reader = {
+                    "Name": $("#readerName").val(),
+                    "ID": $("#readerID").val(),
+                    "Email": $("#readerEmail").val()
                 };
 
                 var msg = '<div class="card-header  bg-primary text-white font-weight-bold">\
@@ -97,15 +97,30 @@
                 s.innerHTML = msg;
 
                 $("#payConfirm").click(function () {
-                    $.get("/apply_account", data, function (res) {
-                        if (res.code == 1) {
-                            //alert('Apply Successfully!\nPlease wait patiently.');
-                            window.location.href = "http://localhost:8081/";
-                        }
-                        else {
-                            alert('Error!Please try again.');
-                        }
-                    })
+
+
+                    if (reader.Name == "") alert("the reader name is null");
+                    else if (reader.ID == "") alert("the reader ID is null");
+                    else if (reader.Email == "") alert("the reader Email is null");
+                    else {
+                        $.ajax({
+                            type: "POST",
+                            url: "/librarian/readerlogon_post",
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify(reader),
+                            dataType: "text",
+                            async: "false",
+                            success: function (result) {
+                                console.log("服务器请求成功");
+                                //alert(result);
+                                console.log("the result is" + result);
+                                if (result == "register is ok") alert("Registration application submitted successfully, please wait for librarian to examine");
+                            },
+                            error: function () {
+                                console.log("404 服务器请求失败");
+                            }
+                        });//ajax把注册信息发送到后台
+                    }
                 });
             }
         });
